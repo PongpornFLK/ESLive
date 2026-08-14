@@ -1,6 +1,8 @@
 # Miscellaneous
 *.class
 *.log
+build_log*.txt
+gradle_stacktrace.txt
 *.pyc
 *.swp
 .DS_Store

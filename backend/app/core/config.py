@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://localhost:6379/0"
     anthropic_api_key: str = ""
     firebase_project_id: str = ""
+    pandascore_api_key: str = ""
 
 
 settings = Settings()

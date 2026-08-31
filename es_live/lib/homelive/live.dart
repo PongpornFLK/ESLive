@@ -4,6 +4,8 @@ import 'package:es_live/homelive/widgets/match_card.dart';
 import 'package:es_live/widgets/live_circle.dart';
 import 'package:flutter/material.dart';
 
+import '../core/model/game_data.dart';
+
 class Live extends StatefulWidget {
   const Live({super.key});
 
@@ -34,7 +36,12 @@ class _LiveState extends State<Live> {
                 ),
               ],
             ),
-            Row(children: [ListGame(game: "game"), ListGame(game: "game")]),
+            Row(
+              children:
+                  data
+                      .map((g) => ListGame(logo: g.logo, gameName: g.gameName))
+                      .toList(),
+            ),
             Divider(),
             Row(
               children: [

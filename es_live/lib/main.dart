@@ -1,4 +1,4 @@
-import 'package:es_live/homepage/home.dart';
+import 'package:es_live/screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:es_live/core/theme/root_colors.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       home: Builder(
         builder: (context) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: AppColors.secondmain,
             body: Stack(
               fit: StackFit.expand,
               children: [
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: <Color>[
                         AppColors.orange,
-                        AppColors.background.withOpacity(0),
+                        AppColors.secondmain.withOpacity(0),
                       ],
                     ),
                   ),
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                         onTap:
                             () => Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Home()),
+                              MaterialPageRoute(builder: (context) => Screen()),
                             ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
                           child: Text(
                             "LET’S WATCHING",
                             style: TextStyle(
-                              color: AppColors.background,
+                              color: AppColors.secondmain,
                               fontFamily: "Genos",
                               fontWeight: FontWeight.w700,
                               fontSize: 30,

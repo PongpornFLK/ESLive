@@ -15,6 +15,7 @@ class Game(Base):
     slug: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     pandascore_slug: Mapped[str | None] = mapped_column(String)
+    logo_url: Mapped[str | None] = mapped_column(String)
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
 
     teams: Mapped[list["Team"]] = relationship(back_populates="game")

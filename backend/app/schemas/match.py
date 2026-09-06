@@ -28,7 +28,7 @@ class MatchOut(BaseModel):
     team_b: TeamOut
     winner_team_id: uuid.UUID | None
     status: MatchStatus
-    scheduled_at: datetime
+    begin_at: datetime
     score_a: int | None
     score_b: int | None
     stream_url: str | None

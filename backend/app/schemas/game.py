@@ -11,6 +11,7 @@ class GameOut(BaseModel):
     slug: str
     name: str
     pandascore_slug: str | None
+    logo_url: str | None
     created_at: datetime
 
 

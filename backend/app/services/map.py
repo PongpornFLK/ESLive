@@ -1,34 +1,40 @@
 from app.models.match import MatchStatus
 
 
-def mapMatch(raw: dict, team_a_id, team_b_id, game_id, tournament_id) -> dict:
+def mapMatch(raw: dict, team_a_id, team_b_id, game_id, tournament_id,) -> dict:
 
+    winner_team_id = None
+    opp_a_id = raw["opponents"][0]["opponent"]["id"]
+    opp_b_id = raw["opponents"][1]["opponent"]["id"]
+    score_a = 0
+    score_b = 0
+    
     if raw["status"] == "not_started":
         status = MatchStatus.upcoming
     elif raw["status"] == "running":
         status = MatchStatus.live
     elif raw["status"] == "finished":
         status = MatchStatus.finished
+        if raw["winner"]["id"] == opp_a_id:
+            winner_team_id = team_a_id
+        else:
+            winner_team_id = team_b_id
     else:
         status = MatchStatus.upcoming
 
-    opp_a_id = raw["opponents"][0]["opponent"]["id"]
-    opp_b_id = raw["opponents"][1]["opponent"]["id"]
-    score_a = 0
-    score_b = 0
-    
+
     for s in raw["results"]:
-        if s["team_id"] == opp_a_id :
+        if s["team_id"] == opp_a_id:
             score_a = s["score"]
-        elif s["team_id"] == opp_b_id :
+        elif s["team_id"] == opp_b_id:
             score_b = s["score"]
 
-    url = None # None = null
-    
+    url = ""  # None = null
+
     for u in raw["streams_list"]:
         if u["main"] == True:
-            url =  u["raw_url"]        
-        
+            url = u["raw_url"]
+
     return {
         "pandascore_id": raw["id"],
         "begin_at": raw["begin_at"],
@@ -39,11 +45,29 @@ def mapMatch(raw: dict, team_a_id, team_b_id, game_id, tournament_id) -> dict:
         "score_a": score_a,
         "score_b": score_b,
         "status": status,
-        "stream_url" : url
+        "stream_url": url,
+        "winner_team_id": winner_team_id,
         # "game_id" : raw["videogame"]["name"],
     }
 
 
 # if __name__ == "__main__":
-#     fake_raw = {"id": 123, "begin_at": "2026-09-02T15:00:00Z"}
-#     print(mapMatch(fake_raw))
+#     fake_raw = {
+#         "id": 123,
+#         "begin_at": "2026-09-02T15:00:00Z",
+#         "status": "finished",
+#         "winner": {"id": 1},
+#         "opponents": [
+#             {"opponent": {"id": 1}},
+#             {"opponent": {"id": 2}},
+#         ],
+#         "results": [
+#             {"team_id": 1, "score": 2},
+#             {"team_id": 2, "score": 1},
+#         ],
+#         "streams_list": [
+#             {"main": False, "raw_url": "https://example.com/backup"},
+#             {"main": True, "raw_url": "https://example.com/main"},
+#         ],
+#     }
+#     print(mapMatch(fake_raw, "fake-team-a", "fake-team-b", "fake-game", "fake-tournament"))

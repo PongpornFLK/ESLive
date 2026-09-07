@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-
 from app.core.config import settings
+from app.api import match
 
 app = FastAPI(title="ESLive API")
+
+app.include_router(match.router)
 
 
 @app.get("/health")

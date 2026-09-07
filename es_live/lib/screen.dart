@@ -2,7 +2,7 @@ import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/follow/follow.dart';
 import 'package:es_live/homelive/live.dart';
 import 'package:es_live/patch/patch.dart';
-import 'package:es_live/setting/setting.dart';
+import 'package:es_live/set/setting.dart';
 import 'package:es_live/tour/tour.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:es_live/widgets/bottom_bar.dart';

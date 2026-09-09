@@ -4,7 +4,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 from app.models.match import MatchStatus, AnalysisStatus
-from app.schemas.game import TeamOut
+from app.schemas.game import TeamOut, TournamentOut
 
 
 class MatchAnalysisOut(BaseModel):
@@ -23,7 +23,7 @@ class MatchOut(BaseModel):
 
     id: uuid.UUID
     game_id: uuid.UUID
-    tournament_id: uuid.UUID
+    tournament: TournamentOut
     team_a: TeamOut
     team_b: TeamOut
     winner_team_id: uuid.UUID | None

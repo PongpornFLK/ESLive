@@ -1,0 +1,149 @@
+import 'package:es_live/_service/match.dart';
+import 'package:es_live/core/theme/root_colors.dart';
+import 'package:es_live/homelive/widgets/list_game.dart';
+import 'package:es_live/homelive/widgets/match_card.dart';
+import 'package:es_live/widgets/live_circle.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../core/model/game_data.dart';
+
+class Home extends ConsumerStatefulWidget {
+  const Home({super.key});
+
+  @override
+  ConsumerState<Home> createState() => _HomeState();
+}
+
+class _HomeState extends ConsumerState<Home> {
+  bool isHaveLive = true;
+  bool isHaveComingSoon = true;
+
+  @override
+  Widget build(BuildContext context) {
+    final matchAsync = ref.watch(matchProvider);
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Text(
+                  "Game",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children:
+                  data
+                      .map((g) => ListGame(logo: g.logo, gameName: g.name))
+                      .toList(),
+            ),
+            Divider(),
+            Row(
+              children: [
+                Text(
+                  "Match ",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Live! ",
+                  style: TextStyle(
+                    color: AppColors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                LiveCircle(),
+              ],
+            ),
+            isHaveLive
+                ? matchAsync.when(
+                  data:
+                      (match) => Column(
+                        children:
+                            match
+                                .where((m) => m.status == "live")
+                                .map(
+                                  (m) => MatchCard(
+                                    gameName: m.game.gameName,
+                                    tourName: m.tournament.tourName,
+                                    teamAName: m.teamA.teamName,
+                                    teamBName: m.teamB.teamName,
+                                    scoreA: m.scoreA,
+                                    scoreB: m.scoreB,
+                                    isLive: true,
+                                    time: m.beginAt,
+                                    logoTeamA: m.teamA.logoUrl,
+                                    logoTeamB: m.teamB.logoUrl,
+                                  ),
+                                )
+                                .toList(),
+                      ),
+                  loading: () => const CircularProgressIndicator(),
+                  error: (error, stackTrace) => Text('$error'),
+                )
+                : Center(
+                  child: Text(
+                    "Not Found",
+                    style: TextStyle(color: AppColors.grey),
+                  ),
+                ),
+            Divider(),
+            Row(
+              children: [
+                Text(
+                  "Coming Soon",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            isHaveComingSoon
+                ? matchAsync.when(
+                  data:
+                      (match) => Column(
+                        children:
+                            match
+                                .where((m) => m.status == "upcoming")
+                                .map(
+                                  (m) => MatchCard(
+                                    gameName: m.game.gameName,
+                                    tourName: m.tournament.tourName,
+                                    teamAName: m.teamA.teamName,
+                                    teamBName: m.teamB.teamName,
+                                    scoreA: m.scoreA,
+                                    scoreB: m.scoreB,
+                                    isLive: false,
+                                    time: m.beginAt,
+                                    logoTeamA: m.teamA.logoUrl,
+                                    logoTeamB: m.teamB.logoUrl,
+                                  ),
+                                )
+                                .toList(),
+                      ),
+                  error: (error, stackTrace) => Text("$error"),
+                  loading: () => CircularProgressIndicator(),
+                )
+                : Center(
+                  child: Text(
+                    "Not Found",
+                    style: TextStyle(color: AppColors.grey),
+                  ),
+                ),
+          ],
+        ),
+      ),
+    );
+  }
+}

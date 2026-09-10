@@ -1,14 +1,23 @@
-class GameData {
+class GameInList {
   final String logo;
-  final String gameName;
+  final String name;
 
-  const GameData({required this.logo, required this.gameName});
+  const GameInList({required this.logo, required this.name});
 }
 
-final List<GameData> data = [
-  const GameData(logo: 'assests/img/list_game/pubg.png', gameName: "PubG"),
-  const GameData(
+final List<GameInList> data = [
+  const GameInList(logo: 'assests/img/list_game/pubg.png', name: "PubG"),
+  const GameInList(
     logo: 'assests/img/list_game/valorant.png',
-    gameName: "Valorant",
+    name: "Valorant",
   ),
 ];
+
+class GameData {
+  final String gameName;
+
+  const GameData({required this.gameName});
+  factory GameData.fromjson(Map<String, dynamic> json) {
+    return GameData(gameName: json['name']);
+  }
+}

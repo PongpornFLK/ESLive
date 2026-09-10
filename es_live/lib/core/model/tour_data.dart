@@ -1,9 +1,9 @@
-class Tournament {
+class TournamentData {
   final String tourName;
 
-  const Tournament({required this.tourName});
+  const TournamentData({required this.tourName});
 
-  factory Tournament.fromjson(Map<String, dynamic> json) {
-    return Tournament(tourName: json['name']);
+  factory TournamentData.fromjson(Map<String, dynamic> json) {
+    return TournamentData(tourName: json['name']);
   }
 }

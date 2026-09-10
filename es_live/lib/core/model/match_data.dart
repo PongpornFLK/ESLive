@@ -1,15 +1,16 @@
+import 'package:es_live/core/model/game_data.dart';
 import 'package:es_live/core/model/team_data.dart';
 import 'package:es_live/core/model/tour_data.dart';
 
-
 class MatchData {
   final String status;
+  final GameData game;
   final TeamData teamA;
   final TeamData teamB;
   final int scoreA;
   final int scoreB;
   final String? streamUrl;
-  final Tournament tournament ;
+  final TournamentData tournament;
   final String beginAt;
 
   const MatchData({
@@ -19,7 +20,8 @@ class MatchData {
     required this.scoreA,
     required this.scoreB,
     required this.streamUrl,
-    required this.tournament ,
+    required this.tournament,
+    required this.game,
     required this.beginAt,
   });
 
@@ -31,12 +33,9 @@ class MatchData {
       scoreA: json['score_a'],
       scoreB: json['score_b'],
       streamUrl: json['stream_url'],
-      tournament : Tournament.fromjson(json["tournament"]),
+      tournament: TournamentData.fromjson(json["tournament"]),
+      game: GameData.fromjson(json["game"]),
       beginAt: json['begin_at'],
     );
   }
 }
-
-
-
-

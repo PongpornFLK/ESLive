@@ -1,6 +1,7 @@
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/widgets/live_circle.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BuildTopic extends StatelessWidget {
   const BuildTopic({
@@ -18,38 +19,42 @@ class BuildTopic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return !isLive
-        ? Column(
+    final matchTime = DateFormat(
+      'HH.mm - dd/MM/yyyy',
+    ).format(DateTime.parse(time).toLocal());
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(gameName, style: TextStyle(color: Colors.white)),
-                Text(time, style: TextStyle(color: AppColors.grey)),
-              ],
+            Expanded(
+              child: Text(
+                gameName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(tourName, style: TextStyle(color: AppColors.grey)),
-              ],
-            ),
+            const SizedBox(width: 8),
+            isLive
+                ? const LiveCircle()
+                : Text(
+                  matchTime,
+                  style: TextStyle(color: AppColors.grey, fontSize: 12),
+                ),
           ],
-        )
-        : Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(gameName, style: TextStyle(color: Colors.white)),
-                LiveCircle(),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [Text(tourName, style: TextStyle(color: Colors.white))],
-            ),
-          ],
-        );
+        ),
+        Text(
+          tourName,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(color: AppColors.grey, fontSize: 10),
+        ),
+      ],
+    );
   }
 }

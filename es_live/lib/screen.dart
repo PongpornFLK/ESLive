@@ -1,6 +1,6 @@
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/follow/follow.dart';
-import 'package:es_live/homelive/live.dart';
+import 'package:es_live/homelive/home.dart';
 import 'package:es_live/patch/patch.dart';
 import 'package:es_live/set/setting.dart';
 import 'package:es_live/tour/tour.dart';
@@ -19,7 +19,7 @@ class _ScreenState extends State<Screen> {
   int currentIndex = 0;
 
   final List<Widget> page = [
-    const Live(),
+    const Home(),
     const Tour(),
     const Follow(),
     const Patch(),

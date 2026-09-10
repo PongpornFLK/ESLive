@@ -3,6 +3,7 @@ from app.models.game import Game, Tournament, Team
 from app.models.match import Match
 from app.services.map import mapMatch
 
+
 # หา game_id ของ Pandascore
 # game.id , game.name , game.slug, game.pandascore_slug , game.logo_url , game.created_at
 def getGameId(db: Session, raw: dict):
@@ -13,14 +14,14 @@ def getGameId(db: Session, raw: dict):
 
 
 def getTourId(db: Session, raw: dict, game_id):
-    tour_panda_id = raw["tournament"]["id"]
+    tour_panda_id = raw["league"]["id"]
     tour = (
         db.query(Tournament).filter(Tournament.pandascore_id == tour_panda_id).first()
     )
 
     if tour is None:
         tour_data = Tournament(
-            game_id=game_id, name=raw["tournament"]["slug"], pandascore_id=tour_panda_id
+            game_id=game_id, name=raw["league"]["slug"], pandascore_id=tour_panda_id
         )
         db.add(tour_data)
         db.commit()
@@ -59,11 +60,10 @@ def saveMatch(db: Session, raw: dict):
     team_b_id = getTeamId(db, raw["opponents"][1]["opponent"], game_id)
 
     match_data = mapMatch(raw, team_a_id, team_b_id, game_id, tour_id)
-    
+
     print(f"match_data : {match_data}")
     match_panda = (
-        db.query(Match)
-        .filter(Match.pandascore_id == match_data["pandascore_id"])
+        db.query(Match).filter(Match.pandascore_id == match_data["pandascore_id"])
     ).first()
 
     if match_panda is None:
@@ -72,7 +72,8 @@ def saveMatch(db: Session, raw: dict):
         db.commit()
         match_panda = match_data
         # print(f"saveMatch : {match_panda}")
-    elif match_data["status"] == "finished" :
+
+    elif match_data["status"] == "finished":
         match_panda.score_a = match_data["score_a"]
         match_panda.score_b = match_data["score_b"]
         match_panda.status = match_data["status"]
@@ -91,7 +92,7 @@ if __name__ == "__main__":
 
     db = SessionLocal()
 
-    for status in ["upcoming", "running" ,"past"]:
+    for status in ["upcoming", "running", "past"]:
         matches = getPandaAPI("valorant", status)
         # print(matches)
         for raw in matches:

@@ -49,25 +49,3 @@ def mapMatch(raw: dict, team_a_id, team_b_id, game_id, tournament_id,) -> dict:
         "winner_team_id": winner_team_id,
         # "game_id" : raw["videogame"]["name"],
     }
-
-
-# if __name__ == "__main__":
-#     fake_raw = {
-#         "id": 123,
-#         "begin_at": "2026-09-02T15:00:00Z",
-#         "status": "finished",
-#         "winner": {"id": 1},
-#         "opponents": [
-#             {"opponent": {"id": 1}},
-#             {"opponent": {"id": 2}},
-#         ],
-#         "results": [
-#             {"team_id": 1, "score": 2},
-#             {"team_id": 2, "score": 1},
-#         ],
-#         "streams_list": [
-#             {"main": False, "raw_url": "https://example.com/backup"},
-#             {"main": True, "raw_url": "https://example.com/main"},
-#         ],
-#     }
-#     print(mapMatch(fake_raw, "fake-team-a", "fake-team-b", "fake-game", "fake-tournament"))

@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.models.match import Match
 from app.db import get_db
 from app.schemas.match import MatchOut
-from sqlalchemy import desc, asc, and_, or_
+from sqlalchemy import asc, and_, or_
 from datetime import datetime, time
 
 router = APIRouter()

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.game import Game, Tournament, Team
 from app.models.match import Match
-from app.services.map import mapMatch
+from app.services.match.map import mapMatch
 
 
 # หา game_id ของ Pandascore
@@ -62,6 +62,7 @@ def saveMatch(db: Session, raw: dict):
     match_data = mapMatch(raw, team_a_id, team_b_id, game_id, tour_id)
 
     print(f"match_data : {match_data}")
+    
     match_panda = (
         db.query(Match).filter(Match.pandascore_id == match_data["pandascore_id"])
     ).first()
@@ -88,7 +89,7 @@ def saveMatch(db: Session, raw: dict):
 
 if __name__ == "__main__":
     from app.db import SessionLocal
-    from app.services.pandascore import getPandaAPI
+    from app.services.match.pandascore import getPandaAPI
 
     db = SessionLocal()
 

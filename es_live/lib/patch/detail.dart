@@ -4,7 +4,20 @@ import 'package:es_live/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class PatchDetail extends StatelessWidget {
-  const PatchDetail({super.key});
+  final String gameName;
+  final String? logoGame;
+  final String? time;
+  final String? summary;
+  final String version;
+
+  const PatchDetail({
+    super.key,
+    required this.gameName,
+    required this.logoGame,
+    required this.time,
+    required this.summary,
+    required this.version,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +41,11 @@ class PatchDetail extends StatelessWidget {
               ],
             ),
             DetailCard(
-              gameName: "",
-              logoGame: "",
-              time: "",
-              summary: "",
-              version: "",
+              gameName: gameName,
+              logoGame: logoGame,
+              time: time,
+              summary: summary,
+              version: version,
             ),
           ],
         ),

@@ -17,4 +17,3 @@ def mapPatch(raw: dict, game_id) -> dict | None:
                 "raw_source_url": raw_source_url,
                 "published_at": published_at,
             }
-

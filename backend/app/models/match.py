@@ -100,3 +100,5 @@ class PatchNote(Base):
     created_at: Mapped[object] = mapped_column(
         TIMESTAMP(timezone=True), server_default=func.now()
     )
+
+    game: Mapped["Game"] = relationship(foreign_keys=[game_id])

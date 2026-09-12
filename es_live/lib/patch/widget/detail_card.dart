@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class DetailCard extends StatelessWidget {
   final String gameName;
   final String? logoGame;
-  final String time;
-  final String summary;
+  final String? time;
+  final String? summary;
   final String version;
 
   const DetailCard({
@@ -27,31 +27,45 @@ class DetailCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  Text("logoGame", style: TextStyle(color: AppColors.main)),
+                  SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: Image.asset(
+                      "$logoGame",
+                      fit: BoxFit.contain,
+                      errorBuilder:
+                          (context, error, stackTrace) => Icon(
+                            Icons.videogame_asset,
+                            size: 20,
+                            color: AppColors.main,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
                   Text(gameName, style: TextStyle(color: AppColors.main)),
                 ],
               ),
-              Text(time, style: TextStyle(color: AppColors.main)),
+              Text("$time", style: TextStyle(color: AppColors.main)),
             ],
           ),
-          Row(
-            children: [
-              Text(
-                "Patch $version",
-                style: TextStyle(
-                  color: AppColors.orange,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          const SizedBox(height: 8),
+          Text(
+            "Patch $version",
+            style: TextStyle(
+              color: AppColors.orange,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            ),
           ),
-          Row(children: [Text(summary)]),
+          const SizedBox(height: 6),
+          Text("$summary", style: const TextStyle(height: 1.4)),
         ],
       ),
     );

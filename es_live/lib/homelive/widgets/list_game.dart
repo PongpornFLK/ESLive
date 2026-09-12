@@ -1,4 +1,3 @@
-import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 
 class ListGame extends StatelessWidget {

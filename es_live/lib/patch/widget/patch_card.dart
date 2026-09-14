@@ -9,6 +9,8 @@ class PatchCard extends StatelessWidget {
   final String? time;
   final String? summary;
   final String version;
+  final String content;
+  final String? url;
 
   const PatchCard({
     super.key,
@@ -17,6 +19,8 @@ class PatchCard extends StatelessWidget {
     required this.time,
     required this.summary,
     required this.version,
+    required this.content,
+    required this.url,
   });
 
   @override
@@ -78,7 +82,7 @@ class PatchCard extends StatelessWidget {
           Text(
             "$summary",
             overflow: TextOverflow.ellipsis,
-            maxLines: 3,
+            maxLines: 5,
             style: const TextStyle(height: 1.4),
           ),
           Align(
@@ -92,9 +96,10 @@ class PatchCard extends StatelessWidget {
                           (context) => PatchDetail(
                             gameName: gameName,
                             logoGame: logoGame,
-                            summary: summary,
                             version: version,
                             time: patchTime,
+                            content: content,
+                            url: url,
                           ),
                     ),
                   ),

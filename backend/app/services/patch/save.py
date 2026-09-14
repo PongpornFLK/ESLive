@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.services.patch.riot_patch import getPatchRiot
+from app.services.patch.riot_patch import getPatchGameURL, getPatchRiot
 from app.models.game import Game
 from app.services.patch.map import mapPatch
 from app.models.match import PatchNote
@@ -16,7 +16,7 @@ def getGamePatchId(db: Session, game: str):
 
 def savePatch(db: Session, raw: dict, game_id):
     patch_list = mapPatch(raw, game_id)
-
+    
     if patch_list is None:
         return "Error"
 
@@ -32,6 +32,7 @@ def savePatch(db: Session, raw: dict, game_id):
     )
 
     if patch_data is None:
+        patch_list["raw_content"] = getPatchGameURL(patch_list["raw_source_url"])
         patch_data = PatchNote(**patch_list)
         db.add(patch_data)
         db.commit()

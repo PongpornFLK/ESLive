@@ -7,16 +7,20 @@ class PatchDetail extends StatelessWidget {
   final String gameName;
   final String? logoGame;
   final String? time;
-  final String? summary;
+  // final String? summary;
   final String version;
+  final String content;
+  final String? url;
 
   const PatchDetail({
     super.key,
     required this.gameName,
     required this.logoGame,
     required this.time,
-    required this.summary,
+    // required this.summary,
     required this.version,
+    required this.content,
+    required this.url,
   });
 
   @override
@@ -44,8 +48,9 @@ class PatchDetail extends StatelessWidget {
               gameName: gameName,
               logoGame: logoGame,
               time: time,
-              summary: summary,
+              content: content,
               version: version,
+              url : url
             ),
           ],
         ),

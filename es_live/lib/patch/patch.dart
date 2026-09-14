@@ -38,6 +38,8 @@ class _PatchState extends ConsumerState<Patch> {
                                   time: g.time ?? "-",
                                   summary: g.summary,
                                   version: g.version,
+                                  content: g.content,
+                                  url: g.url ,
                                 ),
                               )
                               .toList(),

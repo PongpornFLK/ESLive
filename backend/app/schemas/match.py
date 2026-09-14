@@ -42,5 +42,7 @@ class PatchNoteOut(BaseModel):
     game: GameOut
     version: str
     ai_summary: str | None
+    raw_content: str
+    raw_source_url: str | None
     status: AnalysisStatus
     published_at: datetime | None

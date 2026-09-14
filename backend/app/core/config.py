@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_key: str = ""
     redis_url: str = "redis://localhost:6379/0"
-    anthropic_api_key: str = ""
+    gemini_api_key: str = ""
     firebase_project_id: str = ""
     pandascore_api_key: str = ""
 

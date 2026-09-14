@@ -23,6 +23,6 @@ def getPatchGameURL(raw_source_url: str):
     tag_sym = html.unescape(tag_sign)
     content = tag_sym
 
-    # print(f"Content : ${content}")
+    # print(f"Content : ${conten
 
     return content

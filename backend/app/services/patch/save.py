@@ -37,9 +37,7 @@ def savePatch(db: Session, raw: dict, game_id):
         db.add(patch_data)
         db.commit()
     else:
-        patch_data.raw_content = getPatchGameURL(patch_data.raw_source_url)
-        db.commit()
-        print(f"Updated  {patch_data.version}")
+        print("Duplicated")
 
     return patch_data
 

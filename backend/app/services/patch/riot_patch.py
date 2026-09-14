@@ -33,34 +33,3 @@ def getPatchGameURL(raw_source_url: str):
     content = tag_name_blank.strip()
 
     return content
-
-
-if __name__ == "__main__":
-    from app.db import SessionLocal
-    from app.models.match import PatchNote
-
-    db = SessionLocal()
-    patch = db.query(PatchNote).filter(PatchNote.version == "13.05").first()
-
-    content = getPatchGameURL(patch.raw_source_url)
-
-    print(f"URL    : {patch.raw_source_url}")
-    print(f"Length : {len(content)} chars")
-
-    print("\n--- markdown markers (found / target) ---")
-    # 67 = <li> ทั้งหมดในหน้าเว็บ, 5 อันเป็นตัวครอบรายการซ้อนที่ไม่มีข้อความ -> เหลือ 62
-    target = {"# ": 3, "## ": 6, "### ": 0, "- ": 62}
-    for mark, want in target.items():
-        found = len(re.findall(rf"^{re.escape(mark)}", content, re.M))
-        flag = "OK" if found == want else "..."
-        print(f"  {mark:<6} {found:>4} / {want:<4} {flag}")
-    found_bold = content.count("**")
-    print(f"  {'**':<6} {found_bold:>4} / {40:<4} {'OK' if found_bold == 40 else '...'}")
-
-    print("\n--- leftover HTML tags (target 0) ---")
-    leftover = re.findall(r"<[^>]+>", content)
-    print(f"  {len(leftover)} left  {leftover[:5]}")
-
-    print("\n--- first 20 lines ---")
-    for line in content.split("\n")[:100]:
-        print(f"{line}")

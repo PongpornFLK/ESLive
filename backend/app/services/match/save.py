@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.models.game import Game, Tournament, Team
 from app.models.match import Match
 from app.services.match.map import mapMatch
+from app.services.match.pandascore import getPandaTour
 
 
 # หา game_id ของ Pandascore
@@ -20,8 +21,20 @@ def getTourId(db: Session, raw: dict, game_id):
     )
 
     if tour is None:
+        tournament_detail = getPandaTour(raw["tournament"]["id"])
+
         tour_data = Tournament(
-            game_id=game_id, name=raw["league"]["slug"], pandascore_id=tour_panda_id
+            game_id=game_id,
+            name=raw["tournament"]["slug"],
+            pandascore_id=tour_panda_id,
+            league_name=raw["league"]["name"],
+            league_logo_url=raw["league"]["image_url"],
+            region=raw["tournament"]["region"],
+            type=raw["tournament"]["type"],
+            team_count=len(tournament_detail["teams"]),
+            prizepool=raw["tournament"]["prizepool"],
+            begin_at=raw["tournament"]["begin_at"],
+            end_at=raw["tournament"]["end_at"],
         )
         db.add(tour_data)
         db.commit()
@@ -62,7 +75,7 @@ def saveMatch(db: Session, raw: dict):
     match_data = mapMatch(raw, team_a_id, team_b_id, game_id, tour_id)
 
     print(f"match_data : {match_data}")
-    
+
     match_panda = (
         db.query(Match).filter(Match.pandascore_id == match_data["pandascore_id"])
     ).first()
@@ -89,12 +102,12 @@ def saveMatch(db: Session, raw: dict):
 
 if __name__ == "__main__":
     from app.db import SessionLocal
-    from app.services.match.pandascore import getPandaAPI
+    from app.services.match.pandascore import getPandaMatch
 
     db = SessionLocal()
 
     for status in ["upcoming", "running", "past"]:
-        matches = getPandaAPI("valorant", status)
+        matches = getPandaMatch("valorant", status)
         # print(matches)
         for raw in matches:
             match_id = saveMatch(db, raw)

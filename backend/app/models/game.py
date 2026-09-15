@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import ForeignKey, String, BigInteger
+from sqlalchemy import ForeignKey, String, BigInteger, Integer
 from sqlalchemy.dialects.postgresql import UUID, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -56,6 +56,14 @@ class Tournament(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     game_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("game.id"), nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
+    league_name: Mapped[str | None] = mapped_column(String)
+    league_logo_url: Mapped[str | None] = mapped_column(String)
+    region: Mapped[str | None] = mapped_column(String)
+    type: Mapped[str | None] = mapped_column(String)
+    team_count: Mapped[int | None] = mapped_column(Integer)
+    prizepool: Mapped[str | None] = mapped_column(String)
+    begin_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))
+    end_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))
     pandascore_id: Mapped[int | None] = mapped_column(BigInteger, unique=True)
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
 

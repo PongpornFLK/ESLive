@@ -40,4 +40,12 @@ class TournamentOut(BaseModel):
     id: uuid.UUID
     game_id: uuid.UUID
     name: str
+    league_name: str | None
+    league_logo_url: str | None
+    region: str | None
+    type: str | None
+    team_count: int | None
+    prizepool: str | None
+    begin_at: datetime | None
+    end_at: datetime | None
     created_at: datetime

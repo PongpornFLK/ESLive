@@ -2,7 +2,7 @@ import httpx
 from app.core.config import settings
 
 
-def getPandaAPI(gameSlug: str , status : str) -> list[dict]:
+def getPandaMatch(gameSlug: str, status: str) -> list[dict]:
     if status != "finished":
         res = httpx.get(
             f"https://api.pandascore.co/matches/{status}",
@@ -13,6 +13,17 @@ def getPandaAPI(gameSlug: str , status : str) -> list[dict]:
         )
 
         return res.json()
+
+
+def getPandaTour(tournament_id: int) -> dict:
+    res = httpx.get(
+        f"https://api.pandascore.co/tournaments/{tournament_id}",
+        headers={
+            "Authorization": f"Bearer {settings.pandascore_api_key}",
+        },
+    )
+
+    return res.json()
 
 
 # # Test API : python -m app.services.pandascore

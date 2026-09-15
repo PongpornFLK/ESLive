@@ -3,7 +3,7 @@ import 'package:es_live/follow/follow.dart';
 import 'package:es_live/homelive/home.dart';
 import 'package:es_live/patch/patch.dart';
 import 'package:es_live/set/setting.dart';
-import 'package:es_live/tour/tour.dart';
+import 'package:es_live/tour/gametour.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:es_live/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class _ScreenState extends State<Screen> {
 
   final List<Widget> page = [
     const Home(),
-    const Tour(),
+    const GameTour(),
     const Follow(),
     const Patch(),
     const Setting(),

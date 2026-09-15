@@ -1,5 +1,5 @@
 import 'package:es_live/core/theme/root_colors.dart';
-import 'package:es_live/patch/widget/detail_card.dart';
+import 'package:es_live/patch/widgets/detail_card.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 

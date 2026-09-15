@@ -1,6 +1,6 @@
 import 'package:es_live/_service/patch/patch_pro.dart';
 import 'package:es_live/core/theme/root_colors.dart';
-import 'package:es_live/patch/widget/patch_card.dart';
+import 'package:es_live/patch/widgets/patch_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -50,3 +50,22 @@ class TournamentOut(BaseModel):
     begin_at: datetime | None
     end_at: datetime | None
     created_at: datetime
+
+
+class PreviousMatchOut(BaseModel):
+    type: str
+    match_id: int
+
+
+class BracketOut(BaseModel):
+    match_id: int
+    name: str
+    best_of_game: int
+    status: str
+    begin_at: datetime | None
+    team_a_name: str | None
+    team_b_name: str | None
+    score_a: int
+    score_b: int
+    winner_id: int | None
+    from_matches: list[PreviousMatchOut]

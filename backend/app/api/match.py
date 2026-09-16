@@ -30,6 +30,3 @@ def readMatch(db: Session = Depends(get_db)):
     #     raise HTTPException(status_code=404, detail="Match not found")
 
     return map_list
-
-
-# get all match coming

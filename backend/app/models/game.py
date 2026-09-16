@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import ForeignKey, String, BigInteger, Integer
+from sqlalchemy import ForeignKey, String, BigInteger, Integer, Boolean
 from sqlalchemy.dialects.postgresql import UUID, TIMESTAMP
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -61,6 +61,7 @@ class Tournament(Base):
     region: Mapped[str | None] = mapped_column(String)
     type: Mapped[str | None] = mapped_column(String)
     team_count: Mapped[int | None] = mapped_column(Integer)
+    has_bracket: Mapped[bool | None] = mapped_column(Boolean)
     prizepool: Mapped[str | None] = mapped_column(String)
     begin_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))
     end_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))

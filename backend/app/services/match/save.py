@@ -15,7 +15,7 @@ def getGameId(db: Session, raw: dict):
 
 
 def getTourId(db: Session, raw: dict, game_id):
-    tour_panda_id = raw["league"]["id"]
+    tour_panda_id = raw["tournament"]["id"]
     tour = (
         db.query(Tournament).filter(Tournament.pandascore_id == tour_panda_id).first()
     )
@@ -32,13 +32,16 @@ def getTourId(db: Session, raw: dict, game_id):
             region=raw["tournament"]["region"],
             type=raw["tournament"]["type"],
             team_count=len(tournament_detail["teams"]),
+            has_bracket=raw["tournament"]["has_bracket"],
             prizepool=raw["tournament"]["prizepool"],
             begin_at=raw["tournament"]["begin_at"],
             end_at=raw["tournament"]["end_at"],
         )
         db.add(tour_data)
         db.commit()
+
         tour = tour_data
+
         print("Save Tour")
     else:
         print("Duplicate")

@@ -45,6 +45,7 @@ class TournamentOut(BaseModel):
     region: str | None
     type: str | None
     team_count: int | None
+    has_bracket: bool | None
     prizepool: str | None
     begin_at: datetime | None
     end_at: datetime | None

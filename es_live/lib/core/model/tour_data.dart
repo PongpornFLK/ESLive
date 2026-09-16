@@ -1,13 +1,14 @@
 class TournamentData {
   final String tourName;
   final String leagueName;
-  final String leagueLogo;
-  final DateTime startDate;
-  final DateTime endDate;
+  final String? leagueLogo;
+  final String? startDate;
+  final String? endDate;
   final String region;
   final String type;
   final int teamCount;
-  final String prizePool;
+  final bool hasBracket;
+  final String? prizePool;
 
   const TournamentData({
     required this.tourName,
@@ -18,6 +19,7 @@ class TournamentData {
     required this.region,
     required this.type,
     required this.teamCount,
+    required this.hasBracket,
     required this.prizePool,
   });
 
@@ -26,11 +28,12 @@ class TournamentData {
       tourName: json['name'],
       leagueName: json['league_name'],
       leagueLogo: json['league_logo_url'],
-      startDate: DateTime.parse(json['begin_at']),
-      endDate: DateTime.parse(json['end_at']),
+      startDate: json['begin_at'],
+      endDate: json['end_at'],
       region: json['region'],
       type: json['type'],
       teamCount: json['team_count'],
+      hasBracket: json['has_bracket'],
       prizePool: json['prizepool'],
     );
   }

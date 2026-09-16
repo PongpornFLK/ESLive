@@ -52,6 +52,7 @@ class _TourState extends ConsumerState<Tour> {
                                 type: m.type,
                                 teamCount: m.teamCount,
                                 prizePool: m.prizePool,
+                                hasBracket: m.hasBracket,
                               ),
                             )
                             .toList(),

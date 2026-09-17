@@ -69,3 +69,20 @@ class BracketOut(BaseModel):
     score_b: int
     winner_team: str | None
     from_matches: list[PreviousMatchOut]
+
+
+class StandingOut(BaseModel):
+    #1 row = 1 team
+    #มีแค่ rank กับ team ที่อยู่ครบที่เหลือเป็น | None
+
+    rank: int
+    team_name: str
+    team_logo: str | None
+
+    # 24 แถวไม่มีฟิลด์กลุ่มนี้
+    matches_played: int | None
+    wins: int | None
+    losses: int | None
+    game_wins: int | None
+    game_losses: int | None
+    game_ties: int | None

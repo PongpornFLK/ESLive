@@ -6,10 +6,9 @@ def mapBracket(raw: dict) -> dict:
     begin_at = raw["begin_at"]
     opponents = raw["opponents"]
     from_matches = raw["previous_matches"]
-    winner_id = raw['winner_id']
+    winner_id = raw["winner_id"]
     score_a = 0
     score_b = 0
-
 
     #### Team A
     if len(opponents) > 0:
@@ -37,7 +36,7 @@ def mapBracket(raw: dict) -> dict:
             score_a = s["score"]
         if s["team_id"] == opp_b_id:
             score_b = s["score"]
-            
+
     #### Winner Team
     if winner_id == opp_a_id:
         winner_team = team_a_name
@@ -57,5 +56,29 @@ def mapBracket(raw: dict) -> dict:
         "score_a": score_a,
         "score_b": score_b,
         "winner_team": winner_team,
-        "from_matches" : from_matches
+        "from_matches": from_matches,
+    }
+
+
+def mapGroupStanding(raw: dict) -> dict:
+    rank = raw["rank"]
+    team_name = raw["team"]["name"]
+    team_logo = raw["team"]["image_url"]
+    matches_played = raw["total"]
+    win = raw["wins"]
+    loss = raw["losses"]
+    game_wins = raw["game_wins"]
+    game_losses = raw["game_losses"]
+    game_ties = raw["game_ties"]
+
+    return {
+        "rank": rank,
+        "team_name": team_name,
+        "team_logo": team_logo,
+        "matches_played": matches_played,
+        "wins": win,
+        "losses": loss,
+        "game_wins": game_wins,
+        "game_losses": game_losses,
+        "game_ties": game_ties,
     }

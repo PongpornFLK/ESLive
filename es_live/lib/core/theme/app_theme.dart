@@ -1,14 +1,15 @@
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 
-/// รวมค่าสีของทั้งแอปไว้ที่เดียว แยกเป็นโหมดสว่าง/มืด
-///
-/// หน้าจอควรอ่านสีจาก Theme.of(context) แทนการเขียน AppColors ตรง ๆ
-/// เพื่อให้สลับโหมดแล้วเปลี่ยนตามได้
+/// THEME APP ( DARK & LIGHT )
+/// อ่านสีจาก Theme.of(context)
 class AppTheme {
   AppTheme._();
 
-  // ===== โหมดสว่าง =====
+  // ===== Dark with light
+  static const Color _darkSurface = Color(0xFF232849);
+
+  // ===== Light Mode
   static ThemeData get light {
     final scheme = ColorScheme.fromSeed(
       seedColor: AppColors.orange,
@@ -34,14 +35,14 @@ class AppTheme {
     );
   }
 
-  // ===== โหมดมืด (หน้าตาเดิมของแอป) =====
+  // ===== Dark Mode
   static ThemeData get dark {
     final scheme = ColorScheme.fromSeed(
       seedColor: AppColors.orange,
       brightness: Brightness.dark,
     ).copyWith(
       primary: AppColors.orange,
-      surface: AppColors.main,
+      surface: _darkSurface,
       onSurface: Colors.white,
     );
 
@@ -50,7 +51,7 @@ class AppTheme {
       brightness: Brightness.dark,
       colorScheme: scheme,
       scaffoldBackgroundColor: AppColors.secondmain,
-      cardColor: AppColors.main,
+      cardColor: _darkSurface,
       dividerColor: Colors.white24,
       iconTheme: const IconThemeData(color: Colors.white),
       textTheme: Typography.whiteMountainView.apply(

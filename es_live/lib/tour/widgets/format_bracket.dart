@@ -46,7 +46,10 @@ class FormatBracket extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_ios_new_rounded, color: Theme.of(context).colorScheme.onSurface),
+              icon: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
           ],
         ),
@@ -63,10 +66,6 @@ class FormatBracket extends StatelessWidget {
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              Text(
-                tourName,
-                style: TextStyle(color: AppColors.grey, fontSize: 13),
-              ),
               SizedBox(height: 10),
               Wrap(
                 spacing: 14,
@@ -74,20 +73,32 @@ class FormatBracket extends StatelessWidget {
                 children: [
                   Text(
                     "$startTime - $endTime",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 12,
+                    ),
                   ),
                   Text(
                     "$teamCount Team",
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 12,
+                    ),
                   ),
                   Text(
                     region,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 12,
+                    ),
                   ),
                   if (prizePool != null)
                     Text(
                       prizePool!,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 12,
+                      ),
                     ),
                 ],
               ),
@@ -95,12 +106,11 @@ class FormatBracket extends StatelessWidget {
               Text(
                 "Bracket",
                 style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: AppColors.grey,
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 24,
                 ),
               ),
-              SizedBox(height: 12),
             ],
           ),
         ),

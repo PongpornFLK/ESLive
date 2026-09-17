@@ -1,5 +1,4 @@
 import 'package:es_live/_service/tour/tour_pro.dart';
-import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/tour/widgets/list_tour.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ class _TourState extends ConsumerState<Tour> {
     final tourAsync = ref.watch(tourProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.secondmain,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -30,7 +28,7 @@ class _TourState extends ConsumerState<Tour> {
                   onPressed: () => Navigator.pop(context),
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -62,7 +60,7 @@ class _TourState extends ConsumerState<Tour> {
                   (error, stackTrace) => Center(
                     child: Text(
                       "$error",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ),
               loading: () => Center(child: CircularProgressIndicator()),

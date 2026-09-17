@@ -1,4 +1,3 @@
-import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/follow/follow.dart';
 import 'package:es_live/homelive/home.dart';
 import 'package:es_live/patch/patch.dart';
@@ -29,7 +28,6 @@ class _ScreenState extends State<Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondmain,
       appBar: CustomAppBar(),
       bottomNavigationBar: BottomBar(
         currentIndex: currentIndex,

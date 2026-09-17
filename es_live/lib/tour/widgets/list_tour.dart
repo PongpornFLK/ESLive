@@ -49,7 +49,7 @@ class ListTour extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
       child: Material(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         child: InkWell(
           onTap:
               () => Navigator.push(
@@ -104,7 +104,7 @@ class ListTour extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.main,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -167,13 +167,13 @@ class _Chip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.main,
+        color: Theme.of(context).colorScheme.onSurface,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: Theme.of(context).cardColor,
           fontSize: 11,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,

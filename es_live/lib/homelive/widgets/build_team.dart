@@ -41,23 +41,23 @@ class BuildTeam extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: teamColumn(logoTeamA, teamAName)),
+        Expanded(child: teamColumn(context, logoTeamA, teamAName)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             "$scoreA  vs  $scoreB",
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Expanded(child: teamColumn(logoTeamB, teamBName)),
+        Expanded(child: teamColumn(context, logoTeamB, teamBName)),
       ],
     );
   }
 
-  Widget teamColumn(String? url, String name) {
+  Widget teamColumn(BuildContext context, String? url, String name) {
     return Column(
       children: [
         logoTeam(url),
@@ -67,7 +67,7 @@ class BuildTeam extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.white, fontSize: 10),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 10),
         ),
       ],
     );

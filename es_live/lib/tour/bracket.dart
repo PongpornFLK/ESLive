@@ -22,7 +22,6 @@ class _BracketState extends ConsumerState<Bracket> {
     final tourAsync = ref.watch(tourProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.secondmain,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(

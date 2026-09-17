@@ -28,7 +28,7 @@ class DetailCard extends StatelessWidget {
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -49,15 +49,15 @@ class DetailCard extends StatelessWidget {
                           (context, error, stackTrace) => Icon(
                             Icons.videogame_asset,
                             size: 20,
-                            color: AppColors.main,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Text(gameName, style: TextStyle(color: AppColors.main)),
+                  Text(gameName, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
                 ],
               ),
-              Text("$time", style: TextStyle(color: AppColors.main)),
+              Text("$time", style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
             ],
           ),
           const SizedBox(height: 8),

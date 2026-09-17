@@ -43,7 +43,6 @@ class FormatGroup extends StatelessWidget {
             ).format(DateTime.parse(endDate!).toLocal());
 
     return Scaffold(
-      backgroundColor: AppColors.secondmain,
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -55,7 +54,7 @@ class FormatGroup extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                   icon: Icon(
                     Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
@@ -68,7 +67,7 @@ class FormatGroup extends StatelessWidget {
                   Text(
                     leagueName,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 26,
                       fontWeight: FontWeight.w900,
                     ),
@@ -84,20 +83,20 @@ class FormatGroup extends StatelessWidget {
                     children: [
                       Text(
                         "$startTime - $endTime",
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
                       ),
                       Text(
                         "$teamCount Team",
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
                       ),
                       Text(
                         region,
-                        style: TextStyle(color: Colors.white, fontSize: 12),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
                       ),
                       if (prizePool != null && prizePool!.isNotEmpty)
                         Text(
                           prizePool!,
-                          style: TextStyle(color: Colors.white, fontSize: 12),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 12),
                         ),
                     ],
                   ),
@@ -105,7 +104,7 @@ class FormatGroup extends StatelessWidget {
                   Text(
                     "Standings",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -114,7 +113,7 @@ class FormatGroup extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(

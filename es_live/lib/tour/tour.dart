@@ -43,6 +43,7 @@ class _TourState extends ConsumerState<Tour> {
                         data
                             .map(
                               (m) => ListTour(
+                                tourId: m.tourId,
                                 tourName: m.tourName,
                                 leagueName: m.leagueName,
                                 leagueLogo: m.leagueLogo,

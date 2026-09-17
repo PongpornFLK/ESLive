@@ -125,7 +125,7 @@ class ListTour extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 12),
-                Container(height: 1, color: Colors.black12),
+                Container(height: 1, color: Theme.of(context).dividerColor),
                 const SizedBox(height: 10),
 
                 // ===== แถวล่าง : วันที่ + รายละเอียด =====
@@ -211,7 +211,10 @@ class _InfoRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 12,
-              color: highlight ? AppColors.main : AppColors.grey,
+              color:
+                  highlight
+                      ? Theme.of(context).colorScheme.onSurface
+                      : AppColors.grey,
               fontWeight: highlight ? FontWeight.w600 : FontWeight.w400,
             ),
           ),

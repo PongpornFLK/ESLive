@@ -18,9 +18,15 @@ class BuildTeam extends StatelessWidget {
   final int scoreA;
   final int scoreB;
 
-  Widget logoTeam(String? url) {
+  Widget logoTeam(BuildContext context, String? url) {
+    // โล่จาง ๆ ตอนไม่มีโลโก้ทีม ต้องจางลงจากสีตัวอักษรของธีม
+    // ไม่ใช่สีขาวตายตัว ไม่งั้นโหมดสว่างจะขาวบนขาว
+    final faded = Theme.of(
+      context,
+    ).colorScheme.onSurface.withValues(alpha: 0.3);
+
     if (url == null || url.isEmpty) {
-      return const Icon(Icons.shield_outlined, size: 36, color: Colors.white38);
+      return Icon(Icons.shield_outlined, size: 36, color: faded);
     }
     return Image.network(
       url,
@@ -28,11 +34,7 @@ class BuildTeam extends StatelessWidget {
       height: 36,
       fit: BoxFit.contain,
       errorBuilder:
-          (_, _, _) => const Icon(
-            Icons.shield_outlined,
-            size: 36,
-            color: Colors.white38,
-          ),
+          (_, _, _) => Icon(Icons.shield_outlined, size: 36, color: faded),
     );
   }
 
@@ -60,14 +62,17 @@ class BuildTeam extends StatelessWidget {
   Widget teamColumn(BuildContext context, String? url, String name) {
     return Column(
       children: [
-        logoTeam(url),
+        logoTeam(context, url),
         const SizedBox(height: 4),
         Text(
           name,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 10),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontSize: 10,
+          ),
         ),
       ],
     );

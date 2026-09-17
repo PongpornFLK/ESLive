@@ -1,4 +1,5 @@
 class TournamentData {
+  final String tourId;
   final String tourName;
   final String leagueName;
   final String? leagueLogo;
@@ -11,6 +12,7 @@ class TournamentData {
   final String? prizePool;
 
   const TournamentData({
+    required this.tourId,
     required this.tourName,
     required this.leagueName,
     required this.leagueLogo,
@@ -25,6 +27,7 @@ class TournamentData {
 
   factory TournamentData.fromjson(Map<String, dynamic> json) {
     return TournamentData(
+      tourId: json['id'],
       tourName: json['name'],
       leagueName: json['league_name'],
       leagueLogo: json['league_logo_url'],

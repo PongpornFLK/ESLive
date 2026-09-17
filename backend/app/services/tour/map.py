@@ -5,8 +5,8 @@ def mapBracket(raw: dict) -> dict:
     status = raw["status"]
     begin_at = raw["begin_at"]
     opponents = raw["opponents"]
-    winner_id = raw["winner_id"]
     from_matches = raw["previous_matches"]
+    winner_id = raw['winner_id']
     score_a = 0
     score_b = 0
 
@@ -37,6 +37,14 @@ def mapBracket(raw: dict) -> dict:
             score_a = s["score"]
         if s["team_id"] == opp_b_id:
             score_b = s["score"]
+            
+    #### Winner Team
+    if winner_id == opp_a_id:
+        winner_team = team_a_name
+    elif winner_id == opp_b_id:
+        winner_team = team_b_name
+    else:
+        winner_team = None
 
     return {
         "match_id": match_id,
@@ -48,6 +56,6 @@ def mapBracket(raw: dict) -> dict:
         "team_b_name": team_b_name,
         "score_a": score_a,
         "score_b": score_b,
-        "winner_id": winner_id,
+        "winner_team": winner_team,
         "from_matches" : from_matches
     }

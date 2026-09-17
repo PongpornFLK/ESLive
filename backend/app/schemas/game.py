@@ -67,5 +67,5 @@ class BracketOut(BaseModel):
     team_b_name: str | None
     score_a: int
     score_b: int
-    winner_id: int | None
+    winner_team: str | None
     from_matches: list[PreviousMatchOut]

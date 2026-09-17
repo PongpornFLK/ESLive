@@ -33,7 +33,7 @@ class _HomeState extends ConsumerState<Home> {
                 Text(
                   "Game",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -51,7 +51,7 @@ class _HomeState extends ConsumerState<Home> {
                 Text(
                   "Match ",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -103,7 +103,7 @@ class _HomeState extends ConsumerState<Home> {
                 Text(
                   "Coming Soon",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

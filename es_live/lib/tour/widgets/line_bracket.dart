@@ -182,7 +182,7 @@ class _MatchCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -197,7 +197,7 @@ class _MatchCard extends StatelessWidget {
           Container(
             height: 1,
             margin: const EdgeInsets.symmetric(vertical: 7),
-            color: Colors.black12,
+            color: Theme.of(context).dividerColor,
           ),
           _TeamRow(
             name: match.teamB,
@@ -253,7 +253,10 @@ class _TeamRow extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 12,
-              color: isTbd ? AppColors.grey : AppColors.main,
+              color:
+                  isTbd
+                      ? AppColors.grey
+                      : Theme.of(context).colorScheme.onSurface,
               fontWeight: isWinner ? FontWeight.w700 : FontWeight.w400,
             ),
           ),

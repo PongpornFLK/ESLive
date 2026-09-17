@@ -21,7 +21,7 @@ class ListGameTour extends StatelessWidget {
           // height: 100,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
@@ -43,7 +43,7 @@ class ListGameTour extends StatelessWidget {
         SizedBox(height: 10),
         Text(
           gameName,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w900),
         ),
       ],
     );

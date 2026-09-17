@@ -1,4 +1,3 @@
-import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/homelive/widgets/build_team.dart';
 import 'package:es_live/homelive/widgets/build_topic.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +35,9 @@ class MatchCard extends StatelessWidget {
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-        color: AppColors.main,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.white),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Column(
         children: [

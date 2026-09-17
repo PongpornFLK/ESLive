@@ -17,11 +17,11 @@ class ListGame extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
           ),
           child: Image.asset(logo, fit: BoxFit.cover),
         ),
-        Text(gameName, style: TextStyle(color: Colors.white)),
+        Text(gameName, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
       ],
     );
   }

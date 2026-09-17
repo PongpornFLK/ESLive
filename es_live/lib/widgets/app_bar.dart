@@ -6,20 +6,39 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SafeArea(
       bottom: false,
       child: Container(
-        // height: 84,
         padding: EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.main,
-          border: Border.all(color: AppColors.main),
+          color: theme.cardColor,
+          border: Border(bottom: BorderSide(color: theme.dividerColor)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset('assests/img/logo-row.png', height: 30),
+            // โลโก้ = รูปไอคอน + ตัวอักษรที่เขียนด้วยโค้ด
+            // แยกกันแบบนี้เพื่อให้ตัวอักษรเปลี่ยนสีตามธีมได้ (ในไฟล์รูปเปลี่ยนไม่ได้)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset('assests/img/bg-joingame.png', height: 30),
+                const SizedBox(width: 8),
+                Text(
+                  'ES-Live',
+                  style: TextStyle(
+                    color: theme.colorScheme.onSurface,
+                    fontFamily: 'Genos',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 26,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
             ShaderMask(
               shaderCallback:
                   (bounds) => LinearGradient(
@@ -31,6 +50,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(),
                 onPressed: () {},
+                // ต้องเป็นสีขาวเสมอ ไม่ใช่สีของธีม เพราะ ShaderMask เอาสีนี้
+                // ไปคูณกับสีไล่ระดับ สีขาวคูณแล้วได้สีไล่ระดับเดิม สีเข้มจะทำให้หม่น
                 icon: Icon(Icons.notifications, color: Colors.white, size: 28),
               ),
             ),
@@ -41,6 +62,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement key
   Size get preferredSize => const Size.fromHeight(56);
 }

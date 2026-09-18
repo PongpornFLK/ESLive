@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 
 class FormatBracket extends StatelessWidget {
   final String tourName;
-  final String leagueName;
+  final String? leagueName;
   final String? startDate;
   final String? endDate;
-  final String region;
-  final String type;
-  final int teamCount;
+  final String? region;
+  final String? type;
+  final int? teamCount;
   final String? prizePool;
 
   const FormatBracket({
@@ -59,7 +59,7 @@ class FormatBracket extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                leagueName,
+                leagueName ?? "-",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                   fontSize: 26,
@@ -86,7 +86,7 @@ class FormatBracket extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    region,
+                    region ?? "-",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontSize: 12,

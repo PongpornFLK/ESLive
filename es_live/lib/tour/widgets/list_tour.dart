@@ -7,13 +7,13 @@ import 'package:intl/intl.dart';
 class ListTour extends StatelessWidget {
   final String tourId;
   final String tourName;
-  final String leagueName;
+  final String? leagueName;
   final String? leagueLogo;
   final String? startDate;
   final String? endDate;
-  final String region;
-  final String type;
-  final int teamCount;
+  final String? region;
+  final String? type;
+  final int? teamCount;
   final bool hasBracket;
   final String? prizePool;
 
@@ -98,7 +98,7 @@ class ListTour extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            leagueName,
+                            leagueName ?? "-",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -120,7 +120,7 @@ class ListTour extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    _Chip(text: region),
+                    _Chip(text: region ?? "-"),
                   ],
                 ),
 
@@ -136,7 +136,7 @@ class ListTour extends StatelessWidget {
                 const SizedBox(height: 6),
                 _InfoRow(
                   icon: Icons.groups_rounded,
-                  text: '$teamCount Teams  ·  ${type.toUpperCase()}',
+                  text: '$teamCount Teams  ·  ${type?.toUpperCase()}',
                 ),
                 if (prize != null) ...[
                   const SizedBox(height: 6),

@@ -1,13 +1,13 @@
 class TournamentData {
   final String tourId;
   final String tourName;
-  final String leagueName;
+  final String? leagueName;
   final String? leagueLogo;
   final String? startDate;
   final String? endDate;
-  final String region;
-  final String type;
-  final int teamCount;
+  final String? region;
+  final String? type;
+  final int? teamCount;
   final bool hasBracket;
   final String? prizePool;
 

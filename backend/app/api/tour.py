@@ -5,7 +5,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from app.db import get_db
 from app.schemas.game import BracketOut, StandingOut, TournamentOut
-from app.models.game import Tournament
+from app.models.game import Game, Tournament
 from app.services.tour.pandascore import getBracket, getStanding
 from app.services.tour.map import mapBracket, mapGroupStanding
 
@@ -13,11 +13,23 @@ router = APIRouter()
 
 
 @router.get("/tournament", response_model=List[TournamentOut])
-def readTour(db: Session = Depends(get_db)):
+def readTour(game_slug: str | None = None, db: Session = Depends(get_db)):
 
-    tour_list = db.query(Tournament).order_by(desc(Tournament.begin_at)).all()
+    if game_slug is not None:
+        game = db.query(Game).filter(Game.slug == game_slug).first()
+        if game is None:
+            raise HTTPException(status_code=404, detail="Not Found")
 
-    return tour_list
+        tour = (
+            db.query(Tournament)
+            .filter(Tournament.game_id == game.id)
+            .order_by(desc(Tournament.begin_at))
+            .all()
+        )
+    else:
+        tour = db.query(Tournament).order_by(desc(Tournament.begin_at)).all()
+
+    return tour
 
 
 @router.get("/tournament/bracket/{tournament_id}", response_model=List[BracketOut])

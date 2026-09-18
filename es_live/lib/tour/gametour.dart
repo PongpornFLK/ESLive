@@ -19,7 +19,13 @@ class _GameTourState extends State<GameTour> {
         crossAxisCount: 2,
         children:
             data
-                .map((g) => ListGameTour(logoGame: g.logo, gameName: g.name))
+                .map(
+                  (g) => ListGameTour(
+                    logoGame: g.logo,
+                    gameName: g.name,
+                    slug: g.slug,
+                  ),
+                )
                 .toList(),
       ),
     );

@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class ListGameTour extends StatelessWidget {
   final String logoGame;
   final String gameName;
+  final String slug;
 
   const ListGameTour({
     super.key,
     required this.gameName,
     required this.logoGame,
+    required this.slug
   });
 
   @override
@@ -35,7 +37,7 @@ class ListGameTour extends StatelessWidget {
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Tour()),
+                  MaterialPageRoute(builder: (context) => Tour(slug : slug)),
                 ),
             child: Image.asset(logoGame, fit: BoxFit.cover),
           ),

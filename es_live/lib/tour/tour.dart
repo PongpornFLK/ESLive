@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Tour extends ConsumerStatefulWidget {
-  const Tour({super.key});
+  final String slug;
+
+  const Tour({super.key,required this.slug});
 
   @override
   ConsumerState<Tour> createState() => _TourState();
@@ -14,7 +16,7 @@ class Tour extends ConsumerStatefulWidget {
 class _TourState extends ConsumerState<Tour> {
   @override
   Widget build(BuildContext context) {
-    final tourAsync = ref.watch(tourProvider);
+    final tourAsync = ref.watch(tourProviderGameId(widget.slug));
 
     return Scaffold(
       appBar: CustomAppBar(),

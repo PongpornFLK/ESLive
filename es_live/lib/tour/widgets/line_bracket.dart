@@ -3,11 +3,9 @@ import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-// ===== ตัวช่วยจัดกลุ่ม =====
-
+// SECTION
 const _sectionOrder = ['UPPER BRACKET', 'LOWER BRACKET', 'GRAND FINAL'];
 
-/// ชื่อแมตช์บอกสายอยู่แล้ว เช่น "Upper Bracket Final: TBD vs TBD"
 String _sectionOf(String name) {
   final n = name.toLowerCase();
   if (n.startsWith('upper bracket')) return 'UPPER BRACKET';
@@ -17,7 +15,6 @@ String _sectionOf(String name) {
 
 /// ตัดชื่อทีมและเลขลำดับออก เหลือแค่ชื่อรอบ
 /// "Upper Bracket Quarterfinal 1: A vs B"  -> "Upper Bracket Quarterfinal"
-/// "Lower Bracket Round 1 match 2: A vs B" -> "Lower Bracket Round 1"
 String _roundOf(String name) {
   var head = name.split(':').first.trim();
   final matchN = RegExp(r'\s+match\s+\d+$', caseSensitive: false);
@@ -39,7 +36,7 @@ int _roundRank(String round) {
   return 5;
 }
 
-/// ป้ายหัวคอลัมน์ ไม่ต้ต้องำชื่อสายเพราะมีหัวข้อใหญ่อยู่แล้ว
+/// ป้ายหัวคอลัมน์
 String _shortRound(String round) =>
     round
         .replaceAll(
@@ -59,8 +56,6 @@ Map<String, List<BracketData>> _groupBy(
   }
   return {for (final k in sortKeys(bucket.keys)) k: bucket[k]!};
 }
-
-// ===== ผังทั้งหมด =====
 
 class BracketBoard extends StatelessWidget {
   final List<BracketData> matches;
@@ -123,8 +118,7 @@ class BracketBoard extends StatelessWidget {
   }
 }
 
-// ===== หนึ่งคอลัมน์ = หนึ่งรอบ =====
-
+// 1 row = 1 round
 class _RoundColumn extends StatelessWidget {
   final String label;
   final List<BracketData> matches;
@@ -160,8 +154,7 @@ class _RoundColumn extends StatelessWidget {
   }
 }
 
-// ===== การ์ดแมตช์เดียว =====
-
+// Card Match
 class _MatchCard extends StatelessWidget {
   final BracketData match;
 
@@ -225,7 +218,7 @@ class _MatchCard extends StatelessWidget {
   }
 }
 
-// ===== หนึ่งแถว = หนึ่งทีม =====
+// 1 row = 1 team
 
 class _TeamRow extends StatelessWidget {
   final String? name;

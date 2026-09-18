@@ -74,7 +74,6 @@ class BracketOut(BaseModel):
 class StandingOut(BaseModel):
     #1 row = 1 team
     #มีแค่ rank กับ team ที่อยู่ครบที่เหลือเป็น | None
-
     rank: int
     team_name: str
     team_logo: str | None

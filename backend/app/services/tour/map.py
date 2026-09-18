@@ -64,12 +64,12 @@ def mapGroupStanding(raw: dict) -> dict:
     rank = raw["rank"]
     team_name = raw["team"]["name"]
     team_logo = raw["team"]["image_url"]
-    matches_played = raw["total"]
-    win = raw["wins"]
-    loss = raw["losses"]
-    game_wins = raw["game_wins"]
-    game_losses = raw["game_losses"]
-    game_ties = raw["game_ties"]
+    matches_played = raw.get("total")
+    win = raw.get("wins")
+    loss = raw.get("losses")
+    game_wins = raw.get("game_wins")
+    game_losses = raw.get("game_losses")
+    game_ties = raw.get("game_ties")
 
     return {
         "rank": rank,

@@ -12,3 +12,20 @@ final tourProvider = FutureProvider<List<TournamentData>>((ref) async {
     throw Exception("Fail to load data $e");
   }
 });
+
+final tourProviderGameId = FutureProvider.family<List<TournamentData>, String>((
+  ref,
+  gameId,
+) async {
+  try {
+    final res = await dio.get(
+      "/tournament",
+      queryParameters: {"game_slug": gameId},
+    );
+    final List<dynamic> tourGroupList = res.data;
+
+    return tourGroupList.map((json) => TournamentData.fromjson(json)).toList();
+  } catch (e) {
+    throw Exception(e);
+  }
+});

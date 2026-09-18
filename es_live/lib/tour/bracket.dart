@@ -40,7 +40,7 @@ class _BracketState extends ConsumerState<Bracket> {
                                 prizePool: m.prizePool,
                                 teamCount: m.teamCount,
                                 region: m.region,
-                                tourName: m.leagueName,
+                                tourName: m.tourName,
                                 type: m.type,
                               ),
                             )

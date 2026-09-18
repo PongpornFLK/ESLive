@@ -1,15 +1,25 @@
 class GameInList {
   final String logo;
   final String name;
+  final String slug;
 
-  const GameInList({required this.logo, required this.name});
+  const GameInList({
+    required this.logo,
+    required this.name,
+    required this.slug,
+  });
 }
 
 final List<GameInList> data = [
-  const GameInList(logo: 'assests/img/list_game/pubg.png', name: "PubG"),
+  const GameInList(
+    logo: 'assests/img/list_game/pubg.png',
+    name: "PubG",
+    slug: "pubg",
+  ),
   const GameInList(
     logo: 'assests/img/list_game/valorant.png',
     name: "Valorant",
+    slug: "valorant",
   ),
 ];
 

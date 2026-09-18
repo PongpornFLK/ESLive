@@ -40,15 +40,3 @@ def savePatch(db: Session, raw: dict, game_id):
         print("Duplicated")
 
     return patch_data
-
-
-if __name__ == "__main__":
-    from app.db import SessionLocal
-
-    db = SessionLocal()
-
-    game_id = getGamePatchId(db, "val")
-    patch_news = getPatchRiot("val", "en-us")
-
-    for raw in patch_news:
-        savePatch(db, raw, game_id)

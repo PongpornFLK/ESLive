@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.models.game import Game, Tournament, Team
 from app.models.match import Match
 from app.services.match.map import mapMatch
-from app.services.match.pandascore import getPandaTour
+from app.services.match.pandascore import getPandaTourForMatch
 
 
 # หา game_id ของ Pandascore
@@ -21,7 +21,7 @@ def getTourId(db: Session, raw: dict, game_id):
     )
 
     if tour is None:
-        tournament_detail = getPandaTour(raw["tournament"]["id"])
+        tournament_detail = getPandaTourForMatch(raw["tournament"]["id"])
 
         tour_data = Tournament(
             game_id=game_id,

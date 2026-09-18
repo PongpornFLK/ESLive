@@ -1,3 +1,6 @@
+import uuid
+
+
 def mapBracket(raw: dict) -> dict:
     match_id = raw["id"]
     name = raw["name"]
@@ -81,4 +84,32 @@ def mapGroupStanding(raw: dict) -> dict:
         "game_wins": game_wins,
         "game_losses": game_losses,
         "game_ties": game_ties,
+    }
+
+def mapTour(game_id: uuid.UUID,raw : dict) -> dict:
+    game_slug = raw["slug"]
+    panda_id = raw["id"]
+    has_bracket = raw["has_bracket"]
+    prizepool = raw["prizepool"]
+    region = raw["region"]
+    begin_at = raw["begin_at"]
+    end_at = raw["end_at"]
+    league_name = raw["league"]["name"]
+    league_logo_url = raw["league"]["image_url"]
+    type = raw["type"]
+    team_count = len(raw["teams"])
+    
+    return {
+        "game_id": game_id,
+        "name": game_slug,
+        "league_name": league_name,
+        "league_logo_url":league_logo_url,
+        "region": region,
+        "type": type,
+        "team_count":team_count ,
+        "has_bracket": has_bracket,
+        "prizepool": prizepool,
+        "begin_at": begin_at,
+        "end_at": end_at,
+        "pandascore_id": panda_id,
     }

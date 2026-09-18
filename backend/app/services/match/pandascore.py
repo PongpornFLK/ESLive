@@ -15,7 +15,7 @@ def getPandaMatch(gameSlug: str, status: str) -> list[dict]:
         return res.json()
 
 
-def getPandaTour(tournament_id: int) -> dict:
+def getPandaTourForMatch(tournament_id: int) -> dict:
     res = httpx.get(
         f"https://api.pandascore.co/tournaments/{tournament_id}",
         headers={

@@ -24,9 +24,3 @@ def getPandaTourForMatch(tournament_id: int) -> dict:
     )
 
     return res.json()
-
-
-# # Test API : python -m app.services.pandascore
-# if __name__ == "__main__":
-#     result = getPandaAPI("valorant")
-#     print(result)

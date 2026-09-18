@@ -27,17 +27,3 @@ def checkStatus(db: Session, id: uuid.UUID):
     db.commit()
 
     return patch
-
-
-if __name__ == "__main__":
-    from app.db import SessionLocal
-
-    db = SessionLocal()
-
-    patch_list = db.query(PatchNote).filter(PatchNote.status != "ready").all()
-
-    print(f"Found {len(patch_list)} patch note(s) to summarize")
-
-    for patch in patch_list:
-        result = checkStatus(db, patch.id)
-        print(f"  {result.version:<8} -> {result.status}")

@@ -70,6 +70,10 @@ def getTeamId(db: Session, raw: dict, game_id):
 
 
 def saveMatch(db: Session, raw: dict):
+    
+    if len(raw["opponents"]) < 2:
+        return None
+    
     game_id = getGameId(db, raw)
     tour_id = getTourId(db, raw, game_id)
     team_a_id = getTeamId(db, raw["opponents"][0]["opponent"], game_id)
@@ -101,17 +105,3 @@ def saveMatch(db: Session, raw: dict):
         # print(f"{match_panda}")
 
     return match_panda.id
-
-
-if __name__ == "__main__":
-    from app.db import SessionLocal
-    from app.services.match.pandascore import getPandaMatch
-
-    db = SessionLocal()
-
-    for status in ["upcoming", "running", "past"]:
-        matches = getPandaMatch("valorant", status)
-        # print(matches)
-        for raw in matches:
-            match_id = saveMatch(db, raw)
-            # print("Saved match:", match_id)

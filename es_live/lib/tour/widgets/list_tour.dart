@@ -59,7 +59,7 @@ class ListTour extends StatelessWidget {
                       (context) =>
                           hasBracket
                               ? Bracket(tourId: tourId)
-                              : const GroupStage(),
+                              : GroupStage(tourId: tourId),
                 ),
               ),
           child: Padding(

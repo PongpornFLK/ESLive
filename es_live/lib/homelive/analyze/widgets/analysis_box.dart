@@ -17,7 +17,7 @@ class AnalysisBox extends StatelessWidget {
             children: [
               Icon(Icons.lightbulb, color: AppColors.gold),
               Text("AI Analysis Match"),
-              Text("summary" , maxLines: 10,)
+              Text("summary", maxLines: 10),
             ],
           ),
         ],

@@ -84,6 +84,7 @@ class _HomeState extends ConsumerState<Home> {
                                     time: m.beginAt,
                                     logoTeamA: m.teamA.logoUrl,
                                     logoTeamB: m.teamB.logoUrl,
+                                    match: m,
                                   ),
                                 )
                                 .toList(),
@@ -128,6 +129,7 @@ class _HomeState extends ConsumerState<Home> {
                                     time: m.beginAt,
                                     logoTeamA: m.teamA.logoUrl,
                                     logoTeamB: m.teamB.logoUrl,
+                                    match: m,
                                   ),
                                 )
                                 .toList(),

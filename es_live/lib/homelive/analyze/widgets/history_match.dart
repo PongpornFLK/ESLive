@@ -25,7 +25,7 @@ class HistoryMatch extends StatelessWidget {
                 ),
               ),
             ),
-            Image.network(""),
+            // Image.network(""),
             Container(
               decoration: BoxDecoration(
                 color: AppColors.orange,
@@ -53,7 +53,7 @@ class HistoryMatch extends StatelessWidget {
                 ),
               ),
             ),
-            Image.network(""),
+            // Image.network(""),
             Container(
               decoration: BoxDecoration(
                 color: Colors.green,

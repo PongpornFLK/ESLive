@@ -1,3 +1,4 @@
+import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/homelive/analyze/analyze.dart';
 import 'package:es_live/homelive/widgets/build_team.dart';
 import 'package:es_live/homelive/widgets/build_topic.dart';
@@ -14,6 +15,7 @@ class MatchCard extends StatelessWidget {
   final int scoreB;
   final bool isLive;
   final String time;
+  final MatchData match; // จังหวะส่งต่อ
 
   const MatchCard({
     super.key,
@@ -27,6 +29,7 @@ class MatchCard extends StatelessWidget {
     required this.scoreB,
     required this.isLive,
     required this.time,
+    required this.match,
   });
 
   @override
@@ -43,7 +46,9 @@ class MatchCard extends StatelessWidget {
         onTap:
             () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MatchAnalyze()),
+              MaterialPageRoute(
+                builder: (context) => MatchAnalyze(match: match),
+              ),
             ),
         child: Column(
           children: [

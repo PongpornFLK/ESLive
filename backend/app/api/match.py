@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.models.match import Match
 from app.db import get_db
 from app.schemas.match import MatchOut
@@ -15,6 +15,13 @@ def readMatch(db: Session = Depends(get_db)):
     today_midnight = datetime.combine(datetime.today(), time.min)
     map_list = (
         db.query(Match)
+        .options(
+            joinedload(Match.game),
+            joinedload(Match.tournament),
+            joinedload(Match.team_a),
+            joinedload(Match.team_b),
+            joinedload(Match.analysis),
+        )
         .filter(
             or_(
                 and_(Match.status == "finished", Match.begin_at >= today_midnight),

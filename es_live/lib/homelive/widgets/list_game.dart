@@ -21,7 +21,10 @@ class ListGame extends StatelessWidget {
           ),
           child: Image.asset(logo, fit: BoxFit.cover),
         ),
-        Text(gameName, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+        Text(
+          gameName,
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+        ),
       ],
     );
   }

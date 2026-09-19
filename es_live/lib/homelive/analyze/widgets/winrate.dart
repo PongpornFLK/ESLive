@@ -11,9 +11,9 @@ class Winrate extends StatelessWidget {
       child: Column(
         children: [
           Text("Win Rate%"),
-          Image.network(""),
+          // Image.network(""),
           LinearPercentIndicator(barRadius: Radius.circular(50)),
-          Image.network(""),
+          // Image.network(""),
         ],
       ),
     );

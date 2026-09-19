@@ -1,3 +1,4 @@
+import 'package:es_live/homelive/analyze/analyze.dart';
 import 'package:es_live/homelive/widgets/build_team.dart';
 import 'package:es_live/homelive/widgets/build_topic.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,6 @@ class MatchCard extends StatelessWidget {
     required this.time,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,24 +39,31 @@ class MatchCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
-      child: Column(
-        children: [
-          BuildTopic(
-            tourName: tourName,
-            gameName: gameName,
-            isLive: isLive,
-            time: time,
-          ),
-          const SizedBox(height: 10),
-          BuildTeam(
-            teamAName: teamAName,
-            teamBName: teamBName,
-            logoTeamA: logoTeamA,
-            logoTeamB: logoTeamB,
-            scoreA : scoreA,
-            scoreB : scoreB,
-          ),
-        ],
+      child: InkWell(
+        onTap:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MatchAnalyze()),
+            ),
+        child: Column(
+          children: [
+            BuildTopic(
+              tourName: tourName,
+              gameName: gameName,
+              isLive: isLive,
+              time: time,
+            ),
+            const SizedBox(height: 10),
+            BuildTeam(
+              teamAName: teamAName,
+              teamBName: teamBName,
+              logoTeamA: logoTeamA,
+              logoTeamB: logoTeamB,
+              scoreA: scoreA,
+              scoreB: scoreB,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -37,7 +37,7 @@ def mapMatch(raw: dict, team_a_id, team_b_id, game_id, tournament_id,) -> dict:
 
     return {
         "pandascore_id": raw["id"],
-        "begin_at": raw["begin_at"],
+        "begin_at": raw["begin_at"] or raw["scheduled_at"],
         "tournament_id": tournament_id,
         "game_id": game_id,
         "team_a_id": team_a_id,

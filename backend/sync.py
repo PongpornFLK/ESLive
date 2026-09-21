@@ -90,16 +90,51 @@ def syncSummary(db):
     return f"สรุป {len(patch_list)} patch"
 
 
+def syncAnalysis(db):
+    """สร้างแถว match_analysis ที่ยังไม่มี แล้วส่งแมตช์ที่ยังไม่ ready เข้า Gemini
+
+    ขั้นนี้ใช้โควต้า Gemini จริง เลยไม่รวมอยู่ในการรันแบบปกติ
+    ต้องสั่ง python sync.py analysis หรือ python sync.py all เท่านั้น
+    """
+    from app.models.match import Match, MatchAnalysis
+    from app.services.ai.match_analyze import checkStatus
+
+    # เติมแถวให้แมตช์ที่ยังไม่มี ทั้งของเก่าและที่เพิ่ง sync เข้ามา
+    done = {r[0] for r in db.query(MatchAnalysis.match_id).all()}
+    new = 0
+    for (match_id,) in db.query(Match.id).all():
+        if match_id not in done:
+            db.add(MatchAnalysis(match_id=match_id))
+            new += 1
+    db.commit()
+    print(f"  สร้างแถวใหม่ {new} แถว")
+
+    # วิเคราะห์เฉพาะแมตช์ที่ยังไม่แข่ง แมตช์ที่จบแล้วรู้ผลอยู่แล้ว
+    # ไม่มีใครอ่านคำทำนาย และเปลืองโควต้า Gemini ฟรี ๆ
+    todo = (
+        db.query(MatchAnalysis)
+        .join(Match, Match.id == MatchAnalysis.match_id)
+        .filter(MatchAnalysis.status != "ready", Match.status != "finished")
+        .all()
+    )
+    print(f"  มี {len(todo)} แมตช์ที่ยังไม่ได้วิเคราะห์")
+    for a in todo:
+        result = checkStatus(db, a.match_id)
+        print(f"    {str(a.match_id)[:8]} -> {result.status}")
+    return f"วิเคราะห์ {len(todo)} แมตช์ สร้างแถวใหม่ {new}"
+
+
 # ลำดับสำคัญ : tour ต้องมาก่อน match / patch ต้องมาก่อน summary
 STEPS = [
     ("tour", syncTour),
     ("match", syncMatch),
     ("patch", syncPatch),
     ("summary", syncSummary),
+    ("analysis", syncAnalysis),
 ]
 
 # ขั้นที่ใช้เงิน/โควต้า ไม่รันให้เองถ้าไม่สั่งชื่อมาตรง ๆ
-COSTLY = {"summary"}
+COSTLY = {"summary", "analysis"}
 
 
 def main(argv):

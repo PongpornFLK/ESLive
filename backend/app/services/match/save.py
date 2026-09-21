@@ -89,9 +89,10 @@ def saveMatch(db: Session, raw: dict):
 
     if match_panda is None:
         match_data = Match(**match_data)
-        db.add(match_data)
+        db.add(match_data) # save match
         db.commit()
         match_panda = match_data
+        
         # print(f"saveMatch : {match_panda}")
 
     elif match_data["status"] == "finished":

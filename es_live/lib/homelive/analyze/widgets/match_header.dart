@@ -103,7 +103,7 @@ class MatchHeader extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                match.tournament.tourName,
+                match.tournament.leagueName ?? match.tournament.tourName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(color: AppColors.grey, fontSize: 12),

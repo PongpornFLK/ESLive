@@ -21,7 +21,6 @@ class _MatchAnalyzeState extends State<MatchAnalyze> {
     return Scaffold(
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(15),
         child: Column(
           children: [
             Row(
@@ -36,13 +35,25 @@ class _MatchAnalyzeState extends State<MatchAnalyze> {
                 ),
               ],
             ),
-            MatchHeader(match: widget.match),
-            SizedBox(height: 15),
-            Winrate(),
-            SizedBox(height: 15),
-            AnalysisBox(),
-            SizedBox(height: 15),
-            HistoryMatch(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 20),
+              child: Column(
+                children: [
+                  MatchHeader(match: widget.match),
+                  SizedBox(height: 15),
+                  Winrate(
+                    winRateA: widget.match.matchAnalyze?.winRateA ?? 0,
+                    winRateB: widget.match.matchAnalyze?.winRateB ?? 0,
+                    logoTeamAUrl: widget.match.teamA.logoUrl ?? "",
+                    logoTeamBUrl: widget.match.teamB.logoUrl ?? "",
+                  ),
+                  SizedBox(height: 15),
+                  AnalysisBox(reason: widget.match.matchAnalyze?.reason),
+                  SizedBox(height: 15),
+                  HistoryMatch(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:es_live/core/model/game_data.dart';
+import 'package:es_live/core/model/match_analyze.dart';
 import 'package:es_live/core/model/team_data.dart';
 import 'package:es_live/core/model/tour_data.dart';
 
@@ -12,6 +13,7 @@ class MatchData {
   final String? streamUrl;
   final TournamentData tournament;
   final String beginAt;
+  final MatchAnalyzeData? matchAnalyze;
 
   const MatchData({
     required this.status,
@@ -23,6 +25,7 @@ class MatchData {
     required this.tournament,
     required this.game,
     required this.beginAt,
+    required this.matchAnalyze,
   });
 
   factory MatchData.fromjson(Map<String, dynamic> json) {
@@ -36,6 +39,10 @@ class MatchData {
       tournament: TournamentData.fromjson(json["tournament"]),
       game: GameData.fromjson(json["game"]),
       beginAt: json['begin_at'],
+      matchAnalyze:
+          json["analysis"] == null
+              ? null
+              : MatchAnalyzeData.fromjson(json["analysis"]),
     );
   }
 }

@@ -75,7 +75,9 @@ class _HomeState extends ConsumerState<Home> {
                                 .map(
                                   (m) => MatchCard(
                                     gameName: m.game.gameName,
-                                    tourName: m.tournament.tourName,
+                                    leagueName:
+                                        m.tournament.leagueName ??
+                                        m.tournament.tourName,
                                     teamAName: m.teamA.teamName,
                                     teamBName: m.teamB.teamName,
                                     scoreA: m.scoreA,
@@ -120,7 +122,9 @@ class _HomeState extends ConsumerState<Home> {
                                 .map(
                                   (m) => MatchCard(
                                     gameName: m.game.gameName,
-                                    tourName: m.tournament.tourName,
+                                    leagueName:
+                                        m.tournament.leagueName ??
+                                        m.tournament.tourName,
                                     teamAName: m.teamA.teamName,
                                     teamBName: m.teamB.teamName,
                                     scoreA: m.scoreA,

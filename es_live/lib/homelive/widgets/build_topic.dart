@@ -9,13 +9,13 @@ class BuildTopic extends StatelessWidget {
     required this.isLive,
     required this.time,
     required this.gameName,
-    required this.tourName,
+    required this.leagueName,
   });
 
   final bool isLive;
   final String time;
   final String gameName;
-  final String tourName;
+  final String leagueName;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class BuildTopic extends StatelessWidget {
           ],
         ),
         Text(
-          tourName,
+          leagueName,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(color: AppColors.grey, fontSize: 10),

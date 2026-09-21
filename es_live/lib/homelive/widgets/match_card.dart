@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class MatchCard extends StatelessWidget {
   final String gameName;
-  final String tourName;
+  final String leagueName;
   final String teamAName;
   final String teamBName;
   final String? logoTeamA;
@@ -20,7 +20,7 @@ class MatchCard extends StatelessWidget {
   const MatchCard({
     super.key,
     required this.gameName,
-    required this.tourName,
+    required this.leagueName,
     required this.teamAName,
     required this.teamBName,
     required this.logoTeamA,
@@ -53,7 +53,7 @@ class MatchCard extends StatelessWidget {
         child: Column(
           children: [
             BuildTopic(
-              tourName: tourName,
+              leagueName: leagueName,
               gameName: gameName,
               isLive: isLive,
               time: time,

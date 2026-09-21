@@ -1,3 +1,4 @@
+import 'package:es_live/_service/homelive/history_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/homelive/analyze/widgets/analysis_box.dart';
 import 'package:es_live/homelive/analyze/widgets/history_match.dart';
@@ -5,19 +6,22 @@ import 'package:es_live/homelive/analyze/widgets/match_header.dart';
 import 'package:es_live/homelive/analyze/widgets/winrate.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MatchAnalyze extends StatefulWidget {
+class MatchAnalyze extends ConsumerStatefulWidget {
   final MatchData match;
 
   const MatchAnalyze({super.key, required this.match});
 
   @override
-  State<MatchAnalyze> createState() => _MatchAnalyzeState();
+  ConsumerState<MatchAnalyze> createState() => _MatchAnalyzeState();
 }
 
-class _MatchAnalyzeState extends State<MatchAnalyze> {
+class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
   @override
   Widget build(BuildContext context) {
+    final historyAsync = ref.watch(historyProvider(widget.match.id));
+
     return Scaffold(
       appBar: CustomAppBar(),
       body: SingleChildScrollView(
@@ -50,7 +54,32 @@ class _MatchAnalyzeState extends State<MatchAnalyze> {
                   SizedBox(height: 15),
                   AnalysisBox(reason: widget.match.matchAnalyze?.reason),
                   SizedBox(height: 15),
-                  HistoryMatch(),
+                  Text(
+                    "Lastest 5 Matched",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  historyAsync.when(
+                    data:
+                        (history) => Column(
+                          children: [
+                            HistoryMatch(
+                              teamName: widget.match.teamA.teamName,
+                              rows: history.formA,
+                            ),
+                            SizedBox(height: 10),
+                            HistoryMatch(
+                              teamName: widget.match.teamB.teamName,
+                              rows: history.formB,
+                            ),
+                          ],
+                        ),
+                    loading: () => const CircularProgressIndicator(),
+                    error: (error, stackTrace) => Text("$error"),
+                  ),
                 ],
               ),
             ),

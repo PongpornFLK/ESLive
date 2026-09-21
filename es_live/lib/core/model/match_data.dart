@@ -4,6 +4,7 @@ import 'package:es_live/core/model/team_data.dart';
 import 'package:es_live/core/model/tour_data.dart';
 
 class MatchData {
+  final String id;
   final String status;
   final GameData game;
   final TeamData teamA;
@@ -16,6 +17,7 @@ class MatchData {
   final MatchAnalyzeData? matchAnalyze;
 
   const MatchData({
+    required this.id,
     required this.status,
     required this.teamA,
     required this.teamB,
@@ -30,6 +32,7 @@ class MatchData {
 
   factory MatchData.fromjson(Map<String, dynamic> json) {
     return MatchData(
+      id : json["id"],
       status: json['status'],
       teamA: TeamData.fromjson(json["team_a"]),
       teamB: TeamData.fromjson(json["team_b"]),

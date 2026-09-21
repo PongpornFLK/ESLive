@@ -35,6 +35,23 @@ class MatchOut(BaseModel):
     analysis: MatchAnalysisOut | None
 
 
+class HistoryRowOut(BaseModel):
+    # 1 แถว = 1 นัดที่ทีมนั้นเคยแข่ง
+    # ไม่ใช้ from_attributes เพราะประกอบเป็น dict เองใน service
+    result: str  # "W" หรือ "L"
+    opponent_name: str
+    opponent_logo: str | None
+    score_team: int | None
+    score_opponent: int | None
+    begin_at: datetime
+
+
+class MatchHistoryOut(BaseModel):
+    # ฟอร์มล่าสุดของทั้ง 2 ทีม ว่างได้ถ้าทีมยังไม่เคยมีประวัติในระบบ
+    form_a: list[HistoryRowOut]
+    form_b: list[HistoryRowOut]
+
+
 class PatchNoteOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

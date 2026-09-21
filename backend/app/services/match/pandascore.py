@@ -9,7 +9,7 @@ def getPandaMatch(gameSlug: str, status: str) -> list[dict]:
             headers={
                 "Authorization": f"Bearer {settings.pandascore_api_key}",
             },
-            params={"filter[videogame]": gameSlug, "per_page": 10},
+            params={"filter[videogame]": gameSlug, "per_page": 100},
         )
 
         return res.json()

@@ -2,7 +2,7 @@ from app.services.ai.gemini import getGemini
 from sqlalchemy.orm import Session
 from app.models.match import PatchNote
 import uuid
-from app.services.ai.prompt import prompt_list
+from app.services.ai.prompt_patch import prompt_list_patch
 
 # patch.game.slug = "game_name"
 
@@ -13,7 +13,7 @@ def checkStatus(db: Session, id: uuid.UUID):
 
     try:
         if patch.status != "ready":
-            raw_content = prompt_list[patch.game.slug].format(
+            raw_content = prompt_list_patch[patch.game.slug].format(
                 raw_content=patch.raw_content
             )
             patch.ai_summary = getGemini(raw_content)

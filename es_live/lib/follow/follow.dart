@@ -1,4 +1,7 @@
 import 'package:es_live/_service/follow/follow_pro.dart';
+import 'package:es_live/_service/homelive/match_pro.dart';
+import 'package:es_live/core/model/match_data.dart';
+import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/follow/widgets/follow_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,45 +14,99 @@ class Follow extends ConsumerStatefulWidget {
 }
 
 class _FollowState extends ConsumerState<Follow> {
+  /// นัดถัดไปของทีมนี้ ไม่มี -> null
+  /// ตัดนัดที่เวลาผ่านไปแล้วทิ้ง เพราะบางแมตช์ PandaScore ไม่อัปเดตสถานะ
+  /// ยังค้างเป็น upcoming ทั้งที่แข่งจบไปนานแล้ว
+  MatchData? _nextMatch(String teamId, List<MatchData> matches) {
+    final now = DateTime.now();
+
+    final mine =
+        matches.where((m) {
+          if (m.teamA.teamId != teamId && m.teamB.teamId != teamId) {
+            return false;
+          }
+          if (m.status == "live") return true;
+          return DateTime.parse(m.beginAt).toLocal().isAfter(now);
+        }).toList();
+
+    if (mine.isEmpty) return null;
+
+    mine.sort(
+      (a, b) => DateTime.parse(a.beginAt).compareTo(DateTime.parse(b.beginAt)),
+    );
+    return mine.first;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final followAsync = ref.watch(followProvider);
+    final follows = ref.watch(followProvider).value ?? [];
+    final matchAsync = ref.watch(matchProvider);
+
+    // ยังโหลดแมตช์ไม่เสร็จก็แสดงรายชื่อทีมไปก่อน บรรทัดนัดหน้าค่อยเติมทีหลัง
+    final matches = matchAsync.value ?? [];
+
+    // ทีมที่มีนัดใกล้สุดอยู่บน ทีมที่ไม่มีนัดตกไปท้ายสุด
+    final sorted = [...follows];
+    sorted.sort((a, b) {
+      final na = _nextMatch(a.teamId, matches);
+      final nb = _nextMatch(b.teamId, matches);
+
+      if (na == null && nb == null) return 0;
+      if (na == null) return 1;
+      if (nb == null) return -1;
+
+      return DateTime.parse(na.beginAt).compareTo(DateTime.parse(nb.beginAt));
+    });
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(15),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          followAsync.when(
-            data:
-                (data) =>
-                    data.isEmpty
-                        ? Center(child: Text("You are not following yet."))
-                        : Column(
-                          children:
-                              data
-                                  .map(
-                                    (e) => FollowCard(
-                                      logoUrl: e.logoUrl,
-                                      teamName: e.teamName,
-                                      onRemove:
-                                          () => ref
-                                              .read(followProvider.notifier)
-                                              .untoggle(e.teamId),
-                                    ),
-                                  )
-                                  .toList(),
-                        ),
-            error:
-                (error, stackTrace) => Center(
-                  child: Text(
-                    "$error",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
+          Row(
+            children: [
+              Text(
+                "Following",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
                 ),
-            loading: () => Center(child: CircularProgressIndicator()),
+              ),
+            ],
           ),
+          const SizedBox(height: 5),
+
+          if (matchAsync.isLoading) const LinearProgressIndicator(),
+          if (matchAsync.hasError)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                "Can't load schedule. Showing teams only.",
+                style: TextStyle(color: AppColors.red, fontSize: 12),
+              ),
+            ),
+
+          if (sorted.isEmpty)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 30),
+              child: Center(
+                child: Text(
+                  "You are not following yet.",
+                  style: TextStyle(color: AppColors.grey),
+                ),
+              ),
+            )
+          else
+            ...sorted.map(
+              (f) => FollowCard(
+                teamId: f.teamId,
+                teamName: f.teamName,
+                logoUrl: f.logoUrl,
+                nextMatch: _nextMatch(f.teamId, matches),
+                onRemove:
+                    () => ref.read(followProvider.notifier).untoggle(f.teamId),
+              ),
+            ),
         ],
       ),
     );

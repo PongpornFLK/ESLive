@@ -58,7 +58,7 @@ class MatchHeader extends ConsumerWidget {
             color: isOn ? AppColors.gold : AppColors.grey,
             size: 22,
           ),
-          tooltip: isOn ? "เลิกติดตาม" : "ติดตาม",
+          tooltip: isOn ? "Unfollow" : "Follow",
         ),
       ],
     );
@@ -80,7 +80,7 @@ class MatchHeader extends ConsumerWidget {
 
     if (!opened) {
       messenger.showSnackBar(
-        const SnackBar(content: Text("เปิดลิงก์ถ่ายทอดไม่ได้")),
+        const SnackBar(content: Text("Can't open stream link")),
       );
     }
   }

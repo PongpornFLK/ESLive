@@ -1,10 +1,13 @@
+import 'package:es_live/_service/follow/follow_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
+import 'package:es_live/core/model/team_data.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/widgets/live_circle.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MatchHeader extends StatelessWidget {
+class MatchHeader extends ConsumerWidget {
   final MatchData match;
   const MatchHeader({super.key, required this.match});
 
@@ -27,13 +30,16 @@ class MatchHeader extends StatelessWidget {
     );
   }
 
-  Widget _team(BuildContext context, String? logo, String name) {
+  /// รับ notifier มาแทน ref เพราะ watch ไว้ที่ build ครั้งเดียวพอ ใช้ร่วมกันทั้ง 2 ทีม
+  Widget _team(BuildContext context, FollowNotifier follow, TeamData team) {
+    final isOn = follow.isFollow(team.teamId);
+
     return Column(
       children: [
-        _logo(context, logo, 64),
+        _logo(context, team.logoUrl, 64),
         const SizedBox(height: 8),
         Text(
-          name,
+          team.teamName,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
@@ -42,6 +48,17 @@ class MatchHeader extends StatelessWidget {
             fontWeight: FontWeight.w600,
             fontSize: 13,
           ),
+        ),
+        IconButton(
+          onPressed:
+              () =>
+                  isOn ? follow.untoggle(team.teamId) : follow.toggle(team),
+          icon: Icon(
+            isOn ? Icons.star : Icons.star_border,
+            color: isOn ? AppColors.gold : AppColors.grey,
+            size: 22,
+          ),
+          tooltip: isOn ? "เลิกติดตาม" : "ติดตาม",
         ),
       ],
     );
@@ -69,12 +86,16 @@ class MatchHeader extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
 
     final isLive = match.status == "live";
     final streamUrl = match.streamUrl; // แมตช์ที่ยังไม่เริ่มจะดัก null ไว้
+
+    // watch = follow แล้ว icon เปลี่ยน
+    ref.watch(followProvider);
+    final follow = ref.read(followProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,9 +137,7 @@ class MatchHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: _team(context, match.teamA.logoUrl, match.teamA.teamName),
-            ),
+            Expanded(child: _team(context, follow, match.teamA)),
             Column(
               children: [
                 Text(
@@ -155,9 +174,7 @@ class MatchHeader extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
-              child: _team(context, match.teamB.logoUrl, match.teamB.teamName),
-            ),
+            Expanded(child: _team(context, follow, match.teamB)),
           ],
         ),
       ],

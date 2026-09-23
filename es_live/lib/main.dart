@@ -1,15 +1,22 @@
-import 'package:es_live/screen.dart';
+import 'package:es_live/_service/auth_service/gate.dart';
+import 'package:es_live/core/config/supabase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:es_live/core/theme/app_theme.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/core/theme/theme_pro.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // ต้องเรียกก่อนแตะ Supabase.instance
+  await Supabase.initialize(
+    url: SupabaseConfig.url,
+    publishableKey: SupabaseConfig.anonKey,
+  );
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -45,7 +52,7 @@ class MyApp extends ConsumerWidget {
                       end: Alignment.bottomCenter,
                       colors: <Color>[
                         AppColors.orange,
-                        AppColors.secondmain.withOpacity(0),
+                        AppColors.secondmain.withValues(alpha: 0),
                       ],
                     ),
                   ),
@@ -72,10 +79,13 @@ class MyApp extends ConsumerWidget {
                       ),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(100),
+                        // ใช้ AuthGate() แทน
                         onTap:
                             () => Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Screen()),
+                              MaterialPageRoute(
+                                builder: (context) => const AuthGate(),
+                              ),
                             ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(

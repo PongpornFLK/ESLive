@@ -1,3 +1,4 @@
+import 'package:es_live/set/widgets/account_tile.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/core/theme/theme_pro.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,13 @@ class Setting extends ConsumerWidget {
               detail: 'พื้นหลังสีเข้ม',
             ),
           ],
+        ),
+        const SizedBox(height: 16),
+
+        _SectionCard(
+          title: 'Account',
+          subtitle: 'บัญชีที่เข้าสู่ระบบอยู่',
+          children: const [AccountTile()],
         ),
       ],
     );

@@ -1,0 +1,103 @@
+{
+  "@@locale": "en",
+
+  "navLive": "Live",
+  "navTour": "Tour",
+  "navFollow": "Follow",
+  "navPatch": "Patch",
+  "navSetting": "Setting",
+
+  "letsWatching": "LET'S WATCHING",
+  "game": "Game",
+  "match": "Match",
+  "live": "Live!",
+  "comingSoon": "Coming Soon",
+  "notFound": "Not Found",
+
+  "signIn": "SIGN IN",
+  "signUp": "SIGN UP",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm password",
+  "fillEmailPassword": "Fill in email and password",
+  "passwordTooShort": "Password must be at least 6 characters",
+  "passwordNotMatch": "Passwords do not match",
+  "checkEmailConfirm": "Check your email to confirm the account",
+  "somethingWrong": "Something went wrong",
+  "noAccountYet": "No account yet? Sign up",
+  "alreadyHaveAccount": "Already have an account? Sign in",
+
+  "following": "Following",
+  "notFollowingYet": "You are not following yet.",
+  "cantLoadSchedule": "Can't load schedule. Showing teams only.",
+  "noUpcomingMatch": "No upcoming match",
+  "follow": "Follow",
+  "unfollow": "Unfollow",
+
+  "matchAt": "{time}",
+  "@matchAt": {
+    "description": "เวลาเริ่มแมตช์ของวันนี้",
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "matchTomorrow": "Tomorrow {time}",
+  "@matchTomorrow": {
+    "description": "นัดที่แข่งพรุ่งนี้",
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "matchOnDate": "{date}",
+  "@matchOnDate": {
+    "description": "วันเวลาของนัดที่ไกลกว่าพรุ่งนี้ ฟอร์แมตตามภาษา",
+    "placeholders": { "date": { "type": "DateTime", "format": "MMMd" } }
+  },
+
+  "aiAnalysis": "AI Analysis",
+  "winRate": "Win Rate",
+  "latestMatches": "Latest {count} Matches",
+  "@latestMatches": {
+    "description": "หัวข้อประวัติการแข่ง",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "streamUrl": "Stream URL",
+  "cantOpenStream": "Can't open stream link",
+  "noAnalysisYet": "No analysis yet",
+  "noAnalysisForMatch": "No analysis for this match yet",
+  "noHistoryInSystem": "No match history in the system",
+
+  "viewAll": "View All",
+  "patchVersion": "Patch {version}",
+  "@patchVersion": {
+    "description": "หัวข้อแพตช์",
+    "placeholders": { "version": { "type": "String" } }
+  },
+
+  "teamCount": "{count, plural, =0{No teams} =1{1 Team} other{{count} Teams}}",
+  "@teamCount": {
+    "description": "จำนวนทีมในทัวร์นาเมนต์ รูปเอกพจน์พหูพจน์ต่างกันในภาษาอังกฤษ",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noStandingYet": "No standings for this tournament yet",
+  "rankOnlyNoStats": "This tournament has no win/loss stats, rank only",
+
+  "settings": "SETTINGS",
+  "theme": "Theme",
+  "themeSubtitle": "Choose the app color mode",
+  "themeSystem": "System",
+  "themeSystemDetail": "Follow the device setting",
+  "themeLight": "Light",
+  "themeLightDetail": "Light background",
+  "themeDark": "Dark",
+  "themeDarkDetail": "Dark background",
+  "language": "Language",
+  "languageSubtitle": "Choose the app language",
+  "langEnglish": "English",
+  "langEnglishDetail": "Default language",
+  "langThai": "ไทย",
+  "langThaiDetail": "Thai language",
+  "account": "Account",
+  "accountSubtitle": "The account you are signed in with",
+  "signOut": "Sign out",
+  "signOutConfirm": "Sign out of this account?",
+  "cancel": "Cancel",
+  "notSignedIn": "Not signed in",
+  "cantSignOut": "Can't sign out"
+}

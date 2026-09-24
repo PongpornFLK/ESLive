@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/homelive/history_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/homelive/analyze/widgets/analysis_box.dart';
@@ -21,6 +22,7 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
   @override
   Widget build(BuildContext context) {
     final historyAsync = ref.watch(historyProvider(widget.match.id));
+    final l10n = AppLocalizations.of(context);
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -55,7 +57,7 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
                   AnalysisBox(reason: widget.match.matchAnalyze?.reason),
                   SizedBox(height: 15),
                   Text(
-                    "Lastest 5 Matched",
+                    l10n.latestMatches(5),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.w700,

@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/model/group.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,10 @@ class TableGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     if (rows.isEmpty) {
-      return const _Note('ยังไม่มีตารางคะแนนของทัวร์นี้');
+      return _Note(l10n.noStandingYet);
     }
 
     final hasStats = rows.any((r) => r.win != null || r.loss != null);
@@ -52,7 +55,7 @@ class TableGroup extends StatelessWidget {
         if (!hasStats) ...[
           const SizedBox(height: 8),
           Text(
-            'ทัวร์นี้ยังไม่มีสถิติแพ้ชนะ แสดงได้เฉพาะอันดับ',
+            l10n.rankOnlyNoStats,
             style: TextStyle(color: AppColors.grey, fontSize: 11),
           ),
         ],

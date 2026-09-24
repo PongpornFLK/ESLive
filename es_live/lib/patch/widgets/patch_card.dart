@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/patch/detail.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class PatchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final t = time;
     final patchTime =
         t == null
@@ -63,15 +66,25 @@ class PatchCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Text(gameName, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+                  Text(
+                    gameName,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                 ],
               ),
-              Text(patchTime, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+              Text(
+                patchTime,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            "Patch $version",
+            l10n.patchVersion(version),
             style: TextStyle(
               color: AppColors.orange,
               fontWeight: FontWeight.w600,
@@ -107,7 +120,7 @@ class PatchCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "View All",
+                    l10n.viewAll,
                     style: TextStyle(
                       color: AppColors.orange,
                       fontWeight: FontWeight.w600,

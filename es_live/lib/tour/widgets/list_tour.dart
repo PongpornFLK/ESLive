@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/tour/bracket.dart';
 import 'package:es_live/tour/group.dart';
@@ -40,6 +41,8 @@ class ListTour extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final stage = hasBracket ? 'Playoffs' : 'Group Stage';
     final logo = leagueLogo;
     final prize = prizePool;
@@ -136,7 +139,8 @@ class ListTour extends StatelessWidget {
                 const SizedBox(height: 6),
                 _InfoRow(
                   icon: Icons.groups_rounded,
-                  text: '$teamCount Teams  ·  ${type?.toUpperCase()}',
+                  text:
+                      '${l10n.teamCount(teamCount ?? 0)}  ·  ${type?.toUpperCase()}',
                 ),
                 if (prize != null) ...[
                   const SizedBox(height: 6),

@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/homelive/analyze/analyze.dart';
@@ -40,7 +41,7 @@ class FollowCard extends StatelessWidget {
   }
 
   /// วันนี้ -> 20:00 / พรุ่งนี้ -> พรุ่งนี้ 20:00 / เกินนั้น -> 26/09 20:00
-  String _when(String iso) {
+  String _when(String iso, AppLocalizations l10n) {
     final t = DateTime.parse(iso).toLocal();
     final now = DateTime.now();
     final days =
@@ -53,19 +54,22 @@ class FollowCard extends StatelessWidget {
     final hm =
         "${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}";
 
-    if (days == 0) return hm;
-    if (days == 1) return "Tomorrow $hm";
-    return "${t.day.toString().padLeft(2, '0')}/${t.month.toString().padLeft(2, '0')} $hm";
+    // วันที่ตามภาษา
+    if (days == 0) return l10n.matchAt(hm);
+    if (days == 1) return l10n.matchTomorrow(hm);
+    return "${l10n.matchOnDate(t)} $hm";
   }
 
   /// บรรทัดล่างของการ์ด เปลี่ยนตาม 3 สถานะ ไม่มีนัด / กำลังแข่ง / รอแข่ง
   Widget _nextLine(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final m = nextMatch;
 
     if (m == null) {
-      return const Text(
-        "No upcoming match",
-        style: TextStyle(color: AppColors.grey, fontSize: 12),
+      return Text(
+        l10n.noUpcomingMatch,
+        style: const TextStyle(color: AppColors.grey, fontSize: 12),
       );
     }
 
@@ -89,7 +93,7 @@ class FollowCard extends StatelessWidget {
           ),
         ),
         Text(
-          _when(m.beginAt),
+          _when(m.beginAt, l10n),
           style: TextStyle(
             color: isLive ? AppColors.red : AppColors.grey,
             fontWeight: isLive ? FontWeight.bold : FontWeight.normal,
@@ -102,6 +106,8 @@ class FollowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final m = nextMatch;
 
     return Container(
@@ -145,7 +151,7 @@ class FollowCard extends StatelessWidget {
                   IconButton(
                     onPressed: onRemove,
                     icon: const Icon(Icons.star, color: AppColors.gold),
-                    tooltip: "Unfollow",
+                    tooltip: l10n.unfollow,
                   ),
                 ],
               ),

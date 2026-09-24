@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/auth_service/auth.dart';
 import 'package:es_live/auth/register.dart';
 import 'package:es_live/auth/widgets/auth_field.dart';
@@ -28,7 +29,8 @@ class _LoginState extends State<Login> {
   String? _message; // ข้อความ error  null = ไม่มีอะไรผิด
 
   @override
-  void dispose() { // controller จองหน่วยความจำไว้ ต้องคืนเมื่อหน้าถูกปิด
+  void dispose() {
+    // controller จองหน่วยความจำไว้ ต้องคืนเมื่อหน้าถูกปิด
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -36,12 +38,13 @@ class _LoginState extends State<Login> {
 
   // Func loggin button
   Future<void> login() async {
+    final l10n = AppLocalizations.of(context);
     final email = emailController.text.trim();
     final password = passwordController.text;
 
     // เช็คในเครื่องก่อน ไม่ต้องเสียรอบเรียก server
     if (email.isEmpty || password.isEmpty) {
-      setState(() => _message = "Fill in email and password");
+      setState(() => _message = l10n.fillEmailPassword);
       return;
     }
 
@@ -56,22 +59,30 @@ class _LoginState extends State<Login> {
     } on AuthException catch (e) {
       if (mounted) setState(() => _message = e.message); // msg จาก Supabase
     } catch (e) {
-      if (mounted) setState(() => _message = "Something went wrong");
+      if (mounted) setState(() => _message = l10n.somethingWrong);
     } finally {
-      if (mounted) setState(() => _busy = false); // ทำเสมอไม่ว่าสำเร็จหรือพัง ปุ่มจไม่ค้างหมุน
+      // ทำเสมอไม่ว่าสำเร็จหรือพัง ปุ่มจะไม่ค้างหมุน
+      if (mounted) {
+        setState(() => _busy = false);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AuthShell(
-      title: "SIGN IN",
+      title: l10n.signIn,
       children: [
-        AuthField(controller: emailController, hint: "Email", icon: Icons.mail_outline),
+        AuthField(
+          controller: emailController,
+          hint: l10n.email,
+          icon: Icons.mail_outline,
+        ),
         const SizedBox(height: 12),
         AuthField(
           controller: passwordController,
-          hint: "Password",
+          hint: l10n.password,
           icon: Icons.lock_outline,
           obscure: true,
         ),
@@ -95,7 +106,7 @@ class _LoginState extends State<Login> {
               padding: EdgeInsets.symmetric(vertical: 8),
               child: CircularProgressIndicator(color: AppColors.orange),
             )
-            : PillButton(label: "SIGN IN", onTap: login),
+            : PillButton(label: l10n.signIn, onTap: login),
 
         const SizedBox(height: 16),
         TextButton(
@@ -106,9 +117,9 @@ class _LoginState extends State<Login> {
                     context,
                     MaterialPageRoute(builder: (context) => const Register()),
                   ),
-          child: const Text(
-            "No account yet? Sign up",
-            style: TextStyle(color: AppColors.gold),
+          child: Text(
+            l10n.noAccountYet,
+            style: const TextStyle(color: AppColors.gold),
           ),
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,8 @@ class AnalysisBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
     final hasReason = reason != null && reason!.isNotEmpty;
@@ -28,7 +31,7 @@ class AnalysisBox extends StatelessWidget {
               const Icon(Icons.lightbulb, color: AppColors.gold, size: 18),
               const SizedBox(width: 6),
               Text(
-                "AI Analysis",
+                l10n.aiAnalysis,
                 style: TextStyle(
                   color: onSurface,
                   fontWeight: FontWeight.w700,
@@ -39,7 +42,7 @@ class AnalysisBox extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            hasReason ? reason! : "ยังไม่มีผลวิเคราะห์สำหรับแมตช์นี้",
+            hasReason ? reason! : l10n.noAnalysisForMatch,
             style: TextStyle(
               color: hasReason ? onSurface : AppColors.grey,
               fontSize: 13,

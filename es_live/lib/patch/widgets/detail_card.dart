@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class DetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return Container(
       padding: EdgeInsets.all(15),
       margin: EdgeInsets.symmetric(horizontal: 20),
@@ -54,15 +57,25 @@ class DetailCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Text(gameName, style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+                  Text(
+                    gameName,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                 ],
               ),
-              Text("$time", style: TextStyle(color: Theme.of(context).colorScheme.onSurface)),
+              Text(
+                "$time",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),
           Text(
-            "Patch $version",
+            l10n.patchVersion(version),
             style: TextStyle(
               color: AppColors.orange,
               fontWeight: FontWeight.w600,

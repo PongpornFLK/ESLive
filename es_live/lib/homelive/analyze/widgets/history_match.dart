@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/model/match_history.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class HistoryMatch extends StatelessWidget {
     );
   }
 
-  /// badge W / L 
+  /// badge W / L
   Widget _badge(String result) {
     final isWin = result == "W";
 
@@ -52,6 +53,8 @@ class HistoryMatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
 
@@ -78,9 +81,9 @@ class HistoryMatch extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           if (rows.isEmpty)
-            const Text(
-              "ไม่มีประวัติการแข่งในระบบ",
-              style: TextStyle(color: AppColors.grey, fontSize: 12),
+            Text(
+              l10n.noHistoryInSystem,
+              style: const TextStyle(color: AppColors.grey, fontSize: 12),
             )
           else
             // จำนวนแถวมากสุด 5 ตามที่ backend จำกัดมา ใช้ Column ได้ไม่เปลือง

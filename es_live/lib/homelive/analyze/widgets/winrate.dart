@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -37,6 +38,8 @@ class Winrate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final theme = Theme.of(context);
     final onSurface = theme.colorScheme.onSurface;
 
@@ -54,7 +57,7 @@ class Winrate extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "Win Rate",
+            l10n.winRate,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: onSurface,
@@ -108,7 +111,7 @@ class Winrate extends StatelessWidget {
           if (!hasData) ...[
             const SizedBox(height: 8),
             Text(
-              "ยังไม่มีผลวิเคราะห์",
+              l10n.noAnalysisYet,
               textAlign: TextAlign.center,
               style: const TextStyle(color: AppColors.grey, fontSize: 11),
             ),

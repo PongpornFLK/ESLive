@@ -27,6 +27,7 @@ class ListGameTour extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
+                // ignore: deprecated_member_use
                 color: AppColors.orange.withOpacity(0.5),
                 spreadRadius: 1,
                 blurRadius: 10,

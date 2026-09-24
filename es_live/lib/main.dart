@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:es_live/core/theme/app_theme.dart';
 import 'package:es_live/core/theme/root_colors.dart';
+import 'package:es_live/core/lang/locale_pro.dart';
 import 'package:es_live/core/theme/theme_pro.dart';
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
@@ -26,6 +28,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
+    final locale = ref.watch(localeProvider);
 
     return MaterialApp(
       title: "Homepage",
@@ -33,8 +36,16 @@ class MyApp extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
+
+      // ต่อระบบภาษา  AppLocalizations.of(context) อ่านค่าจาก 3 บรรทัดนี้
+      locale: locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+
       home: Builder(
         builder: (context) {
+          final l10n = AppLocalizations.of(context);
+
           return Scaffold(
             backgroundColor: AppColors.secondmain,
             body: Stack(
@@ -87,13 +98,13 @@ class MyApp extends ConsumerWidget {
                                 builder: (context) => const AuthGate(),
                               ),
                             ),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 30,
                             vertical: 10,
                           ),
                           child: Text(
-                            "LET’S WATCHING",
+                            l10n.letsWatching,
                             style: TextStyle(
                               color: AppColors.secondmain,
                               fontFamily: "Genos",

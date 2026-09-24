@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/auth_service/auth.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
@@ -18,23 +19,24 @@ class _AccountTileState extends State<AccountTile> {
   bool _busy = false;
 
   Future<void> _signOut() async {
+    final l10n = AppLocalizations.of(context);
     // ถามก่อน กันกดพลาด
     final ok = await showDialog<bool>(
       context: context,
       builder:
           (ctx) => AlertDialog(
-            title: const Text('Sign out'),
-            content: const Text('ออกจากระบบใช่ไหม'),
+            title: Text(l10n.signOut),
+            content: Text(l10n.signOutConfirm),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx, false),
-                child: const Text('ยกเลิก'),
+                child: Text(l10n.cancel),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(ctx, true),
-                child: const Text(
-                  'ออกจากระบบ',
-                  style: TextStyle(color: AppColors.red),
+                child: Text(
+                  l10n.signOut,
+                  style: const TextStyle(color: AppColors.red),
                 ),
               ),
             ],
@@ -52,7 +54,7 @@ class _AccountTileState extends State<AccountTile> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text("Can't sign out")));
+        ).showSnackBar(SnackBar(content: Text(l10n.cantSignOut)));
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -62,6 +64,7 @@ class _AccountTileState extends State<AccountTile> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final email = authen.getUserEmail();
 
     return Column(
@@ -78,7 +81,7 @@ class _AccountTileState extends State<AccountTile> {
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
-                  email ?? 'ยังไม่ได้เข้าสู่ระบบ',
+                  email ?? l10n.notSignedIn,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -102,10 +105,10 @@ class _AccountTileState extends State<AccountTile> {
                   color: AppColors.red,
                 ),
                 const SizedBox(width: 14),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'ออกจากระบบ',
-                    style: TextStyle(
+                    l10n.signOut,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       color: AppColors.red,

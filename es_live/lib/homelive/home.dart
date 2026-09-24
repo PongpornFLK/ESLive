@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/homelive/widgets/list_game.dart';
@@ -21,6 +22,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     final matchAsync = ref.watch(matchProvider);
+    final l10n = AppLocalizations.of(context);
 
     return SingleChildScrollView(
       child: Padding(
@@ -31,7 +33,7 @@ class _HomeState extends ConsumerState<Home> {
             Row(
               children: [
                 Text(
-                  "Game",
+                  l10n.game,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
@@ -49,14 +51,14 @@ class _HomeState extends ConsumerState<Home> {
             Row(
               children: [
                 Text(
-                  "Match ",
+                  l10n.match,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Live! ",
+                  l10n.live,
                   style: TextStyle(
                     color: AppColors.red,
                     fontWeight: FontWeight.bold,
@@ -96,7 +98,7 @@ class _HomeState extends ConsumerState<Home> {
                 )
                 : Center(
                   child: Text(
-                    "Not Found",
+                    l10n.notFound,
                     style: TextStyle(color: AppColors.grey),
                   ),
                 ),
@@ -104,7 +106,7 @@ class _HomeState extends ConsumerState<Home> {
             Row(
               children: [
                 Text(
-                  "Coming Soon",
+                  l10n.comingSoon,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
@@ -143,7 +145,7 @@ class _HomeState extends ConsumerState<Home> {
                 )
                 : Center(
                   child: Text(
-                    "Not Found",
+                    l10n.notFound,
                     style: TextStyle(color: AppColors.grey),
                   ),
                 ),

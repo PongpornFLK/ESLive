@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/auth_service/auth.dart';
 import 'package:es_live/auth/widgets/auth_field.dart';
 import 'package:es_live/auth/widgets/auth_shell.dart';
@@ -32,20 +33,21 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _submit() async {
+    final l10n = AppLocalizations.of(context);
     final email = _email.text.trim();
     final password = _password.text;
 
     // เช็คในเครื่องก่อน ไม่ต้องเสียรอบเรียก server
     if (email.isEmpty || password.isEmpty) {
-      setState(() => _message = "Fill in email and password");
+      setState(() => _message = l10n.fillEmailPassword);
       return;
     }
     if (password.length < 6) {
-      setState(() => _message = "Password must be at least 6 characters");
+      setState(() => _message = l10n.passwordTooShort);
       return;
     }
     if (password != _confirm.text) {
-      setState(() => _message = "Passwords do not match");
+      setState(() => _message = l10n.passwordNotMatch);
       return;
     }
 
@@ -60,7 +62,7 @@ class _RegisterState extends State<Register> {
 
       if (res.session == null) {
         // ไม่ได้ session = Supabase ยังบังคับยืนยันอีเมลอยู่
-        setState(() => _message = "Check your email to confirm the account");
+        setState(() => _message = l10n.checkEmailConfirm);
       } else {
         // หน้านี้ถูก push ทับ AuthGate อยู่ ต้อง pop ออกเอง
         // ไม่งั้น gate สลับเป็น Screen แล้วแต่ผู้ใช้ยังค้างที่หน้านี้
@@ -70,7 +72,7 @@ class _RegisterState extends State<Register> {
     } on AuthException catch (e) {
       if (mounted) setState(() => _message = e.message);
     } catch (e) {
-      if (mounted) setState(() => _message = "Something went wrong");
+      if (mounted) setState(() => _message = l10n.somethingWrong);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -78,25 +80,26 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return AuthShell(
-      title: "SIGN UP",
+      title: l10n.signUp,
       children: [
         AuthField(
           controller: _email,
-          hint: "Email",
+          hint: l10n.email,
           icon: Icons.mail_outline,
         ),
         const SizedBox(height: 12),
         AuthField(
           controller: _password,
-          hint: "Password",
+          hint: l10n.password,
           icon: Icons.lock_outline,
           obscure: true,
         ),
         const SizedBox(height: 12),
         AuthField(
           controller: _confirm,
-          hint: "Confirm password",
+          hint: l10n.confirmPassword,
           icon: Icons.lock_outline,
           obscure: true,
         ),
@@ -110,10 +113,7 @@ class _RegisterState extends State<Register> {
                   : Text(
                     _message!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: AppColors.red,
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(color: AppColors.red, fontSize: 12),
                   ),
         ),
 
@@ -122,14 +122,14 @@ class _RegisterState extends State<Register> {
               padding: EdgeInsets.symmetric(vertical: 8),
               child: CircularProgressIndicator(color: AppColors.orange),
             )
-            : PillButton(label: "SIGN UP", onTap: _submit),
+            : PillButton(label: l10n.signUp, onTap: _submit),
 
         const SizedBox(height: 16),
         TextButton(
           onPressed: _busy ? null : () => Navigator.pop(context),
-          child: const Text(
-            "Already have an account? Sign in",
-            style: TextStyle(color: AppColors.gold),
+          child: Text(
+            l10n.alreadyHaveAccount,
+            style: const TextStyle(color: AppColors.gold),
           ),
         ),
       ],

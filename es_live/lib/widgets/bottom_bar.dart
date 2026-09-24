@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class BottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     final theme = Theme.of(context);
     final isLight = theme.brightness == Brightness.light;
 
@@ -54,27 +57,27 @@ class BottomBar extends StatelessWidget {
             NavigationDestination(
               selectedIcon: Icon(Icons.live_tv_rounded, color: active),
               icon: Icon(Icons.live_tv_rounded, color: idle),
-              label: "Live",
+              label: l10n.navLive,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.line_style_outlined, color: active),
               icon: Icon(Icons.line_style_outlined, color: idle),
-              label: "Tour",
+              label: l10n.navTour,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.star_border, color: active),
               icon: Icon(Icons.star_border, color: idle),
-              label: "Follow",
+              label: l10n.navFollow,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.note_outlined, color: active),
               icon: Icon(Icons.note_outlined, color: idle),
-              label: "Patch",
+              label: l10n.navPatch,
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.settings, color: active),
               icon: Icon(Icons.settings, color: idle),
-              label: "Setting",
+              label: l10n.navSetting,
             ),
           ],
         ),

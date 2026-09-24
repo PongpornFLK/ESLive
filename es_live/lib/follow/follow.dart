@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/follow/follow_pro.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
@@ -41,6 +42,7 @@ class _FollowState extends ConsumerState<Follow> {
   Widget build(BuildContext context) {
     final follows = ref.watch(followProvider).value ?? [];
     final matchAsync = ref.watch(matchProvider);
+    final l10n = AppLocalizations.of(context);
 
     // ยังโหลดแมตช์ไม่เสร็จก็แสดงรายชื่อทีมไปก่อน บรรทัดนัดหน้าค่อยเติมทีหลัง
     final matches = matchAsync.value ?? [];
@@ -66,7 +68,7 @@ class _FollowState extends ConsumerState<Follow> {
           Row(
             children: [
               Text(
-                "Following",
+                l10n.following,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
@@ -78,21 +80,21 @@ class _FollowState extends ConsumerState<Follow> {
 
           if (matchAsync.isLoading) const LinearProgressIndicator(),
           if (matchAsync.hasError)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
               child: Text(
-                "Can't load schedule. Showing teams only.",
-                style: TextStyle(color: AppColors.red, fontSize: 12),
+                l10n.cantLoadSchedule,
+                style: const TextStyle(color: AppColors.red, fontSize: 12),
               ),
             ),
 
           if (sorted.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
               child: Center(
                 child: Text(
-                  "You are not following yet.",
-                  style: TextStyle(color: AppColors.grey),
+                  l10n.notFollowingYet,
+                  style: const TextStyle(color: AppColors.grey),
                 ),
               ),
             )

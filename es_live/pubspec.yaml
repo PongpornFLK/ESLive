@@ -40,12 +40,14 @@ dependencies:
   firebase_core: ^4.13.0
   firebase_messaging: ^16.5.0
   dio: ^5.11.1
-  intl: ^0.20.2
+  intl: any  # flutter_localizations ล็อกเวอร์ชันให้เอง
   flutter_markdown_plus: ^1.0.7
   shared_preferences: ^2.5.3
   percent_indicator: ^4.2.5
   url_launcher: ^6.3.1
   supabase_flutter: ^2.15.4
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  # เปิดให้ flutter สร้างคลาส AppLocalizations จากไฟล์ .arb อัตโนมัติ
+  generate: true
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

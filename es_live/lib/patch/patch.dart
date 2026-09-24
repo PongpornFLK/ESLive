@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/patch/patch_pro.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/patch/widgets/patch_card.dart';
@@ -17,6 +18,7 @@ class _PatchState extends ConsumerState<Patch> {
   @override
   Widget build(BuildContext context) {
     final patchAsync = ref.watch(patchProvider);
+    final l10n = AppLocalizations.of(context);
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(20),
@@ -39,7 +41,7 @@ class _PatchState extends ConsumerState<Patch> {
                                   summary: g.summary,
                                   version: g.version,
                                   content: g.content,
-                                  url: g.url ,
+                                  url: g.url,
                                 ),
                               )
                               .toList(),
@@ -49,7 +51,7 @@ class _PatchState extends ConsumerState<Patch> {
                         Text("$error", style: TextStyle(color: AppColors.red)),
                 loading: () => Center(child: CircularProgressIndicator()),
               )
-              : Text("Not Found"),
+              : Text(l10n.notFound),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/follow/follow_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/core/model/team_data.dart';
@@ -32,6 +33,8 @@ class MatchHeader extends ConsumerWidget {
 
   /// รับ notifier มาแทน ref เพราะ watch ไว้ที่ build ครั้งเดียวพอ ใช้ร่วมกันทั้ง 2 ทีม
   Widget _team(BuildContext context, FollowNotifier follow, TeamData team) {
+    final l10n = AppLocalizations.of(context);
+
     final isOn = follow.isFollow(team.teamId);
 
     return Column(
@@ -51,14 +54,13 @@ class MatchHeader extends ConsumerWidget {
         ),
         IconButton(
           onPressed:
-              () =>
-                  isOn ? follow.untoggle(team.teamId) : follow.toggle(team),
+              () => isOn ? follow.untoggle(team.teamId) : follow.toggle(team),
           icon: Icon(
             isOn ? Icons.star : Icons.star_border,
             color: isOn ? AppColors.gold : AppColors.grey,
             size: 22,
           ),
-          tooltip: isOn ? "Unfollow" : "Follow",
+          tooltip: isOn ? l10n.unfollow : l10n.follow,
         ),
       ],
     );
@@ -66,6 +68,7 @@ class MatchHeader extends ConsumerWidget {
 
   /// เปิด Live ของ app นั้น
   Future<void> _openStream(BuildContext context, String url) async {
+    final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     var opened = false;
 
@@ -79,9 +82,7 @@ class MatchHeader extends ConsumerWidget {
     }
 
     if (!opened) {
-      messenger.showSnackBar(
-        const SnackBar(content: Text("Can't open stream link")),
-      );
+      messenger.showSnackBar(SnackBar(content: Text(l10n.cantOpenStream)));
     }
   }
 
@@ -96,6 +97,7 @@ class MatchHeader extends ConsumerWidget {
     // watch = follow แล้ว icon เปลี่ยน
     ref.watch(followProvider);
     final follow = ref.read(followProvider.notifier);
+    final l10n = AppLocalizations.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,10 +169,7 @@ class MatchHeader extends ConsumerWidget {
                       streamUrl == null || streamUrl.isEmpty
                           ? null
                           : () => _openStream(context, streamUrl),
-                  label: const Text(
-                    "Stream URL",
-                    style: TextStyle(fontSize: 12),
-                  ),
+                  label: Text(l10n.streamUrl, style: TextStyle(fontSize: 12)),
                 ),
               ],
             ),

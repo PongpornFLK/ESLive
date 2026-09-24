@@ -25,11 +25,17 @@ class ProfileUpdate(BaseModel):
     notify_before_minutes: int | None = None
 
 
-class FollowTeamOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
+class FollowTeamIn(BaseModel):
+    # ตอน POST client ส่งมาแค่ว่าจะตามทีมไหน profile_id มาจาก token ไม่ใช่จาก body
     team_id: uuid.UUID
-    created_at: datetime
+
+
+class FollowTeamOut(BaseModel):
+    # ไม่ใช้ from_attributes เพราะประกอบเป็น dict เองจาก join follow_team + team
+    # ชื่อคีย์ตรงกับที่ FollowData.fromjson ฝั่ง Flutter อ่านอยู่แล้ว
+    team_id: uuid.UUID
+    team_name: str
+    logo_url: str | None
 
 
 class FollowPlayerOut(BaseModel):

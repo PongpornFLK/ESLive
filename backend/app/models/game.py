@@ -34,20 +34,6 @@ class Team(Base):
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
 
     game: Mapped["Game"] = relationship(back_populates="teams")
-    players: Mapped[list["Player"]] = relationship(back_populates="team")
-
-
-class Player(Base):
-    __tablename__ = "player"
-
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    team_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("team.id"), nullable=False)
-    handle: Mapped[str] = mapped_column(String, nullable=False)
-    pandascore_id: Mapped[int | None] = mapped_column(BigInteger, unique=True)
-    riot_id: Mapped[str | None] = mapped_column(String, unique=True)
-    created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
-
-    team: Mapped["Team"] = relationship(back_populates="players")
 
 
 class Tournament(Base):

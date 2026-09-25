@@ -75,7 +75,8 @@ class MatchAnalysis(Base):
     )
     win_pct_a: Mapped[float | None] = mapped_column(Numeric)
     win_pct_b: Mapped[float | None] = mapped_column(Numeric)
-    reasoning: Mapped[str | None] = mapped_column(Text)
+    reasoning_eng: Mapped[str | None] = mapped_column(Text)
+    reasoning_th: Mapped[str | None] = mapped_column(Text)
     key_players: Mapped[dict | None] = mapped_column(JSONB)
     generated_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))
 
@@ -92,7 +93,8 @@ class PatchNote(Base):
     version: Mapped[str] = mapped_column(String, nullable=False)
     raw_source_url: Mapped[str | None] = mapped_column(String)
     raw_content: Mapped[str | None] = mapped_column(Text)
-    ai_summary: Mapped[str | None] = mapped_column(Text)
+    ai_summary_eng: Mapped[str | None] = mapped_column(Text)
+    ai_summary_th: Mapped[str | None] = mapped_column(Text)
     status: Mapped[AnalysisStatus] = mapped_column(
         analysis_status_type, nullable=False, default=AnalysisStatus.pending
     )

@@ -54,7 +54,12 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
                     logoTeamBUrl: widget.match.teamB.logoUrl ?? "",
                   ),
                   SizedBox(height: 15),
-                  AnalysisBox(reason: widget.match.matchAnalyze?.reason),
+                  AnalysisBox(
+                    // Localizations.localeOf อ่านภาษาจาก MaterialApp
+                    reason: widget.match.matchAnalyze?.reasonFor(
+                      Localizations.localeOf(context).languageCode,
+                    ),
+                  ),
                   SizedBox(height: 15),
                   Text(
                     l10n.latestMatches(5),

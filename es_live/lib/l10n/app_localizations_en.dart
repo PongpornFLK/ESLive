@@ -143,6 +143,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAll => 'View All';
 
   @override
+  String get viewSource => 'Open source page';
+
+  @override
+  String get cantOpenLink => 'Can\'t open link';
+
+  @override
   String patchVersion(String version) {
     return 'Patch $version';
   }

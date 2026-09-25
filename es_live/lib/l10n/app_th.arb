@@ -48,6 +48,8 @@
   "noHistoryInSystem": "ไม่มีประวัติการแข่งในระบบ",
 
   "viewAll": "ดูทั้งหมด",
+  "viewSource": "เปิดหน้าต้นฉบับ",
+  "cantOpenLink": "เปิดลิงก์ไม่ได้",
   "patchVersion": "แพตช์ {version}",
 
   "teamCount": "{count, plural, =0{ไม่มีทีม} other{{count} ทีม}}",

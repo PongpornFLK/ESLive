@@ -94,8 +94,8 @@ class PatchCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             "$summary",
-            overflow: TextOverflow.ellipsis,
-            maxLines: 5,
+            // overflow: TextOverflow.ellipsis,
+            // maxLines: 5,
             style: const TextStyle(height: 1.4),
           ),
           Align(

@@ -4,7 +4,8 @@ class PatchData {
   final String version;
   final GameData game;
   final String? time;
-  final String? summary;
+  final String? summaryEng;
+  final String? summaryTh;
   final String content;
   final String? url;
 
@@ -12,7 +13,8 @@ class PatchData {
     required this.version,
     required this.time,
     required this.game,
-    required this.summary,
+    required this.summaryEng,
+    required this.summaryTh,
     required this.content,
     required this.url,
   });
@@ -22,9 +24,17 @@ class PatchData {
       game: GameData.fromjson(json['game']),
       time: json['published_at'],
       version: json['version'],
-      summary: json['ai_summary'],
+      summaryEng: json['ai_summary_eng'],
+      summaryTh: json['ai_summary_th'],
       content: json['raw_content'],
-      url: json['raw_source_url']
+      url: json['raw_source_url'],
     );
+  }
+
+  /// เลือกข้อความตามภาษาที่ผู้ใช้เลือกอยู่ ไม่มีก็ใช้อังกฤษ
+  String? summaryFor(String langCode) {
+    if (langCode == 'th') return summaryTh ?? summaryEng;
+
+    return summaryEng;
   }
 }

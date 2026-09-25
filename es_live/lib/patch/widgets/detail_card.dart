@@ -2,6 +2,7 @@ import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailCard extends StatelessWidget {
   final String gameName;
@@ -22,6 +23,29 @@ class DetailCard extends StatelessWidget {
     required this.content,
     required this.url,
   });
+
+  /// เปิดหน้าต้นฉบับในเบราว์เซอร์ ท่าเดียวกับปุ่ม Stream URL ใน match_header
+  Future<void> _openSource(
+    BuildContext context,
+    String link,
+    String error,
+  ) async {
+    final messenger = ScaffoldMessenger.of(context);
+    var opened = false;
+
+    try {
+      opened = await launchUrl(
+        Uri.parse(link),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (_) {
+      opened = false;
+    }
+
+    if (!opened) {
+      messenger.showSnackBar(SnackBar(content: Text(error)));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +98,31 @@ class DetailCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          Text(
-            l10n.patchVersion(version),
-            style: TextStyle(
-              color: AppColors.orange,
-              fontWeight: FontWeight.w600,
-              fontSize: 18,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  l10n.patchVersion(version),
+                  style: const TextStyle(
+                    color: AppColors.orange,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              IconButton(
+                // ไม่มีลิงก์ = onPressed เป็น null Flutter หรี่สีให้เอง
+                onPressed:
+                    (url == null || url!.isEmpty)
+                        ? null
+                        : () => _openSource(context, url!, l10n.cantOpenLink),
+                icon: const Icon(Icons.open_in_new_rounded, size: 20),
+                color: AppColors.orange,
+                tooltip: l10n.viewSource,
+                visualDensity: VisualDensity.compact,
+              ),
+            ],
           ),
           const SizedBox(height: 6),
           MarkdownBody(

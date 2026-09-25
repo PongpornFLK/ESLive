@@ -143,6 +143,12 @@ class AppLocalizationsTh extends AppLocalizations {
   String get viewAll => 'ดูทั้งหมด';
 
   @override
+  String get viewSource => 'เปิดหน้าต้นฉบับ';
+
+  @override
+  String get cantOpenLink => 'เปิดลิงก์ไม่ได้';
+
+  @override
   String patchVersion(String version) {
     return 'แพตช์ $version';
   }

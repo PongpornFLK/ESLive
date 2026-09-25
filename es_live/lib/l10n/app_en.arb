@@ -64,6 +64,8 @@
   "noHistoryInSystem": "No match history in the system",
 
   "viewAll": "View All",
+  "viewSource": "Open source page",
+  "cantOpenLink": "Can't open link",
   "patchVersion": "Patch {version}",
   "@patchVersion": {
     "description": "หัวข้อแพตช์",

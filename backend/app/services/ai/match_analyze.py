@@ -148,7 +148,8 @@ def checkStatus(db: Session, match_id: uuid.UUID):
             match_ai.win_pct_a = raw["win_pct_a"]
             match_ai.win_pct_b = raw["win_pct_b"]
             match_ai.status = "ready"
-            match_ai.reasoning = raw["reasoning"]
+            match_ai.reasoning_eng = raw["reasoning_eng"]
+            match_ai.reasoning_th = raw["reasoning_th"]
             match_ai.generated_at = datetime.now(timezone.utc)
 
     except Exception as e:

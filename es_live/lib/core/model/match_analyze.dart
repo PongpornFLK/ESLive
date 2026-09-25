@@ -1,13 +1,15 @@
 class MatchAnalyzeData {
   final double? winRateA;
   final double? winRateB;
-  final String? reason;
+  final String? reasonEng;
+  final String? reasonTh;
   final String status;
 
   const MatchAnalyzeData({
     required this.winRateA,
     required this.winRateB,
-    required this.reason,
+    required this.reasonEng,
+    required this.reasonTh,
     required this.status,
   });
 
@@ -15,8 +17,16 @@ class MatchAnalyzeData {
     return MatchAnalyzeData(
       winRateA: json["win_pct_a"],
       winRateB: json["win_pct_b"],
-      reason: json["reasoning"],
+      reasonEng: json["reasoning_eng"],
+      reasonTh: json["reasoning_th"],
       status: json["status"],
     );
+  }
+
+  /// เลือกข้อความตามภาษาที่ผู้ใช้เลือกอยู่
+  String? reasonFor(String langCode) {
+    if (langCode == 'th') return reasonTh ?? reasonEng;
+
+    return reasonEng;
   }
 }

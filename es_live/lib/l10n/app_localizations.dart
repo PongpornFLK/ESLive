@@ -341,6 +341,18 @@ abstract class AppLocalizations {
   /// **'View All'**
   String get viewAll;
 
+  /// No description provided for @viewSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source page'**
+  String get viewSource;
+
+  /// No description provided for @cantOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t open link'**
+  String get cantOpenLink;
+
   /// หัวข้อแพตช์
   ///
   /// In en, this message translates to:

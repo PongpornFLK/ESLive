@@ -38,7 +38,11 @@ class _PatchState extends ConsumerState<Patch> {
                                           ? "assests/img/list_game/valorant.png"
                                           : "assests/img/error/err.png",
                                   time: g.time ?? "-",
-                                  summary: g.summary,
+                                  summary: g.summaryFor(
+                                    Localizations.localeOf(
+                                      context,
+                                    ).languageCode,
+                                  ),
                                   version: g.version,
                                   content: g.content,
                                   url: g.url,

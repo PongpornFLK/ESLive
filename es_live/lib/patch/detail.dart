@@ -48,7 +48,7 @@ class PatchDetail extends StatelessWidget {
               time: time,
               content: content,
               version: version,
-              url : url
+              url: url,
             ),
           ],
         ),

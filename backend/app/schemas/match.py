@@ -13,7 +13,8 @@ class MatchAnalysisOut(BaseModel):
     status: AnalysisStatus
     win_pct_a: float | None
     win_pct_b: float | None
-    reasoning: str | None
+    reasoning_eng: str | None
+    reasoning_th: str | None
     key_players: dict | None
     generated_at: datetime | None
 
@@ -58,7 +59,8 @@ class PatchNoteOut(BaseModel):
     id: uuid.UUID
     game: GameOut
     version: str
-    ai_summary: str | None
+    ai_summary_eng: str | None
+    ai_summary_th: str | None
     raw_content: str
     raw_source_url: str | None
     status: AnalysisStatus

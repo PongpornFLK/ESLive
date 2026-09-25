@@ -38,8 +38,4 @@ class FollowTeamOut(BaseModel):
     logo_url: str | None
 
 
-class FollowPlayerOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
 
-    player_id: uuid.UUID
-    created_at: datetime

@@ -47,14 +47,6 @@ class FollowTeam(Base):
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
 
 
-class FollowPlayer(Base):
-    __tablename__ = "follow_player"
-
-    profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"), primary_key=True)
-    player_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("player.id"), primary_key=True)
-    created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
-
-
 class MatchNotificationOverride(Base):
     __tablename__ = "match_notification_override"
 

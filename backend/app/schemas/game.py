@@ -25,15 +25,6 @@ class TeamOut(BaseModel):
     created_at: datetime
 
 
-class PlayerOut(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: uuid.UUID
-    team_id: uuid.UUID
-    handle: str
-    created_at: datetime
-
-
 class TournamentOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

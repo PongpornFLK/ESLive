@@ -42,6 +42,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notFound => 'Not Found';
 
   @override
+  String get noLiveNow => 'No live match right now';
+
+  @override
+  String liveCountNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count MATCHES LIVE STREAM NOW!',
+      one: '1 MATCH LIVE STREAM NOW!',
+      zero: 'NO MATCH LIVE STREAM NOW!',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get signIn => 'SIGN IN';
 
   @override
@@ -152,6 +167,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String patchVersion(String version) {
     return 'Patch $version';
   }
+
+  @override
+  String get noSummaryYet => 'AI summary in progress';
 
   @override
   String teamCount(int count) {

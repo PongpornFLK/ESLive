@@ -42,6 +42,20 @@ class AppLocalizationsTh extends AppLocalizations {
   String get notFound => 'ไม่พบข้อมูล';
 
   @override
+  String get noLiveNow => 'ยังไม่มีการไลฟ์สดตอนนี้';
+
+  @override
+  String liveCountNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'กำลังไลฟ์สด $count แมตช์!',
+      zero: 'ยังไม่มีการไลฟ์สดตอนนี้!',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get signIn => 'เข้าสู่ระบบ';
 
   @override
@@ -152,6 +166,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String patchVersion(String version) {
     return 'แพตช์ $version';
   }
+
+  @override
+  String get noSummaryYet => 'กำลังสรุปอยู่ รอสักครู่';
 
   @override
   String teamCount(int count) {

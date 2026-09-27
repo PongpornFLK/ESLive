@@ -38,27 +38,21 @@ class _FollowState extends ConsumerState<Follow> {
     return mine.first;
   }
 
+  /// กล่องกลางจอสำหรับข้อความสั้น ๆ ใช้ร่วมกันทั้ง ว่าง / กำลังโหลด / error
+  Widget _notice(Widget child) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 30),
+    child: Center(child: child),
+  );
+
   @override
   Widget build(BuildContext context) {
-    final follows = ref.watch(followProvider).value ?? [];
+    // เก็บทั้งก้อนไว้ ไม่ดึง .value ออกมาเลย จะได้แยก loading กับ ว่าง ออกจากกันได้
+    final followAsync = ref.watch(followProvider);
     final matchAsync = ref.watch(matchProvider);
     final l10n = AppLocalizations.of(context);
 
     // ยังโหลดแมตช์ไม่เสร็จก็แสดงรายชื่อทีมไปก่อน บรรทัดนัดหน้าค่อยเติมทีหลัง
     final matches = matchAsync.value ?? [];
-
-    // ทีมที่มีนัดใกล้สุดอยู่บน ทีมที่ไม่มีนัดตกไปท้ายสุด
-    final sorted = [...follows];
-    sorted.sort((a, b) {
-      final na = _nextMatch(a.teamId, matches);
-      final nb = _nextMatch(b.teamId, matches);
-
-      if (na == null && nb == null) return 0;
-      if (na == null) return 1;
-      if (nb == null) return -1;
-
-      return DateTime.parse(na.beginAt).compareTo(DateTime.parse(nb.beginAt));
-    });
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(15),
@@ -88,27 +82,59 @@ class _FollowState extends ConsumerState<Follow> {
               ),
             ),
 
-          if (sorted.isEmpty)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: Center(
-                child: Text(
-                  l10n.notFollowingYet,
-                  style: const TextStyle(color: AppColors.grey),
+          followAsync.when(
+            data: (follows) {
+              // ทีมที่มีนัดใกล้สุดอยู่บน ทีมที่ไม่มีนัดตกไปท้ายสุด
+              final sorted = [...follows];
+              sorted.sort((a, b) {
+                final na = _nextMatch(a.teamId, matches);
+                final nb = _nextMatch(b.teamId, matches);
+
+                if (na == null && nb == null) return 0;
+                if (na == null) return 1;
+                if (nb == null) return -1;
+
+                return DateTime.parse(
+                  na.beginAt,
+                ).compareTo(DateTime.parse(nb.beginAt));
+              });
+
+              if (sorted.isEmpty) {
+                return _notice(
+                  Text(
+                    l10n.notFollowingYet,
+                    style: const TextStyle(color: AppColors.grey),
+                  ),
+                );
+              }
+
+              return Column(
+                children:
+                    sorted
+                        .map(
+                          (f) => FollowCard(
+                            teamId: f.teamId,
+                            teamName: f.teamName,
+                            logoUrl: f.logoUrl,
+                            nextMatch: _nextMatch(f.teamId, matches),
+                            onRemove:
+                                () => ref
+                                    .read(followProvider.notifier)
+                                    .untoggle(f.teamId),
+                          ),
+                        )
+                        .toList(),
+              );
+            },
+            loading: () => _notice(const CircularProgressIndicator()),
+            error:
+                (error, stackTrace) => _notice(
+                  Text(
+                    l10n.somethingWrong,
+                    style: const TextStyle(color: AppColors.red),
+                  ),
                 ),
-              ),
-            )
-          else
-            ...sorted.map(
-              (f) => FollowCard(
-                teamId: f.teamId,
-                teamName: f.teamName,
-                logoUrl: f.logoUrl,
-                nextMatch: _nextMatch(f.teamId, matches),
-                onRemove:
-                    () => ref.read(followProvider.notifier).untoggle(f.teamId),
-              ),
-            ),
+          ),
         ],
       ),
     );

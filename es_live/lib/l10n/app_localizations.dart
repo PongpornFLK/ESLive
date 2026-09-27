@@ -161,6 +161,18 @@ abstract class AppLocalizations {
   /// **'Not Found'**
   String get notFound;
 
+  /// No description provided for @noLiveNow.
+  ///
+  /// In en, this message translates to:
+  /// **'No live match right now'**
+  String get noLiveNow;
+
+  /// ข้อความแดงบนหน้า splash บอกจำนวนแมตช์ที่กำลังไลฟ์
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{NO MATCH LIVE STREAM NOW!} =1{1 MATCH LIVE STREAM NOW!} other{{count} MATCHES LIVE STREAM NOW!}}'**
+  String liveCountNow(int count);
+
   /// No description provided for @signIn.
   ///
   /// In en, this message translates to:
@@ -358,6 +370,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patch {version}'**
   String patchVersion(String version);
+
+  /// No description provided for @noSummaryYet.
+  ///
+  /// In en, this message translates to:
+  /// **'AI summary in progress'**
+  String get noSummaryYet;
 
   /// จำนวนทีมในทัวร์นาเมนต์ รูปเอกพจน์พหูพจน์ต่างกันในภาษาอังกฤษ
   ///

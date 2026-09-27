@@ -7,6 +7,7 @@ import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/core/lang/locale_pro.dart';
 import 'package:es_live/core/theme/theme_pro.dart';
 import 'package:es_live/l10n/app_localizations.dart';
+import 'package:es_live/widgets/live_count_text.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'firebase_options.dart';
@@ -121,15 +122,7 @@ class MyApp extends ConsumerWidget {
                   bottom: 50,
                   left: 0,
                   right: 0,
-                  child: Center(
-                    child: Text(
-                      "2 MATCH LIVE STREAM NOW!",
-                      style: TextStyle(
-                        color: AppColors.red,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
+                  child: const Center(child: LiveCountText()),
                 ),
               ],
             ),

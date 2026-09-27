@@ -29,12 +29,16 @@ class PatchCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
 
     final t = time;
+    final s = summary;
     final patchTime =
         t == null
             ? "--/--/--"
             : DateFormat(
               'HH.mm - dd/MM/yyyy',
             ).format(DateTime.parse(t).toLocal());
+
+    // patch ที่เพิ่งดึงมาเป็น pending
+    final summaryText = (s == null || s.isEmpty) ? l10n.noSummaryYet : s;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -93,7 +97,7 @@ class PatchCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            "$summary",
+            summaryText,
             // overflow: TextOverflow.ellipsis,
             // maxLines: 5,
             style: const TextStyle(height: 1.4),

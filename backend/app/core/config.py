@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     firebase_project_id: str = ""
     pandascore_api_key: str = ""
+    cron_job_key : str = ""
 
 
 settings = Settings()

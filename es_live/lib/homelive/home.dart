@@ -1,27 +1,16 @@
 import 'package:es_live/l10n/app_localizations.dart';
-import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/homelive/widgets/list_game.dart';
-import 'package:es_live/homelive/widgets/match_card.dart';
+import 'package:es_live/homelive/widgets/match_section.dart';
 import 'package:es_live/widgets/live_circle.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/model/game_data.dart';
 
-class Home extends ConsumerStatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  ConsumerState<Home> createState() => _HomeState();
-}
-
-class _HomeState extends ConsumerState<Home> {
-  bool isHaveLive = true;
-  bool isHaveComingSoon = true;
-
-  @override
   Widget build(BuildContext context) {
-    final matchAsync = ref.watch(matchProvider);
     final l10n = AppLocalizations.of(context);
 
     return SingleChildScrollView(
@@ -67,41 +56,7 @@ class _HomeState extends ConsumerState<Home> {
                 LiveCircle(),
               ],
             ),
-            isHaveLive
-                ? matchAsync.when(
-                  data:
-                      (match) => Column(
-                        children:
-                            match
-                                .where((m) => m.status == "live")
-                                .map(
-                                  (m) => MatchCard(
-                                    gameName: m.game.gameName,
-                                    leagueName:
-                                        m.tournament.leagueName ??
-                                        m.tournament.tourName,
-                                    teamAName: m.teamA.teamName,
-                                    teamBName: m.teamB.teamName,
-                                    scoreA: m.scoreA,
-                                    scoreB: m.scoreB,
-                                    isLive: true,
-                                    time: m.beginAt,
-                                    logoTeamA: m.teamA.logoUrl,
-                                    logoTeamB: m.teamB.logoUrl,
-                                    match: m,
-                                  ),
-                                )
-                                .toList(),
-                      ),
-                  loading: () => const CircularProgressIndicator(),
-                  error: (error, stackTrace) => Text('$error'),
-                )
-                : Center(
-                  child: Text(
-                    l10n.notFound,
-                    style: TextStyle(color: AppColors.grey),
-                  ),
-                ),
+            MatchSection(status: "live", emptyText: l10n.noLiveNow),
             Divider(),
             Row(
               children: [
@@ -114,41 +69,7 @@ class _HomeState extends ConsumerState<Home> {
                 ),
               ],
             ),
-            isHaveComingSoon
-                ? matchAsync.when(
-                  data:
-                      (match) => Column(
-                        children:
-                            match
-                                .where((m) => m.status == "upcoming")
-                                .map(
-                                  (m) => MatchCard(
-                                    gameName: m.game.gameName,
-                                    leagueName:
-                                        m.tournament.leagueName ??
-                                        m.tournament.tourName,
-                                    teamAName: m.teamA.teamName,
-                                    teamBName: m.teamB.teamName,
-                                    scoreA: m.scoreA,
-                                    scoreB: m.scoreB,
-                                    isLive: false,
-                                    time: m.beginAt,
-                                    logoTeamA: m.teamA.logoUrl,
-                                    logoTeamB: m.teamB.logoUrl,
-                                    match: m,
-                                  ),
-                                )
-                                .toList(),
-                      ),
-                  error: (error, stackTrace) => Text("$error"),
-                  loading: () => CircularProgressIndicator(),
-                )
-                : Center(
-                  child: Text(
-                    l10n.notFound,
-                    style: TextStyle(color: AppColors.grey),
-                  ),
-                ),
+            MatchSection(status: "upcoming", emptyText: l10n.noUpcomingMatch),
           ],
         ),
       ),

@@ -1,12 +1,11 @@
+import 'package:es_live/_service/noti/noti.dart';
 import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/auth_service/auth.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:flutter/material.dart';
 
-/// แถวบัญชี + ปุ่มออกจากระบบ ใช้ใน _SectionCard ของหน้า Setting
-///
-/// เป็น StatefulWidget เพราะต้องมี _busy ระหว่างรอ server
-/// แยกออกมาเพื่อให้ rebuild แค่แถวนี้ ไม่ลากทั้งหน้า Setting
+/// Account + SignOut ( Stateful เพราะต้องมี _busy ระหว่างรอ server )
+/// แยกออกมาเพื่อให้ rebuild แค่แถวนี้ ไม่ลากทั้งหน้า
 class AccountTile extends StatefulWidget {
   const AccountTile({super.key});
 
@@ -46,9 +45,13 @@ class _AccountTileState extends State<AccountTile> {
     if (ok != true) return;
 
     setState(() => _busy = true);
+
+    try {
+      await removeNoti();
+    } catch (_) {}
+
     try {
       // สำเร็จแล้วไม่ต้อง Navigator เพราะ AuthGate ฟัง onAuthStateChange
-      // แล้วสลับกลับไปหน้า Login ให้เอง
       await authen.signOut();
     } catch (e) {
       if (mounted) {

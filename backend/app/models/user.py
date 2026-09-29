@@ -41,15 +41,24 @@ class Profile(Base):
 
 class FollowTeam(Base):
     __tablename__ = "follow_team"
-
+    
     profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"), primary_key=True)
     team_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("team.id"), primary_key=True)
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
 
 
+# user อยากให้ส่ง noti ไหม
 class MatchNotificationOverride(Base):
     __tablename__ = "match_notification_override"
 
     profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"), primary_key=True)
     match_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("match.id"), primary_key=True)
     enabled: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+# ส่งไปเครื่องไหน
+class DeviceToken(Base):
+    __tablename__ = "device_token"
+    
+    token : Mapped[str] = mapped_column(primary_key=True)
+    profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"),nullable=False)
+    created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())

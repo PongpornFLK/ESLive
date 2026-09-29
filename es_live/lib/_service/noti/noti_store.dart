@@ -5,8 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const _listKey = 'noti_list';
 const _unreadKey = 'noti_unread';
+const _enabledKey = 'noti_enabled';
 
-/// เก็บไว้ 30 
+/// เก็บไว้ 30
 const _maxKeep = 30;
 
 Future<List<NotiItem>> getAll() async {
@@ -36,4 +37,15 @@ Future<bool> getUnread() async {
 Future<void> setUnread(bool value) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setBool(_unreadKey, value);
+}
+
+/// Setting ผู้ใช้เปิดรับแจ้งเตือนบนเครื่องนี้อยู่ไหม ยังไม่เคยตั้ง = เปิด
+Future<bool> getEnabled() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool(_enabledKey) ?? true;
+}
+
+Future<void> setEnabled(bool value) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool(_enabledKey, value);
 }

@@ -51,6 +51,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clearAll => 'Clear all';
 
   @override
+  String get notiSubtitle => 'Alerts before a match starts';
+
+  @override
+  String get notiOn => 'On';
+
+  @override
+  String get notiOnDetail => 'Get alerts on this device';
+
+  @override
+  String get notiOff => 'Off';
+
+  @override
+  String get notiOffDetail => 'No alerts on this device';
+
+  @override
   String get noLiveNow => 'No live match right now';
 
   @override

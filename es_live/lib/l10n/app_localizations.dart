@@ -179,6 +179,36 @@ abstract class AppLocalizations {
   /// **'Clear all'**
   String get clearAll;
 
+  /// No description provided for @notiSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts before a match starts'**
+  String get notiSubtitle;
+
+  /// No description provided for @notiOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get notiOn;
+
+  /// No description provided for @notiOnDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Get alerts on this device'**
+  String get notiOnDetail;
+
+  /// No description provided for @notiOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notiOff;
+
+  /// No description provided for @notiOffDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'No alerts on this device'**
+  String get notiOffDetail;
+
   /// No description provided for @noLiveNow.
   ///
   /// In en, this message translates to:

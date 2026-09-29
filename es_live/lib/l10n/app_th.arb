@@ -16,6 +16,11 @@
   "notifications": "การแจ้งเตือน",
   "noNotiYet": "ยังไม่มีการแจ้งเตือน",
   "clearAll": "ล้างทั้งหมด",
+  "notiSubtitle": "แจ้งเตือนก่อนแมตช์เริ่ม",
+  "notiOn": "เปิด",
+  "notiOnDetail": "รับแจ้งเตือนบนเครื่องนี้",
+  "notiOff": "ปิด",
+  "notiOffDetail": "ไม่รับแจ้งเตือนบนเครื่องนี้",
   "noLiveNow": "ยังไม่มีการไลฟ์สดตอนนี้",
   "liveCountNow": "{count, plural, =0{ยังไม่มีการไลฟ์สดตอนนี้!} other{กำลังไลฟ์สด {count} แมตช์!}}",
 

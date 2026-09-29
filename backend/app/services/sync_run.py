@@ -127,7 +127,9 @@ def syncNotify(db):
     sent = dead = 0
     for item in due:
         for token in item["tokens"]:
-            if sendPush(token, item["title"], item["body"]):
+            # แนบ match_id
+            payload = {"match_id": str(item["match_id"])}
+            if sendPush(token, item["title"], item["body"], payload):
                 sent += 1
             else:
                 # sendPush คืน False เฉพาะตอน token ตายถาวร ลบทิ้งไม่ให้ค้าง

@@ -1,9 +1,11 @@
+import 'package:es_live/_service/noti/noti_switch_pro.dart';
 import 'package:es_live/core/lang/locale_pro.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/core/theme/theme_pro.dart';
 import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/set/widgets/account_tile.dart';
 import 'package:es_live/set/widgets/lang_tile.dart';
+import 'package:es_live/set/widgets/noti_tile.dart';
 import 'package:es_live/set/widgets/section_card.dart';
 import 'package:es_live/set/widgets/theme_tile.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class Setting extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
+    final notiOn = ref.watch(notiSwitchProvider);
     final l10n = AppLocalizations.of(context);
 
     return ListView(
@@ -78,6 +81,28 @@ class Setting extends ConsumerWidget {
               current: locale,
               label: l10n.langThai,
               detail: l10n.langThaiDetail,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        SectionCard(
+          title: l10n.notifications,
+          subtitle: l10n.notiSubtitle,
+          children: [
+            NotiTile(
+              value: true,
+              current: notiOn,
+              icon: Icons.notifications_active_rounded,
+              label: l10n.notiOn,
+              detail: l10n.notiOnDetail,
+            ),
+            NotiTile(
+              value: false,
+              current: notiOn,
+              icon: Icons.notifications_off_rounded,
+              label: l10n.notiOff,
+              detail: l10n.notiOffDetail,
             ),
           ],
         ),

@@ -1,5 +1,5 @@
+import 'package:es_live/noti/widgets/noti_bell.dart';
 import 'package:flutter/material.dart';
-import 'package:es_live/core/theme/root_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -39,22 +39,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ],
             ),
-            ShaderMask(
-              shaderCallback:
-                  (bounds) => LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [AppColors.gold, AppColors.orange],
-                  ).createShader(bounds),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                constraints: BoxConstraints(),
-                onPressed: () {},
-                // ต้องเป็นสีขาวเสมอ ไม่ใช่สีของธีม เพราะ ShaderMask เอาสีนี้
-                // ไปคูณกับสีไล่ระดับ สีขาวคูณแล้วได้สีไล่ระดับเดิม สีเข้มจะทำให้หม่น
-                icon: Icon(Icons.notifications, color: Colors.white, size: 28),
-              ),
-            ),
+            const NotiBell(),
           ],
         ),
       ),

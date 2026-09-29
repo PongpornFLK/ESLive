@@ -19,12 +19,19 @@ def _init() -> None:
 
 
 # ส่ง Noti -> MyPhone
-def sendPush(token: str, title: str, body: str) -> bool:
+def sendPush(token: str, title: str, body: str, data: dict | None = None) -> bool:
     _init()
 
+    # noti = สิ่งที่เห็น  data = โค้ดอ่าน
+    # data ต้อง str ทุกตัว FCM เท่านั้น
     msg = messaging.Message(
         token=token,
         notification=messaging.Notification(title=title, body=body),
+        data=data or {},
+        android=messaging.AndroidConfig(
+            priority="high",
+            notification=messaging.AndroidNotification(channel_id="eslive_match"),
+        ),
     )
 
     try:

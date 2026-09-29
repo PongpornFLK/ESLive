@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     firebase_project_id: str = ""
     pandascore_api_key: str = ""
     cron_job_key : str = ""
+    firebase_credentials: str = ""
 
 
 settings = Settings()

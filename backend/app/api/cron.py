@@ -47,7 +47,9 @@ def runCron(
         )
 
     # ด่าน 3 รอบก่อนทำงานอยู่
-    if _running:
+    # notify ไม่ต้องรอ เพราะอ่านคนละตารางกับ sync และต้องยิงทุก 10 นาทีให้ตรงเวลา
+    # ถ้าเข้าคิวด้วยจะโดน 409 ทุกครั้งที่ชน match ที่กินเวลา 131 วินาที
+    if _running and set(names) != {"notify"}:
         raise HTTPException(status_code=409, detail="sync รอบก่อนยังทำงานอยู่")
 
     tasks.add_task(_runInBackground, names)

@@ -42,6 +42,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notFound => 'Not Found';
 
   @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get noNotiYet => 'No notifications yet';
+
+  @override
+  String get clearAll => 'Clear all';
+
+  @override
   String get noLiveNow => 'No live match right now';
 
   @override

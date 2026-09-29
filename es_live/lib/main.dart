@@ -1,4 +1,5 @@
 import 'package:es_live/_service/auth_service/gate.dart';
+import 'package:es_live/core/config/nav_key.dart';
 import 'package:es_live/core/config/supabase_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class MyApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
 
     return MaterialApp(
+      navigatorKey: navigatorKey, // ให้ noti เปิดหน้าใหม่ได้จากที่ที่ไม่มี BuildContext
       title: "Homepage",
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,

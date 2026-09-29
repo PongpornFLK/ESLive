@@ -13,6 +13,9 @@
   "live": "Live!",
   "comingSoon": "Coming Soon",
   "notFound": "Not Found",
+  "notifications": "Notifications",
+  "noNotiYet": "No notifications yet",
+  "clearAll": "Clear all",
   "noLiveNow": "No live match right now",
   "liveCountNow": "{count, plural, =0{NO MATCH LIVE STREAM NOW!} =1{1 MATCH LIVE STREAM NOW!} other{{count} MATCHES LIVE STREAM NOW!}}",
   "@liveCountNow": {

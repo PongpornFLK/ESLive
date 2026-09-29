@@ -13,6 +13,9 @@
   "live": "สด!",
   "comingSoon": "กำลังจะแข่ง",
   "notFound": "ไม่พบข้อมูล",
+  "notifications": "การแจ้งเตือน",
+  "noNotiYet": "ยังไม่มีการแจ้งเตือน",
+  "clearAll": "ล้างทั้งหมด",
   "noLiveNow": "ยังไม่มีการไลฟ์สดตอนนี้",
   "liveCountNow": "{count, plural, =0{ยังไม่มีการไลฟ์สดตอนนี้!} other{กำลังไลฟ์สด {count} แมตช์!}}",
 

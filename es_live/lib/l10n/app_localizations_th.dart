@@ -42,6 +42,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get notFound => 'ไม่พบข้อมูล';
 
   @override
+  String get notifications => 'การแจ้งเตือน';
+
+  @override
+  String get noNotiYet => 'ยังไม่มีการแจ้งเตือน';
+
+  @override
+  String get clearAll => 'ล้างทั้งหมด';
+
+  @override
   String get noLiveNow => 'ยังไม่มีการไลฟ์สดตอนนี้';
 
   @override

@@ -62,3 +62,12 @@ class DeviceToken(Base):
     token : Mapped[str] = mapped_column(primary_key=True)
     profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"),nullable=False)
     created_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
+
+
+# จดว่าเคยเตือนคู่ไหนไปแล้ว กัน cron รอบถัดไปส่งซ้ำ
+class MatchNotified(Base):
+    __tablename__ = "match_notified"
+
+    profile_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("profiles.id"), primary_key=True)
+    match_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("match.id"), primary_key=True)
+    sent_at: Mapped[object] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())

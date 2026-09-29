@@ -111,17 +111,49 @@ def syncAnalysis(db):
     return f"วิเคราะห์ {len(todo)} แมตช์ สร้างแถวใหม่ {new}"
 
 
+def syncNotify(db):
+    """หาคนที่ถึงเวลาแล้วส่งแจ้งเตือน จดว่าส่งไปแล้ว และเก็บกวาด token ที่ตาย
+
+    ขั้นนี้ยิง FCM จริง เลยไม่รวมอยู่ในการรันแบบปกติ
+    ต้องสั่งชื่อ notify มาตรง ๆ หรือ all เท่านั้น
+    """
+    from app.models.user import DeviceToken, MatchNotified
+    from app.services.noti.find import findDue
+    from app.services.noti.push import sendPush
+
+    due = findDue(db)
+    print(f"  มี {len(due)} คนที่ถึงเวลาแจ้งเตือน")
+
+    sent = dead = 0
+    for item in due:
+        for token in item["tokens"]:
+            if sendPush(token, item["title"], item["body"]):
+                sent += 1
+            else:
+                # sendPush คืน False เฉพาะตอน token ตายถาวร ลบทิ้งไม่ให้ค้าง
+                db.query(DeviceToken).filter(DeviceToken.token == token).delete()
+                dead += 1
+
+        # จดไว้ว่าคู่นี้เตือนไปแล้ว รอบหน้า findDue จะข้ามให้เอง
+        db.add(MatchNotified(profile_id=item["profile_id"], match_id=item["match_id"]))
+
+    db.commit()
+    return f"เตือน {len(due)} คน ส่ง {sent} เครื่อง ลบ token ตาย {dead}"
+
+
 # ลำดับสำคัญ : tour ต้องมาก่อน match / patch ต้องมาก่อน summary
+# notify อยู่ท้ายสุด จะได้อ่านเวลาแมตช์ที่ match เพิ่งอัปเดตมา
 STEPS = [
     ("tour", syncTour),
     ("match", syncMatch),
     ("patch", syncPatch),
     ("summary", syncSummary),
     ("analysis", syncAnalysis),
+    ("notify", syncNotify),
 ]
 
-# ขั้นที่ใช้เงิน/โควต้า ไม่รันให้เองถ้าไม่สั่งชื่อมาตรง ๆ
-COSTLY = {"summary", "analysis"}
+# ขั้นที่ใช้เงิน/โควต้า หรือส่งของออกไปหาผู้ใช้จริง ไม่รันให้เองถ้าไม่สั่งชื่อมาตรง ๆ
+COSTLY = {"summary", "analysis", "notify"}
 
 def runSteps(names: list[str]) -> list[dict]:
     """รับชื่อขั้นตอน -> รันตามลำดับใน STEPS -> คืนผลของแต่ละขั้น

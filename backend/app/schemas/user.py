@@ -38,4 +38,5 @@ class FollowTeamOut(BaseModel):
     logo_url: str | None
 
 
-
+class DeviceTokenIn(BaseModel):    
+    token : str

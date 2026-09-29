@@ -1,3 +1,4 @@
+import 'package:es_live/_service/noti/noti.dart';
 import 'package:es_live/follow/follow.dart';
 import 'package:es_live/homelive/home.dart';
 import 'package:es_live/patch/patch.dart';
@@ -24,6 +25,12 @@ class _ScreenState extends State<Screen> {
     const Patch(),
     const Setting(),
   ];
+
+  @override
+  void initState(){
+    super.initState();
+    setupNoti();
+  }
 
   @override
   Widget build(BuildContext context) {

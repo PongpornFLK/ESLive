@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from app.core.auth import getCurrentUser
-from app.schemas.user import FollowTeamIn, FollowTeamOut
+from app.schemas.user import FollowTeamIn, FollowTeamOut, DeviceTokenIn
 from app.models.game import Team
-from app.models.user import FollowTeam
+from app.models.user import DeviceToken, FollowTeam
 from app.db import get_db
 
 router = APIRouter()
@@ -17,6 +17,7 @@ def readUser(user_id=Depends(getCurrentUser)):
     return {"user_id": str(user_id)}
 
 
+# FOLLOWER ---------------------------------------
 @router.get("/user/follow", response_model=list[FollowTeamOut])
 def readUserFollow(user_id=Depends(getCurrentUser), db: Session = Depends(get_db)):
 
@@ -69,6 +70,39 @@ def deleteFollow(
     db.query(FollowTeam).filter(
         FollowTeam.profile_id == user_id,
         FollowTeam.team_id == team_id,
+    ).delete()
+    db.commit()
+
+    return {"ok": True}
+
+
+# DEVICE TOKEN ---------------------------------------
+@router.post("/user/device")
+def createToken(
+    payload: DeviceTokenIn,
+    user_id=Depends(getCurrentUser),
+    db: Session = Depends(get_db),
+):
+
+    data = db.query(DeviceToken).filter(DeviceToken.token == payload.token).first()
+
+    if data is None:
+        db.add(DeviceToken(token=payload.token, profile_id=user_id))
+        db.commit()
+    elif data.profile_id != user_id:
+        data.profile_id = user_id
+        db.commit()
+
+    return {"ok": True}
+
+
+@router.delete("/user/device/{token}")
+def deleteToken(
+    token: str, user_id=Depends(getCurrentUser), db: Session = Depends(get_db)
+):
+
+    db.query(DeviceToken).filter(
+        and_(DeviceToken.token == token, DeviceToken.profile_id == user_id)
     ).delete()
     db.commit()
 

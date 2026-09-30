@@ -1,3 +1,4 @@
+import 'package:es_live/_service/user/user_store.dart' as user;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,9 @@ class LocaleNotifier extends Notifier<Locale> {
     state = locale;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_prefKey, locale.languageCode);
+
+    // server อ่านค่านี้ไปเลือกภาษาของข้อความแจ้งเตือน
+    await user.syncProfile({'language': locale.languageCode});
   }
 }
 

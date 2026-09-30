@@ -1,3 +1,4 @@
+import 'package:es_live/_service/user/user_store.dart' as user;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +31,11 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
     state = mode;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_prefKey, mode.name);
+
+    // ฝั่ง server มีแค่ dark กับ light ไม่มี system จึงข้ามไปเมื่อเลือกตามเครื่อง
+    if (mode != ThemeMode.system) {
+      await user.syncProfile({'theme': mode.name});
+    }
   }
 }
 

@@ -21,6 +21,20 @@
   "notiOnDetail": "Get alerts on this device",
   "notiOff": "Off",
   "notiOffDetail": "No alerts on this device",
+  "notiBefore": "Alert time",
+  "notiBeforeSubtitle": "How early to alert you before a match",
+  "notiMinutes": "{count} minutes before",
+  "@notiMinutes": {
+    "description": "ตัวเลือกเวลาแจ้งเตือนล่วงหน้า",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "notiMinutesDetail": "Alert when the match is about to start",
+  "notiScope": "What to alert",
+  "notiScopeSubtitle": "Choose which matches you get alerts for",
+  "notiFollowOnly": "Followed teams",
+  "notiFollowOnlyDetail": "Only matches of teams you follow",
+  "notiAllMatches": "All matches",
+  "notiAllMatchesDetail": "Every upcoming match",
   "noLiveNow": "No live match right now",
   "liveCountNow": "{count, plural, =0{NO MATCH LIVE STREAM NOW!} =1{1 MATCH LIVE STREAM NOW!} other{{count} MATCHES LIVE STREAM NOW!}}",
   "@liveCountNow": {

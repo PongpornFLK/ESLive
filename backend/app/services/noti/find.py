@@ -43,9 +43,27 @@ def findDue(db: Session) -> list[dict]:
         .all()
     )
 
+    # คนที่เปิด "เตือนทุกแมตช์" ไม่ต้องตามทีมก็ได้รับ
+    # จับคู่ใน Python ไม่ใช่ใน SQL เพราะมันคือทุกคู่ของ (คนกลุ่มนี้ x ทุกแมตช์ที่ใกล้ถึง)
+    # เขียนเป็น query เดียวจะกลายเป็น cartesian join ที่อ่านยากและ SQLAlchemy เตือน
+    all_rows = []
+    everyone = db.query(Profile).filter(Profile.notify_all_matches.is_(True)).all()
+    if everyone:
+        soon = (
+            db.query(Match)
+            .filter(
+                Match.status == "upcoming",
+                Match.begin_at > now,
+                Match.begin_at <= limit,
+            )
+            .all()
+        )
+        all_rows = [(m, p) for p in everyone for m in soon]
+
     # คนที่ตามทั้งสองทีมในแมตช์เดียวกันจะได้ 2 แถว ยุบเหลือคู่ละครั้ง
+    # คนที่เปิดเตือนทุกแมตช์และตามทีมนั้นด้วยก็ถูกยุบด้วยกลไกเดียวกัน
     pairs: dict[tuple, tuple] = {}
-    for match, profile in rows:
+    for match, profile in rows + all_rows:
         pairs[(profile.id, match.id)] = (match, profile)
 
     if not pairs:

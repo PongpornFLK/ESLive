@@ -66,6 +66,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notiOffDetail => 'No alerts on this device';
 
   @override
+  String get notiBefore => 'Alert time';
+
+  @override
+  String get notiBeforeSubtitle => 'How early to alert you before a match';
+
+  @override
+  String notiMinutes(int count) {
+    return '$count minutes before';
+  }
+
+  @override
+  String get notiMinutesDetail => 'Alert when the match is about to start';
+
+  @override
+  String get notiScope => 'What to alert';
+
+  @override
+  String get notiScopeSubtitle => 'Choose which matches you get alerts for';
+
+  @override
+  String get notiFollowOnly => 'Followed teams';
+
+  @override
+  String get notiFollowOnlyDetail => 'Only matches of teams you follow';
+
+  @override
+  String get notiAllMatches => 'All matches';
+
+  @override
+  String get notiAllMatchesDetail => 'Every upcoming match';
+
+  @override
   String get noLiveNow => 'No live match right now';
 
   @override

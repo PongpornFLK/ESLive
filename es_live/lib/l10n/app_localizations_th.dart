@@ -66,6 +66,38 @@ class AppLocalizationsTh extends AppLocalizations {
   String get notiOffDetail => 'ไม่รับแจ้งเตือนบนเครื่องนี้';
 
   @override
+  String get notiBefore => 'เวลาแจ้งเตือน';
+
+  @override
+  String get notiBeforeSubtitle => 'จะเตือนล่วงหน้ากี่นาทีก่อนแข่ง';
+
+  @override
+  String notiMinutes(int count) {
+    return 'ก่อนเริ่ม $count นาที';
+  }
+
+  @override
+  String get notiMinutesDetail => 'เตือนตอนใกล้จะเริ่มแข่ง';
+
+  @override
+  String get notiScope => 'เตือนแมตช์ไหน';
+
+  @override
+  String get notiScopeSubtitle => 'เลือกขอบเขตของการแจ้งเตือน';
+
+  @override
+  String get notiFollowOnly => 'ทีมที่ติดตาม';
+
+  @override
+  String get notiFollowOnlyDetail => 'เฉพาะแมตช์ของทีมที่ติดตาม';
+
+  @override
+  String get notiAllMatches => 'ทุกแมตช์';
+
+  @override
+  String get notiAllMatchesDetail => 'ทุกแมตช์ที่กำลังจะแข่ง';
+
+  @override
   String get noLiveNow => 'ยังไม่มีการไลฟ์สดตอนนี้';
 
   @override

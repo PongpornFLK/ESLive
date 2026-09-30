@@ -3,18 +3,46 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import and_
 from sqlalchemy.orm import Session
 from app.core.auth import getCurrentUser
-from app.schemas.user import FollowTeamIn, FollowTeamOut, DeviceTokenIn
+from app.schemas.user import (
+    FollowTeamIn,
+    FollowTeamOut,
+    DeviceTokenIn,
+    ProfileOut,
+    ProfileUpdate,
+)
 from app.models.game import Team
-from app.models.user import DeviceToken, FollowTeam
+from app.models.user import DeviceToken, FollowTeam, Profile
 from app.db import get_db
 
 router = APIRouter()
 
 
-@router.get("/user")
-def readUser(user_id=Depends(getCurrentUser)):
+@router.get("/user", response_model=ProfileOut)
+def readUser(user_id=Depends(getCurrentUser), db: Session = Depends(get_db)):
+    # getCurrentUser สร้างแถวให้แล้วถ้ายังไม่มี ตรงนี้จึงเจอเสมอ
+    return db.query(Profile).filter(Profile.id == user_id).first()
 
-    return {"user_id": str(user_id)}
+
+@router.patch("/user", response_model=ProfileOut)
+def updateUser(
+    payload: ProfileUpdate,
+    user_id=Depends(getCurrentUser),
+    db: Session = Depends(get_db),
+):
+    profile = db.query(Profile).filter(Profile.id == user_id).first()
+
+    if profile is None:
+        raise HTTPException(status_code=404, detail="Profile not found")
+
+    # exclude_unset=True คืนเฉพาะ field ที่ client ส่งมาจริง
+    # ที่ไม่ได้ส่งมาจะไม่อยู่ใน dict เลย ค่าเดิมจึงไม่ถูกเขียนทับ
+    for field, value in payload.model_dump(exclude_unset=True).items():
+        setattr(profile, field, value)
+
+    db.commit()
+    db.refresh(profile)
+
+    return profile
 
 
 # FOLLOWER ---------------------------------------

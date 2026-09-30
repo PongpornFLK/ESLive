@@ -209,6 +209,66 @@ abstract class AppLocalizations {
   /// **'No alerts on this device'**
   String get notiOffDetail;
 
+  /// No description provided for @notiBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert time'**
+  String get notiBefore;
+
+  /// No description provided for @notiBeforeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How early to alert you before a match'**
+  String get notiBeforeSubtitle;
+
+  /// ตัวเลือกเวลาแจ้งเตือนล่วงหน้า
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes before'**
+  String notiMinutes(int count);
+
+  /// No description provided for @notiMinutesDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert when the match is about to start'**
+  String get notiMinutesDetail;
+
+  /// No description provided for @notiScope.
+  ///
+  /// In en, this message translates to:
+  /// **'What to alert'**
+  String get notiScope;
+
+  /// No description provided for @notiScopeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which matches you get alerts for'**
+  String get notiScopeSubtitle;
+
+  /// No description provided for @notiFollowOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Followed teams'**
+  String get notiFollowOnly;
+
+  /// No description provided for @notiFollowOnlyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Only matches of teams you follow'**
+  String get notiFollowOnlyDetail;
+
+  /// No description provided for @notiAllMatches.
+  ///
+  /// In en, this message translates to:
+  /// **'All matches'**
+  String get notiAllMatches;
+
+  /// No description provided for @notiAllMatchesDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Every upcoming match'**
+  String get notiAllMatchesDetail;
+
   /// No description provided for @noLiveNow.
   ///
   /// In en, this message translates to:

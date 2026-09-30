@@ -32,7 +32,7 @@ class MatchData {
 
   factory MatchData.fromjson(Map<String, dynamic> json) {
     return MatchData(
-      id : json["id"],
+      id: json["id"],
       status: json['status'],
       teamA: TeamData.fromjson(json["team_a"]),
       teamB: TeamData.fromjson(json["team_b"]),

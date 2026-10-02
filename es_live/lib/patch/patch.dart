@@ -32,6 +32,7 @@ class _PatchState extends ConsumerState<Patch> {
                               data
                                   .map(
                                     (g) => PatchCard(
+                                      patchId: g.patchId,
                                       gameName: g.game.gameName,
                                       logoGame:
                                           g.game.gameName == "Valorant"
@@ -44,7 +45,6 @@ class _PatchState extends ConsumerState<Patch> {
                                         ).languageCode,
                                       ),
                                       version: g.version,
-                                      content: g.content,
                                       url: g.url,
                                     ),
                                   )

@@ -10,8 +10,8 @@ class DetailCard extends StatelessWidget {
   final String? time;
   // final String? summary;
   final String version;
-  final String content;
   final String? url;
+  final String content;
 
   const DetailCard({
     super.key,
@@ -20,8 +20,8 @@ class DetailCard extends StatelessWidget {
     required this.time,
     // required this.summary,
     required this.version,
-    required this.content,
     required this.url,
+    required this.content,
   });
 
   /// เปิดหน้าต้นฉบับในเบราว์เซอร์ ท่าเดียวกับปุ่ม Stream URL ใน match_header

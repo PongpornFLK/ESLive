@@ -61,7 +61,9 @@ class PatchNoteOut(BaseModel):
     version: str
     ai_summary_eng: str | None
     ai_summary_th: str | None
-    raw_content: str
     raw_source_url: str | None
     status: AnalysisStatus
     published_at: datetime | None
+
+class PatchDetailOut(PatchNoteOut):
+    raw_content: str

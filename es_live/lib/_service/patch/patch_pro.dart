@@ -13,3 +13,14 @@ final patchProvider = FutureProvider<List<PatchData>>((ref) async {
   }
 
 });
+
+final patchDetailProvider = FutureProvider.family<PatchData , String>((ref , patchId) async {
+  try{
+    final res = await dio.get('/patch/$patchId');
+    
+    return PatchData.fromjson(res.data);
+  }catch(e){
+    throw Exception("$e");
+  }
+
+});

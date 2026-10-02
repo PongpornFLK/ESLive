@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PatchCard extends StatelessWidget {
+  final String patchId;
   final String gameName;
   final String? logoGame;
   final String? time;
   final String? summary;
   final String version;
-  final String content;
   final String? url;
 
   const PatchCard({
     super.key,
+    required this.patchId,
     required this.gameName,
     required this.logoGame,
     required this.time,
     required this.summary,
     required this.version,
-    required this.content,
     required this.url,
   });
 
@@ -111,11 +111,11 @@ class PatchCard extends StatelessWidget {
                     MaterialPageRoute(
                       builder:
                           (context) => PatchDetail(
+                            patchId:  patchId,
                             gameName: gameName,
                             logoGame: logoGame,
                             version: version,
                             time: patchTime,
-                            content: content,
                             url: url,
                           ),
                     ),

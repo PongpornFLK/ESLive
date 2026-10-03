@@ -20,8 +20,8 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.29.4"
-          # channel: stable
+          # flutter-version: "3.29.4"
+          channel: stable
           # เก็บ SDK ไว้ใช้รอบหน้า ไม่ต้องโหลดใหม่ทุกครั้ง
           cache: true
 

@@ -1,0 +1,61 @@
+name: CI
+
+# รันเมื่อเปิด PR เข้า main และเมื่อ push เข้า main โดยตรง
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    # ทุกคำสั่งรันในโฟลเดอร์นี้ ไม่ต้อง cd เอง
+    defaults:
+      run:
+        working-directory: es_live
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.4"
+          # channel: stable
+          # เก็บ SDK ไว้ใช้รอบหน้า ไม่ต้องโหลดใหม่ทุกครั้ง
+          cache: true
+
+      - name: ติดตั้ง dependency
+        run: flutter pub get
+
+      - name: ตรวจ lint และชนิดข้อมูล
+        run: flutter analyze
+
+      # ขั้นนี้สำคัญที่สุด  analyze กับคอมไพเลอร์เข้มไม่เท่ากัน
+      # เคส List<dynamic> ที่เคยหลุดไปถึง flutter run จะถูกจับตรงนี้
+      - name: คอมไพล์จริง
+        run: flutter build bundle
+
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          # เก็บ package ไว้ใช้รอบหน้า ไม่ต้องโหลดใหม่ทุกครั้ง
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: ติดตั้ง dependency
+        run: pip install -r requirements.txt
+
+      # จับ import ผิด path, พิมพ์ชื่อคลาสเกิน, ลืมใส่ package ใหม่ลง requirements.txt
+      # ทั้งสามอย่างพังตอน import ทั้งสิ้น
+      - name: ลอง import ทั้งแอป
+        run: python -c "import app.main"

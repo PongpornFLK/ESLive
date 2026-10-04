@@ -4,7 +4,7 @@ from app.models.match import Match
 from app.db import get_db
 from app.schemas.match import MatchOut
 from sqlalchemy import asc, and_, or_
-from datetime import datetime, time
+from datetime import datetime, time, timedelta, timezone
 
 router = APIRouter()
 
@@ -13,6 +13,8 @@ router = APIRouter()
 @router.get("/matchcoming", response_model=list[MatchOut])
 def readMatch(db: Session = Depends(get_db)):
     today_midnight = datetime.combine(datetime.today(), time.min)
+    cut_time = datetime.now(timezone.utc) - timedelta(hours=12)
+
     map_list = (
         db.query(Match)
         .options(
@@ -25,8 +27,8 @@ def readMatch(db: Session = Depends(get_db)):
         .filter(
             or_(
                 and_(Match.status == "finished", Match.begin_at >= today_midnight),
-                Match.status == "upcoming",
-                Match.status == "live",
+                and_(Match.status == "upcoming", Match.begin_at >= cut_time),
+                and_(Match.status == "live", Match.begin_at >= cut_time),
             )
         )
         .order_by(asc(Match.begin_at))

@@ -1,4 +1,4 @@
-package com.example.es_live
+package dev.flk.eslive
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

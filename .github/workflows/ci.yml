@@ -31,6 +31,9 @@ jobs:
       - name: ตรวจ lint และชนิดข้อมูล
         run: flutter analyze
 
+      - name: เฉพาะรันเทสทั้งหมด
+        run: flutter test
+
       # ขั้นนี้สำคัญที่สุด  analyze กับคอมไพเลอร์เข้มไม่เท่ากัน
       # เคส List<dynamic> ที่เคยหลุดไปถึง flutter run จะถูกจับตรงนี้
       - name: คอมไพล์จริง

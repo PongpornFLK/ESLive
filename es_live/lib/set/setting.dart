@@ -11,6 +11,7 @@ import 'package:es_live/set/widgets/noti_scope_tile.dart';
 import 'package:es_live/set/widgets/noti_tile.dart';
 import 'package:es_live/set/widgets/section_card.dart';
 import 'package:es_live/set/widgets/theme_tile.dart';
+import 'package:es_live/set/widgets/version_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -160,6 +161,8 @@ class Setting extends ConsumerWidget {
           subtitle: l10n.accountSubtitle,
           children: const [AccountTile()],
         ),
+
+        const VersionText(),
       ],
     );
   }

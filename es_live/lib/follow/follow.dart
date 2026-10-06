@@ -1,3 +1,4 @@
+import 'package:es_live/core/media/text_scale.dart';
 import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/follow/follow_pro.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
@@ -108,7 +109,14 @@ class _FollowState extends ConsumerState<Follow> {
                 );
               }
 
-              return Column(
+              return GridView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 450,
+                  mainAxisExtent: scaledHeight(context, 105),
+                  crossAxisSpacing: 10,
+                ),
                 children:
                     sorted
                         .map(

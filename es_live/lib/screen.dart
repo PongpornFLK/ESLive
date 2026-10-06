@@ -27,7 +27,7 @@ class _ScreenState extends State<Screen> {
   ];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     setupNoti();
   }
@@ -43,7 +43,9 @@ class _ScreenState extends State<Screen> {
               currentIndex = nextIndex;
             }),
       ),
-      body: page[currentIndex],
+      // แนวนอน แถบระบบ
+      // top/bottom ปิดไว้ เพราะ AppBar กับ BottomBar กันของตัวเองอยู่แล้ว
+      body: SafeArea(top: false, bottom: false, child: page[currentIndex]),
     );
   }
 }

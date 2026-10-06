@@ -155,7 +155,7 @@ class FollowCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 10),
               _nextLine(context),
             ],
           ),

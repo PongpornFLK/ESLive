@@ -71,18 +71,45 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
                   SizedBox(height: 10),
                   historyAsync.when(
                     data:
-                        (history) => Column(
-                          children: [
-                            HistoryMatch(
-                              teamName: widget.match.teamA.teamName,
-                              rows: history.formA,
-                            ),
-                            SizedBox(height: 10),
-                            HistoryMatch(
-                              teamName: widget.match.teamB.teamName,
-                              rows: history.formB,
-                            ),
-                          ],
+                        (history) => LayoutBuilder(
+                          builder: (context, constraints) {
+                            final wide = constraints.maxWidth >= 600;
+
+                            if (wide) {
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: HistoryMatch(
+                                      teamName: widget.match.teamA.teamName,
+                                      rows: history.formA,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: HistoryMatch(
+                                      teamName: widget.match.teamB.teamName,
+                                      rows: history.formB,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+
+                            return Column(
+                              children: [
+                                HistoryMatch(
+                                  teamName: widget.match.teamA.teamName,
+                                  rows: history.formA,
+                                ),
+                                SizedBox(height: 10),
+                                HistoryMatch(
+                                  teamName: widget.match.teamB.teamName,
+                                  rows: history.formB,
+                                ),
+                              ],
+                            );
+                          },
                         ),
                     loading: () => const CircularProgressIndicator(),
                     error: (error, stackTrace) => Text("$error"),

@@ -12,21 +12,28 @@ class GameTour extends StatefulWidget {
 class _GameTourState extends State<GameTour> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: GridView.count(
-        primary: false,
-        crossAxisCount: 2,
-        children:
-            data
-                .map(
-                  (g) => ListGameTour(
-                    logoGame: g.logo,
-                    gameName: g.name,
-                    slug: g.slug,
-                  ),
-                )
-                .toList(),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 490),
+          child: GridView.extent(
+            primary: false,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            maxCrossAxisExtent: 250,
+            children:
+                data
+                    .map(
+                      (g) => ListGameTour(
+                        logoGame: g.logo,
+                        gameName: g.name,
+                        slug: g.slug,
+                      ),
+                    )
+                    .toList(),
+          ),
+        ),
       ),
     );
   }

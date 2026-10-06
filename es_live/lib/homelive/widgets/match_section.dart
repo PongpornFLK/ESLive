@@ -1,4 +1,5 @@
 import 'package:es_live/_service/homelive/match_pro.dart';
+import 'package:es_live/core/media/text_scale.dart';
 import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/homelive/widgets/match_card.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,14 @@ class MatchSection extends ConsumerWidget {
         // เช็คว่างได้ตรงนี้ที่เดียว ก่อนข้อมูลมาถึงยังไม่มีทางรู้ว่ามีกี่นัด
         if (list.isEmpty) return _notice(Text(emptyText, style: _greyText));
 
-        return Column(
+        return GridView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 450,
+            mainAxisExtent: scaledHeight(context, 145),
+            crossAxisSpacing: 10,
+          ),
           children:
               list
                   .map(

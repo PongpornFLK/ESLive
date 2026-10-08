@@ -103,8 +103,6 @@ def saveMatch(db: Session, raw: dict):
 
         db.commit()
         # print(f"{match_panda}")
-    else:
-        match_panda.status = match_data["status"]
-        db.commit()
+
 
     return match_panda.id

@@ -18,7 +18,15 @@ class Home extends ConsumerWidget {
     return RefreshIndicator(
       onRefresh: () async {
         ref.invalidate(matchProvider);
-        await ref.read(matchProvider.future);
+        try {
+          await ref.read(matchProvider.future);
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('โหลดข้อมูลไม่สำเร็จ')),
+            );
+          }
+        }
       },
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),

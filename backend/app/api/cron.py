@@ -1,4 +1,3 @@
-# app/api/cron.py
 import logging
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException
 from app.core.config import settings
@@ -6,6 +5,8 @@ from app.services.sync_run import STEPS, runSteps
 
 router = APIRouter()
 log = logging.getLogger("cron")
+
+_running = False
 
 def _runInBackground(names: list[str]) -> None:
     """ตัวที่ทำงานจริงหลังตอบ request ไปแล้ว ผลไปโผล่ที่ Logs ของ Render"""

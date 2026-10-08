@@ -70,10 +70,10 @@ def getTeamId(db: Session, raw: dict, game_id):
 
 
 def saveMatch(db: Session, raw: dict):
-    
+
     if len(raw["opponents"]) < 2:
         return None
-    
+
     game_id = getGameId(db, raw)
     tour_id = getTourId(db, raw, game_id)
     team_a_id = getTeamId(db, raw["opponents"][0]["opponent"], game_id)
@@ -89,20 +89,22 @@ def saveMatch(db: Session, raw: dict):
 
     if match_panda is None:
         match_data = Match(**match_data)
-        db.add(match_data) # save match
+        db.add(match_data)  # save match
         db.commit()
         match_panda = match_data
-        
+
         # print(f"saveMatch : {match_panda}")
 
-    elif match_data["status"] == "finished":
+    elif match_data["status"] == "finished" or match_data["status"] == "live":
         match_panda.score_a = match_data["score_a"]
         match_panda.score_b = match_data["score_b"]
         match_panda.status = match_data["status"]
         match_panda.winner_team_id = match_data["winner_team_id"]
 
         db.commit()
-
         # print(f"{match_panda}")
+    else:
+        match_panda.status = match_data["status"]
+        db.commit()
 
     return match_panda.id

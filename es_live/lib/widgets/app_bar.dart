@@ -10,10 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     // พื้นสีอยู่ชั้นนอก SafeArea อยู่ชั้นใน
     return Container(
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        border: Border(bottom: BorderSide(color: theme.dividerColor)),
-      ),
+      decoration: BoxDecoration(color: theme.cardColor),
       child: SafeArea(
         bottom: false,
         child: Container(

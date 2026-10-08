@@ -39,8 +39,7 @@ class MatchCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(14),
       ),
       child: InkWell(
         onTap:

@@ -114,7 +114,7 @@ class _FollowState extends ConsumerState<Follow> {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 450,
-                  mainAxisExtent: scaledHeight(context, 105),
+                  mainAxisExtent: scaledHeight(context, 115),
                   crossAxisSpacing: 10,
                 ),
                 children:

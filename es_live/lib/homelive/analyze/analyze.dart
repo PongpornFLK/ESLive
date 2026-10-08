@@ -1,3 +1,4 @@
+import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/_service/homelive/history_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
@@ -64,7 +65,7 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
                   Text(
                     l10n.latestMatches(5),
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: AppColors.orange,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

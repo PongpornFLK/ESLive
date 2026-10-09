@@ -1,4 +1,3 @@
-# app/api/cron.py
 import logging
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException
 from app.core.config import settings
@@ -9,11 +8,16 @@ log = logging.getLogger("cron")
 
 _running = False
 
-
 def _runInBackground(names: list[str]) -> None:
     """ตัวที่ทำงานจริงหลังตอบ request ไปแล้ว ผลไปโผล่ที่ Logs ของ Render"""
     global _running
-    _running = True
+    work_hard = set(names) != {"notify"} # false
+
+    # ให้ส่วนอื่นทำงานผ่านได้ตอนที่ notify กำลังทำงาน 
+    # ถ้า noti มันไม่หนักเกินไป แล้วในขณะที่ตัวอื่นทำงานอยุ่จะไม่ให้มันมาชนกัน
+    if work_hard : 
+        _running = True
+    
     try:
         for r in runSteps(names):
             log.warning(
@@ -24,7 +28,8 @@ def _runInBackground(names: list[str]) -> None:
                 r["detail"],
             )
     finally:
-        _running = False  # อยู่ใน finally เสมอ
+        if work_hard:
+            _running = False
 
 
 @router.post("/internal/cron")
@@ -48,7 +53,6 @@ def runCron(
 
     # ด่าน 3 รอบก่อนทำงานอยู่
     # notify ไม่ต้องรอ เพราะอ่านคนละตารางกับ sync และต้องยิงทุก 10 นาทีให้ตรงเวลา
-    # ถ้าเข้าคิวด้วยจะโดน 409 ทุกครั้งที่ชน match ที่กินเวลา 131 วินาที
     if _running and set(names) != {"notify"}:
         raise HTTPException(status_code=409, detail="sync รอบก่อนยังทำงานอยู่")
 

@@ -62,14 +62,6 @@ class _NotiSheet extends ConsumerWidget {
                     ],
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color:
-                        isDark
-                            ? Colors.white.withValues(alpha: 0.18)
-                            : Colors.black.withValues(alpha: 0.08),
-                  ),
-                  // เงานุ่มแผ่กว้าง ทำให้แผงดูลอยเหนือเนื้อหา
-                  // เป็นตัวที่ให้ความรู้สึก "กระจกวางทับ" แทนความเบลอที่เอาออกไป
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: isDark ? 0.5 : 0.2),

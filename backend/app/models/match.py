@@ -14,6 +14,8 @@ class MatchStatus(str, enum.Enum):
     upcoming = "upcoming"
     live = "live"
     finished = "finished"
+    canceled = "canceled"
+    
 
 
 class AnalysisStatus(str, enum.Enum):

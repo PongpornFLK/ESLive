@@ -22,7 +22,14 @@ class MatchSection extends ConsumerWidget {
 
     return matchAsync.when(
       data: (matches) {
-        final list = matches.where((m) => m.status == status).toList();
+        final list =
+            matches
+                .where(
+                  (m) =>
+                      m.status == status ||
+                      m.status == "upcoming" && m.status == "canceled",
+                )
+                .toList();
 
         // เช็คว่างได้ตรงนี้ที่เดียว ก่อนข้อมูลมาถึงยังไม่มีทางรู้ว่ามีกี่นัด
         if (list.isEmpty) return _notice(Text(emptyText, style: _greyText));
@@ -46,7 +53,7 @@ class MatchSection extends ConsumerWidget {
                       teamBName: m.teamB.teamName,
                       scoreA: m.scoreA,
                       scoreB: m.scoreB,
-                      isLive: status == "live",
+                      isLive: m.status,
                       time: m.beginAt,
                       logoTeamA: m.teamA.logoUrl,
                       logoTeamB: m.teamB.logoUrl,

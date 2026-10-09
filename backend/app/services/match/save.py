@@ -3,7 +3,9 @@ from app.models.game import Game, Tournament, Team
 from app.models.match import Match
 from app.services.match.map import mapMatch
 from app.services.match.pandascore import getPandaTourForMatch
+import logging
 
+log = logging.getLogger("sync")
 
 # หา game_id ของ Pandascore
 # game.id , game.name , game.slug, game.pandascore_slug , game.logo_url , game.created_at
@@ -42,9 +44,9 @@ def getTourId(db: Session, raw: dict, game_id):
 
         tour = tour_data
 
-        print("Save Tour")
+        log.debug("Save Tour")
     else:
-        print("Duplicate")
+        log.debug("Duplicate")
 
     return tour.id
 
@@ -59,12 +61,12 @@ def getTeamId(db: Session, raw: dict, game_id):
             pandascore_id=raw["id"],
             logo_url=raw["image_url"],
         )
-        print("Save Team")
+        log.debug("Save Team")
         db.add(team_data)
         db.commit()
         team_id = team_data
     else:
-        print("Duplicated")
+        log.debug("Duplicated")
 
     return team_id.id
 
@@ -81,7 +83,7 @@ def saveMatch(db: Session, raw: dict):
 
     match_data = mapMatch(raw, team_a_id, team_b_id, game_id, tour_id)
 
-    print(f"match_data : {match_data}")
+    log.debug("match_data : %s", match_data)
 
     match_panda = (
         db.query(Match).filter(Match.pandascore_id == match_data["pandascore_id"])
@@ -93,16 +95,14 @@ def saveMatch(db: Session, raw: dict):
         db.commit()
         match_panda = match_data
 
-        # print(f"saveMatch : {match_panda}")
-
-    elif match_data["status"] == "finished" or match_data["status"] == "live":
+    else:
+        match_panda.status = match_data["status"]
         match_panda.score_a = match_data["score_a"]
         match_panda.score_b = match_data["score_b"]
-        match_panda.status = match_data["status"]
         match_panda.winner_team_id = match_data["winner_team_id"]
+        match_panda.begin_at = match_data["begin_at"]
+        match_panda.stream_url = match_data["stream_url"]
 
         db.commit()
-        # print(f"{match_panda}")
-
 
     return match_panda.id

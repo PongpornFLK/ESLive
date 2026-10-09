@@ -2,6 +2,8 @@ import 'package:es_live/core/theme/root_colors.dart';
 import 'package:es_live/widgets/live_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:flutter/material.dart' hide Badge;
 
 class BuildTopic extends StatelessWidget {
   const BuildTopic({
@@ -12,7 +14,7 @@ class BuildTopic extends StatelessWidget {
     required this.leagueName,
   });
 
-  final bool isLive;
+  final String isLive;
   final String time;
   final String gameName;
   final String leagueName;
@@ -40,8 +42,24 @@ class BuildTopic extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            isLive
+            isLive == "live"
                 ? const LiveCircle()
+                : isLive == "canceled"
+                ? badges.Badge(
+                  badgeStyle: const badges.BadgeStyle(
+                    badgeColor: AppColors.red,
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  ),
+                  badgeContent: const Text(
+                    'canceled',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                )
                 : Text(
                   matchTime,
                   style: TextStyle(color: AppColors.grey, fontSize: 12),

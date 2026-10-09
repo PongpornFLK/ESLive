@@ -13,7 +13,7 @@ class MatchCard extends StatelessWidget {
   final String? logoTeamB;
   final int scoreA;
   final int scoreB;
-  final bool isLive;
+  final String isLive;
   final String time;
   final MatchData match; // จังหวะส่งต่อ
 

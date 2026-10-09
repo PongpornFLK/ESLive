@@ -35,7 +35,14 @@ void main() {
 
   // widget ที่วาดเดี่ยว ๆ ต้องมี MaterialApp ครอบ ไม่งั้นพังเพราะหา
   // Directionality กับ Theme ไม่เจอ ของจริงมี MaterialApp ครอบอยู่ที่ main.dart
-  Widget wrap({required bool isLive, String? logoA}) => MaterialApp(
+  // isLive รับสถานะเป็นข้อความ  "live" / "upcoming" / "canceled"
+  // สกอร์แยก parameter เพราะเคสยกเลิกกับยังไม่แข่งควรเป็น 0-0
+  Widget wrap({
+    required String isLive,
+    String? logoA,
+    int scoreA = 1,
+    int scoreB = 0,
+  }) => MaterialApp(
     home: Scaffold(
       body: MatchCard(
         gameName: 'Valorant',
@@ -44,8 +51,8 @@ void main() {
         teamBName: 'HooK Esport',
         logoTeamA: logoA,
         logoTeamB: null,
-        scoreA: 1,
-        scoreB: 0,
+        scoreA: scoreA,
+        scoreB: scoreB,
         isLive: isLive,
         time: '2026-10-04T12:00:00+00:00',
         match: makeMatch(),
@@ -55,7 +62,7 @@ void main() {
 
   group('MatchCard', () {
     testWidgets('แสดงชื่อเกม ชื่อลีก ชื่อทีม และสกอร์ครบ', (tester) async {
-      await tester.pumpWidget(wrap(isLive: false));
+      await tester.pumpWidget(wrap(isLive: "live"));
 
       expect(find.text('Valorant'), findsOneWidget);
       expect(find.text('VCT Pacific'), findsOneWidget);
@@ -65,28 +72,30 @@ void main() {
       expect(find.text('1  vs  0'), findsOneWidget);
     });
 
-    testWidgets('กำลังไลฟ์ โชว์จุดไลฟ์ ไม่โชว์เวลา', (tester) async {
-      await tester.pumpWidget(wrap(isLive: true));
-      // ใช้ pump ไม่ใช่ pumpAndSettle เพราะ LiveCircle หมุนไม่มีวันจบ
-      // pumpAndSettle จะรอจนหมดเวลาแล้ว error
+    testWidgets('กำลังไลฟ์ โชว์จุดไลฟ์', (tester) async {
+      await tester.pumpWidget(wrap(isLive: "live"));
       await tester.pump();
 
       expect(find.byType(LiveCircle), findsOneWidget);
     });
 
     testWidgets('ยังไม่ไลฟ์ โชว์เวลา ไม่โชว์จุดไลฟ์', (tester) async {
-      await tester.pumpWidget(wrap(isLive: false));
+      await tester.pumpWidget(wrap(isLive: "upcoming", scoreA: 0, scoreB: 0));
 
       expect(find.byType(LiveCircle), findsNothing);
       // เวลาต้องถูกจัดรูปแบบก่อนแสดง ไม่ใช่โยนข้อความดิบจาก server ขึ้นจอ
       expect(find.text('2026-10-04T12:00:00+00:00'), findsNothing);
+      expect(find.text('0  vs  0'), findsOneWidget);
     });
 
-    testWidgets('ทีมที่ไม่มีโลโก้ แสดงไอคอนโล่แทน', (tester) async {
-      // ส่ง null ทั้งสองทีม ต้องได้ไอคอนโล่ 2 อัน
-      await tester.pumpWidget(wrap(isLive: false, logoA: null));
+    testWidgets('แมตช์ยกเลิก โชว์ป้าย canceled ไม่โชว์จุดไลฟ์', (tester) async {
+      await tester.pumpWidget(wrap(isLive: "canceled", scoreA: 0, scoreB: 0));
 
-      expect(find.byIcon(Icons.shield_outlined), findsNWidgets(2));
+      expect(find.text('canceled'), findsOneWidget);
+      expect(find.byType(LiveCircle), findsNothing);
+      // ข้อมูลแมตช์ยังแสดงครบ ผู้ใช้ต้องรู้ว่าคู่ไหนถูกยกเลิก
+      expect(find.text('Catboys'), findsOneWidget);
+      expect(find.text('HooK Esport'), findsOneWidget);
     });
   });
 }

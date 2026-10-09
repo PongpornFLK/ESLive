@@ -29,6 +29,7 @@ def readMatch(db: Session = Depends(get_db)):
                 and_(Match.status == "finished", Match.begin_at >= today_midnight),
                 and_(Match.status == "upcoming", Match.begin_at >= cut_time),
                 and_(Match.status == "live", Match.begin_at >= cut_time),
+                and_(Match.status == "canceled", Match.begin_at >= today_midnight),
             )
         )
         .order_by(asc(Match.begin_at))

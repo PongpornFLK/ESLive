@@ -28,7 +28,7 @@ void main() {
       'has_bracket': false,
       'prizepool': null,
     },
-    'game': {'name': 'Valorant'},
+    'game': {'name': 'Valorant', 'slug': 'valorant'},
     'begin_at': '2026-10-04T12:00:00+00:00',
     'analysis': null,
   });

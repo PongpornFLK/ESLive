@@ -7,7 +7,7 @@ from sqlalchemy import and_
 
 
 def getGamePatchId(db: Session, game: str):
-    list_game_patch = {"val": "valorant"}
+    list_game_patch = {"val": "valorant" , "lol" : "league-of-legends"}
 
     patch_game = db.query(Game).filter(Game.slug == list_game_patch[game]).first()
 

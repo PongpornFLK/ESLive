@@ -9,7 +9,7 @@ void main() {
         'id': 'patch-1',
         'version': '13.06',
         // game เป็นก้อนซ้อนข้างใน ไม่ใช่ค่าเดี่ยว
-        'game': {'name': 'Valorant'},
+        'game': {'name': 'Valorant', 'slug': 'valorant'},
         'published_at': '2026-10-01T00:00:00+00:00',
         'ai_summary_eng': 'Agent balance changes.',
         'ai_summary_th': 'ปรับสมดุลตัวละคร',
@@ -34,7 +34,7 @@ void main() {
       final json = {
         'id': 'patch-2',
         'version': '13.07',
-        'game': {'name': 'Valorant'},
+        'game': {'name': 'Valorant', 'slug': 'valorant'},
         'published_at': null,
         'ai_summary_eng': null,
         'ai_summary_th': null,
@@ -55,7 +55,7 @@ void main() {
       patchId: 'patch-1',
       version: '13.06',
       time: null,
-      game: const GameData(gameName: 'Valorant'),
+      game: const GameData(gameName: 'Valorant', slug: 'valorant'),
       summaryEng: eng,
       summaryTh: th,
       url: null,

@@ -1,12 +1,17 @@
+# แต่ละขั้น import ของตัวเองข้างในฟังก์ชัน ไม่ import ไว้ข้างบนไฟล์
 import time
-
 from app.db import SessionLocal
 
-# แต่ละขั้น import ของตัวเองข้างในฟังก์ชัน ไม่ import ไว้ข้างบนไฟล์
-# เพราะถ้าแพ็กเกจของขั้นใดขั้นหนึ่งมีปัญหา (เช่น google-genai ยังไม่ได้ลง)
-# จะล้มทั้งไฟล์ตั้งแต่ยังไม่เริ่มทำงาน ทั้งที่ขั้นอื่นไม่เกี่ยวอะไรด้วย
+# เกมที่ระบบ sync ให้ เพิ่มเกมใหม่ = เพิ่ม dict หนึ่งก้อนในลิสต์นี้ ไม่ต้องแก้ฟังก์ชัน
+# panda  ชื่อที่ใช้ใน URL ของ PandaScore /{panda}/tournaments
+# patch  รหัสเกมบน data.rito.news  None = เกมนั้นไม่มี patch note บนเว็บ Riot
+# duel   แมตช์เป็นสองทีมเจอกัน  ตาราง match เก็บได้แค่ team_a กับ team_b
+# PUBG ไม่อยู่ในลิสต์เพราะเป็น battle royale ลงสนาม 16 ทีมต่อแมตช์ ซึ่ง saveMatch
 
-GAME_SLUGS = ["valorant", "pubg"]
+GAMES = [
+    {"panda": "valorant", "patch": "val", "duel": True},
+    {"panda": "lol", "patch": "lol", "duel": True},
+]
 MATCH_STATUSES = ["upcoming", "running", "past"]
 
 
@@ -20,9 +25,9 @@ def syncTour(db):
     from app.services.tour.save import saveTour
 
     total = 0
-    for slug in GAME_SLUGS:
-        tours = getPandaListTour(slug)
-        print(f"  {slug:<10} ได้ {len(tours)} ทัวร์")
+    for game in GAMES:
+        tours = getPandaListTour(game["panda"])
+        print(f"  {game['panda']:<10} ได้ {len(tours)} ทัวร์")
         for raw in tours:
             saveTour(db, raw)
         total += len(tours)
@@ -30,34 +35,46 @@ def syncTour(db):
 
 
 def syncMatch(db):
-    """ดึงแมตช์ของ valorant ทั้ง 3 สถานะ แล้วบันทึก พร้อมทีมที่ยังไม่มี"""
+    """ดึงแมตช์ของทุกเกมที่เป็นสองทีมเจอกัน ทั้ง 3 สถานะ แล้วบันทึกพร้อมทีมที่ยังไม่มี"""
     from app.services.match.pandascore import getPandaMatch
     from app.services.match.save import saveMatch
 
     total = skipped = 0
-    for status in MATCH_STATUSES:
-        matches = getPandaMatch("valorant", status)
-        print(f"  {status:<10} ได้ {len(matches)} แมตช์")
-        for raw in matches:
-            # saveMatch คืน None เมื่อข้ามแมตช์ที่ยังประกาศคู่ไม่ครบ 2 ทีม
-            if saveMatch(db, raw) is None:
-                skipped += 1
-            else:
-                total += 1
+    for game in GAMES:
+        # เกมที่ไม่ใช่สองทีมเจอกันข้ามไป ตาราง match รับได้แค่ team_a กับ team_b
+        if not game["duel"]:
+            continue
+
+        for status in MATCH_STATUSES:
+            matches = getPandaMatch(game["panda"], status)
+            print(f"  {game['panda']:<10} {status:<10} ได้ {len(matches)} แมตช์")
+            for raw in matches:
+                # saveMatch คืน None เมื่อข้ามแมตช์ที่ยังประกาศคู่ไม่ครบ 2 ทีม
+                if saveMatch(db, raw) is None:
+                    skipped += 1
+                else:
+                    total += 1
     return f"บันทึก {total} แมตช์ ข้าม {skipped} (ยังไม่มีคู่แข่ง)"
 
 
 def syncPatch(db):
-    """ดูดหน้า patch note ของ valorant จากเว็บ Riot แล้วบันทึกอันที่ยังไม่มี"""
+    """ดูดหน้า patch note ของทุกเกมที่มีบนเว็บ Riot แล้วบันทึกอันที่ยังไม่มี"""
     from app.services.patch.riot_patch import getPatchRiot
     from app.services.patch.save import getGamePatchId, savePatch
 
-    game_id = getGamePatchId(db, "val")
-    patch_news = getPatchRiot("val", "en-us")
-    print(f"  เจอ {len(patch_news)} หน้า")
-    for raw in patch_news:
-        savePatch(db, raw, game_id)
-    return f"ตรวจ {len(patch_news)} หน้า"
+    total = 0
+    for game in GAMES:
+        # เกมค่ายอื่นไม่มีหน้าข่าวบน data.rito.news ซึ่งเป็น CDN ของ Riot
+        if game["patch"] is None:
+            continue
+
+        game_id = getGamePatchId(db, game["patch"])
+        patch_news = getPatchRiot(game["patch"], "en-us")
+        print(f"  {game['patch']:<10} เจอ {len(patch_news)} หน้า")
+        for raw in patch_news:
+            savePatch(db, raw, game_id)
+        total += len(patch_news)
+    return f"ตรวจ {total} หน้า"
 
 
 def syncSummary(db):
@@ -179,7 +196,6 @@ def runSteps(names: list[str]) -> list[dict]:
     else:
         unknown = [n for n in names if n not in {s[0] for s in STEPS}]
         if unknown:
-            # โยนให้คนเรียกตัดสินใจเอง CLI จะ print แล้วจบ / endpoint จะตอบ 400
             raise ValueError("ไม่รู้จักขั้นตอน: " + ", ".join(unknown))
         chosen = [s for s in STEPS if s[0] in names]
 

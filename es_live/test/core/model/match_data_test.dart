@@ -36,7 +36,7 @@ void main() {
     'score_b': 0,
     'stream_url': 'https://twitch.tv/valorant',
     'tournament': tourJson,
-    'game': {'name': 'Valorant'},
+    'game': {'name': 'Valorant', 'slug': 'valorant'},
     'begin_at': '2026-10-04T12:00:00+00:00',
     'analysis': {
       'win_pct_a': 60.0,

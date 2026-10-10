@@ -60,6 +60,7 @@ class _MatchAnalyzeState extends ConsumerState<MatchAnalyze> {
                     reason: widget.match.matchAnalyze?.reasonFor(
                       Localizations.localeOf(context).languageCode,
                     ),
+                    status: widget.match.status,
                   ),
                   SizedBox(height: 15),
                   Text(

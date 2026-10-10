@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class AnalysisBox extends StatelessWidget {
   final String? reason;
+  final String status;
 
-  const AnalysisBox({super.key, required this.reason});
+  const AnalysisBox({super.key, required this.reason, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +42,23 @@ class AnalysisBox extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(
-            hasReason ? reason! : l10n.noAnalysisForMatch,
-            style: TextStyle(
-              color: hasReason ? onSurface : AppColors.grey,
-              fontSize: 13,
-              height: 1.5,
-            ),
-          ),
+          status != "canceled"
+              ? Text(
+                hasReason ? reason! : l10n.noAnalysisForMatch,
+                style: TextStyle(
+                  color: hasReason ? onSurface : AppColors.grey,
+                  fontSize: 13,
+                  height: 1.5,
+                ),
+              )
+              : Text(
+                l10n.noAnalysisCanceled,
+                style: TextStyle(
+                  color: AppColors.grey,
+                  fontSize: 13,
+                  height: 1.5,
+                ),
+              ),
         ],
       ),
     );

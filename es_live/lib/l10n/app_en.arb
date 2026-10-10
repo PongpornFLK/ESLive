@@ -89,6 +89,7 @@
   "cantOpenStream": "Can't open stream link",
   "noAnalysisYet": "No analysis yet",
   "noAnalysisForMatch": "No analysis for this match yet",
+  "noAnalysisCanceled": "This match was canceled, no analysis available",
   "noHistoryInSystem": "No match history in the system",
 
   "viewAll": "View All",

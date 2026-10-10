@@ -207,6 +207,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get noAnalysisForMatch => 'ยังไม่มีผลวิเคราะห์สำหรับแมตช์นี้';
 
   @override
+  String get noAnalysisCanceled => 'แมตช์นี้ถูกยกเลิก ไม่มีผลวิเคราะห์';
+
+  @override
   String get noHistoryInSystem => 'ไม่มีประวัติการแข่งในระบบ';
 
   @override

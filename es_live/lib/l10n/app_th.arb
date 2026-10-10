@@ -65,6 +65,7 @@
   "cantOpenStream": "เปิดลิงก์ถ่ายทอดไม่ได้",
   "noAnalysisYet": "ยังไม่มีผลวิเคราะห์",
   "noAnalysisForMatch": "ยังไม่มีผลวิเคราะห์สำหรับแมตช์นี้",
+  "noAnalysisCanceled": "แมตช์นี้ถูกยกเลิก ไม่มีผลวิเคราะห์",
   "noHistoryInSystem": "ไม่มีประวัติการแข่งในระบบ",
 
   "viewAll": "ดูทั้งหมด",

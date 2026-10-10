@@ -208,6 +208,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noAnalysisForMatch => 'No analysis for this match yet';
 
   @override
+  String get noAnalysisCanceled => 'This match was canceled, no analysis available';
+
+  @override
   String get noHistoryInSystem => 'No match history in the system';
 
   @override

@@ -449,6 +449,12 @@ abstract class AppLocalizations {
   /// **'No analysis for this match yet'**
   String get noAnalysisForMatch;
 
+  /// No description provided for @noAnalysisCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'This match was canceled, no analysis available'**
+  String get noAnalysisCanceled;
+
   /// No description provided for @noHistoryInSystem.
   ///
   /// In en, this message translates to:

@@ -96,14 +96,17 @@ def syncAnalysis(db):
     db.commit()
     print(f"  สร้างแถวใหม่ {new} แถว")
 
-    # วิเคราะห์เฉพาะแมตช์ที่ยังไม่แข่ง แมตช์ที่จบแล้วรู้ผลอยู่แล้ว
-    # ไม่มีใครอ่านคำทำนาย และเปลืองโควต้า Gemini ฟรี ๆ
+    # วิเคราะห์เฉพาะแมตช์ที่ยังไม่แข่ง กับ ถูกยกเลิก
     todo = (
         db.query(MatchAnalysis)
         .join(Match, Match.id == MatchAnalysis.match_id)
-        .filter(MatchAnalysis.status != "ready", Match.status != "finished")
+        .filter(
+            MatchAnalysis.status != "ready",
+            Match.status.notin_(["finished", "canceled"]),
+        )
         .all()
     )
+
     print(f"  มี {len(todo)} แมตช์ที่ยังไม่ได้วิเคราะห์")
     for a in todo:
         result = checkStatus(db, a.match_id)

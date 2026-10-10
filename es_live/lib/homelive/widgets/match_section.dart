@@ -27,7 +27,7 @@ class MatchSection extends ConsumerWidget {
                 .where(
                   (m) =>
                       m.status == status ||
-                      m.status == "upcoming" && m.status == "canceled",
+                      (status == "upcoming" && m.status == "canceled"),
                 )
                 .toList();
 

@@ -22,6 +22,7 @@ class _GameTourState extends State<GameTour> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             maxCrossAxisExtent: 250,
+            childAspectRatio: 0.85,
             children:
                 data
                     .map(

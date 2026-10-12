@@ -1,3 +1,4 @@
+import 'package:es_live/_service/homelive/game_filter_pro.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/core/model/match_data.dart';
 import 'package:es_live/homelive/widgets/match_card.dart';
@@ -9,49 +10,59 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   // แมตช์ปลอม พอให้รู้ว่าเรียงเป็นกี่คอลัมน์
   // status แยกเป็น parameter เพราะเทสกลุ่มที่ 2 ต้องปน canceled เข้าไปด้วย
-  MatchData makeMatch(String id, {String status = 'live'}) =>
-      MatchData.fromjson({
-        'id': id,
-        'status': status,
-        'team_a': {'id': 'a$id', 'name': 'Catboys', 'logo_url': null},
-        'team_b': {'id': 'b$id', 'name': 'HooK Esport', 'logo_url': null},
-        'score_a': 1,
-        'score_b': 0,
-        'stream_url': null,
-        'tournament': {
-          'id': 'tour-1',
-          'name': 'VCT Pacific',
-          'league_name': 'VCT',
-          'league_logo_url': null,
-          'begin_at': null,
-          'end_at': null,
-          'region': null,
-          'type': null,
-          'team_count': null,
-          'has_bracket': false,
-          'prizepool': null,
-        },
-        'game': {'name': 'Valorant', 'slug': 'valorant'},
-        'begin_at': '2026-10-04T12:00:00+00:00',
-        'analysis': null,
-      });
+  MatchData makeMatch(
+    String id, {
+    String status = 'live',
+    String gameName = 'Valorant',
+    String gameSlug = 'valorant',
+  }) => MatchData.fromjson({
+    'id': id,
+    'status': status,
+    'team_a': {'id': 'a$id', 'name': 'Catboys', 'logo_url': null},
+    'team_b': {'id': 'b$id', 'name': 'HooK Esport', 'logo_url': null},
+    'score_a': 1,
+    'score_b': 0,
+    'stream_url': null,
+    'tournament': {
+      'id': 'tour-1',
+      'name': 'VCT Pacific',
+      'league_name': 'VCT',
+      'league_logo_url': null,
+      'begin_at': null,
+      'end_at': null,
+      'region': null,
+      'type': null,
+      'team_count': null,
+      'has_bracket': false,
+      'prizepool': null,
+    },
+    'game': {'name': gameName, 'slug': gameSlug},
+    'begin_at': '2026-10-04T12:00:00+00:00',
+    'analysis': null,
+  });
 
   // matchProvider ตัวจริงยิง dio ไปหา server  ในเทสเราสับเปลี่ยนเป็นข้อมูลปลอม
   // sectionStatus คือค่าที่ home.dart ส่งเข้ามาบอกว่านี่คือช่องไหน
   // matches คือข้อมูลที่ provider คืนให้  ไม่ส่งมาก็ได้ live 2 นัดเป็นค่าตั้งต้น
-  Widget wrap({String sectionStatus = 'live', List<MatchData>? matches}) =>
-      ProviderScope(
-        overrides: [
-          matchProvider.overrideWith(
-            (ref) async => matches ?? [makeMatch('1'), makeMatch('2')],
-          ),
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: MatchSection(status: sectionStatus, emptyText: 'ไม่มีแมตช์'),
-          ),
-        ),
-      );
+  Widget wrap({
+    String sectionStatus = 'live',
+    List<MatchData>? matches,
+    String? selectedGame,
+  }) => ProviderScope(
+    overrides: [
+      matchProvider.overrideWith(
+        (ref) async => matches ?? [makeMatch('1'), makeMatch('2')],
+      ),
+      // ไม่ได้ส่งมา = ยังไม่ได้กดเกมไหน ปล่อยให้ provider ตัวจริงคืน null
+      if (selectedGame != null)
+        gameFilterProvider.overrideWith(() => _FixedGameFilter(selectedGame)),
+    ],
+    child: MaterialApp(
+      home: Scaffold(
+        body: MatchSection(status: sectionStatus, emptyText: 'ไม่มีแมตช์'),
+      ),
+    ),
+  );
 
   /// ย่อขยายหน้าจอจำลอง  ส่งเป็นพิกเซลจริง หารด้วย devicePixelRatio ได้เป็น dp
   void setScreen(WidgetTester tester, {required double widthDp}) {
@@ -145,4 +156,96 @@ void main() {
       expect(find.text('ไม่มีแมตช์'), findsOneWidget);
     });
   });
+
+  group('MatchSection กรองตามเกมที่เลือก', () {
+    // ไม่เลือกเกม = เห็นทุกเกม เป็นค่าตั้งต้นของหน้า Live
+    testWidgets('ยังไม่กดเกมไหน เห็นแมตช์ของทุกเกม', (tester) async {
+      setScreen(tester, widthDp: 400);
+
+      await tester.pumpWidget(
+        wrap(
+          matches: [
+            makeMatch('1'),
+            makeMatch(
+              '2',
+              gameName: 'League of Legends',
+              gameSlug: 'league-of-legends',
+            ),
+          ],
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(MatchCard), findsNWidgets(2));
+    });
+
+    testWidgets('กดเกมหนึ่ง เหลือเฉพาะแมตช์ของเกมนั้น', (tester) async {
+      setScreen(tester, widthDp: 400);
+
+      await tester.pumpWidget(
+        wrap(
+          selectedGame: 'league-of-legends',
+          matches: [
+            makeMatch('1'),
+            makeMatch(
+              '2',
+              gameName: 'League of Legends',
+              gameSlug: 'league-of-legends',
+            ),
+          ],
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(MatchCard), findsOneWidget);
+      expect(find.text('League of Legends'), findsOneWidget);
+      expect(find.text('Valorant'), findsNothing);
+    });
+
+    // เกมที่เลือกอาจไม่มีแมตช์ในช่องนั้นเลย ต้องขึ้นข้อความว่าง ไม่ใช่ช่องโล่ง
+    testWidgets('เกมที่เลือกไม่มีแมตช์ในช่องนั้น ขึ้นข้อความว่าง', (
+      tester,
+    ) async {
+      setScreen(tester, widthDp: 400);
+
+      await tester.pumpWidget(
+        wrap(selectedGame: 'league-of-legends', matches: [makeMatch('1')]),
+      );
+      await tester.pump();
+
+      expect(find.byType(MatchCard), findsNothing);
+      expect(find.text('ไม่มีแมตช์'), findsOneWidget);
+    });
+
+    // ด่านกันตัวกรองไปเหมาแมตช์ที่ status ไม่ตรงช่องเข้ามาด้วย
+    testWidgets('กรองเกมแล้ว ยังต้องแยกช่อง live กับ upcoming เหมือนเดิม', (
+      tester,
+    ) async {
+      setScreen(tester, widthDp: 400);
+
+      await tester.pumpWidget(
+        wrap(
+          sectionStatus: 'live',
+          selectedGame: 'valorant',
+          matches: [
+            makeMatch('1', status: 'live'),
+            makeMatch('2', status: 'upcoming'),
+          ],
+        ),
+      );
+      await tester.pump();
+
+      expect(find.byType(MatchCard), findsOneWidget);
+    });
+  });
+}
+
+/// บังคับให้ตัวกรองเริ่มต้นที่เกมหนึ่งเลย แทนการจำลองการกด
+class _FixedGameFilter extends GameFilterNotifier {
+  _FixedGameFilter(this.slug);
+
+  final String? slug;
+
+  @override
+  String? build() => slug;
 }

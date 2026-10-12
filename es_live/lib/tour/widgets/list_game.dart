@@ -20,7 +20,7 @@ class ListGameTour extends StatelessWidget {
       children: [
         Container(
           width: 150,
-          height: 100,
+          height: 150,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
@@ -43,11 +43,15 @@ class ListGameTour extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
-        Text(
-          gameName,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface,
-            fontWeight: FontWeight.w900,
+        Flexible(
+          child: Text(
+            gameName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
       ],

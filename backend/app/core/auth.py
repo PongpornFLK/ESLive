@@ -1,9 +1,9 @@
 import uuid
 from fastapi import Depends, Header, HTTPException
-import httpx
 from sqlalchemy.orm import Session
 from app.db import get_db
 from app.core.config import settings
+from app.core.http import http
 from app.models.user import Profile
 
 
@@ -16,7 +16,7 @@ def getCurrentUser(
 
     token = authorization.removeprefix("Bearer ")
 
-    res = httpx.get(
+    res = http.get(
         f"{settings.supabase_url}/auth/v1/user",
         headers={"Authorization": f"Bearer {token}", "apikey": settings.supabase_key},
     )

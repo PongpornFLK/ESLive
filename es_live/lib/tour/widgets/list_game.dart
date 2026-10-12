@@ -11,7 +11,7 @@ class ListGameTour extends StatelessWidget {
     super.key,
     required this.gameName,
     required this.logoGame,
-    required this.slug
+    required this.slug,
   });
 
   @override
@@ -20,15 +20,14 @@ class ListGameTour extends StatelessWidget {
       children: [
         Container(
           width: 150,
-          // height: 100,
+          height: 100,
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                // ignore: deprecated_member_use
-                color: AppColors.orange.withOpacity(0.5),
+                color: AppColors.orange.withValues(alpha: 0.5),
                 spreadRadius: 1,
                 blurRadius: 10,
               ),
@@ -38,7 +37,7 @@ class ListGameTour extends StatelessWidget {
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Tour(slug : slug)),
+                  MaterialPageRoute(builder: (context) => Tour(slug: slug)),
                 ),
             child: Image.asset(logoGame, fit: BoxFit.cover),
           ),
@@ -46,7 +45,10 @@ class ListGameTour extends StatelessWidget {
         SizedBox(height: 10),
         Text(
           gameName,
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.w900),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.w900,
+          ),
         ),
       ],
     );

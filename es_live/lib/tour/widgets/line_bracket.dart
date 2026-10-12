@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // SECTION
-const _sectionOrder = ['UPPER BRACKET', 'LOWER BRACKET', 'GRAND FINAL'];
-
-String _sectionOf(String name) {
+String _sectionOf(String name, String lastSection) {
   final n = name.toLowerCase();
   if (n.startsWith('upper bracket')) return 'UPPER BRACKET';
   if (n.startsWith('lower bracket')) return 'LOWER BRACKET';
-  return 'GRAND FINAL';
+  return lastSection;
 }
 
 /// ตัดชื่อทีมและเลขลำดับออก เหลือแค่ชื่อรอบ
@@ -59,15 +57,25 @@ Map<String, List<BracketData>> _groupBy(
 
 class BracketBoard extends StatelessWidget {
   final List<BracketData> matches;
+  final String lastSection;
 
-  const BracketBoard({super.key, required this.matches});
+  const BracketBoard({
+    super.key,
+    required this.matches,
+    this.lastSection = 'GRAND FINAL',
+  });
 
   @override
   Widget build(BuildContext context) {
     final sections = _groupBy(
       matches,
-      _sectionOf,
-      (keys) => _sectionOrder.where(keys.contains).toList(),
+      (name) => _sectionOf(name, lastSection),
+      (keys) =>
+          [
+            'UPPER BRACKET',
+            'LOWER BRACKET',
+            lastSection,
+          ].where(keys.contains).toList(),
     );
 
     return Column(

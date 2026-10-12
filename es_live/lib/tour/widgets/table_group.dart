@@ -10,9 +10,6 @@ const double _kWinLossWidth = 46;
 const double _kGamesWidth = 54;
 
 /// ตารางคะแนนของรอบแบ่งกลุ่ม
-///
-/// PandaScore ส่งแถวมา 2 แบบ บางทัวร์มีสถิติแพ้ชนะ บางทัวร์มีแค่อันดับ
-/// ถ้าไม่มีสถิติเลยจะซ่อนคอลัมน์ตัวเลขทิ้ง แทนที่จะโชว์ขีดเต็มตาราง
 class TableGroup extends StatelessWidget {
   final List<GroupData> rows;
 
@@ -106,7 +103,7 @@ class _TeamRow extends StatelessWidget {
   /// แพ้ชนะระดับแมตช์ เช่น "2-0"
   String get _winLoss {
     if (data.win == null && data.loss == null) return '-';
-    return '${data.win ?? 0}-${data.loss ?? 0}';
+    return '${data.win ?? '-'}-${data.loss ?? '-'}';
   }
 
   /// แพ้ชนะระดับเกมย่อย เช่น "4-1" หรือ "4-1-2" ถ้ามีเสมอ

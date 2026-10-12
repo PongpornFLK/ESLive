@@ -77,6 +77,11 @@
   "teamCount": "{count, plural, =0{ไม่มีทีม} other{{count} ทีม}}",
   "noStandingYet": "ยังไม่มีตารางคะแนนของทัวร์นี้",
   "rankOnlyNoStats": "ทัวร์นี้ยังไม่มีสถิติแพ้ชนะ แสดงได้เฉพาะอันดับ",
+  "tabPlayoff": "รอบคัดออก",
+  "tabGroup": "รอบแบ่งกลุ่ม",
+  "noPlayoffStage": "ทัวร์นี้ไม่มีรอบคัดออก",
+  "noGroupStage": "ทัวร์นี้ไม่มีรอบแบ่งกลุ่ม",
+  "sectionQualify": "รอบคัดเลือก",
 
   "settings": "ตั้งค่า",
   "theme": "ธีม",

@@ -509,6 +509,36 @@ abstract class AppLocalizations {
   /// **'This tournament has no win/loss stats, rank only'**
   String get rankOnlyNoStats;
 
+  /// No description provided for @tabPlayoff.
+  ///
+  /// In en, this message translates to:
+  /// **'Playoffs'**
+  String get tabPlayoff;
+
+  /// No description provided for @tabGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Stage'**
+  String get tabGroup;
+
+  /// No description provided for @noPlayoffStage.
+  ///
+  /// In en, this message translates to:
+  /// **'This tournament has no playoff round'**
+  String get noPlayoffStage;
+
+  /// No description provided for @noGroupStage.
+  ///
+  /// In en, this message translates to:
+  /// **'This tournament has no group stage'**
+  String get noGroupStage;
+
+  /// No description provided for @sectionQualify.
+  ///
+  /// In en, this message translates to:
+  /// **'QUALIFY'**
+  String get sectionQualify;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:

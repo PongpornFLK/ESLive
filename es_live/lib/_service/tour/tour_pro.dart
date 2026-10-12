@@ -13,7 +13,7 @@ final tourProvider = FutureProvider<List<TournamentData>>((ref) async {
   }
 });
 
-final tourProviderGameId = FutureProvider.family<List<TournamentData>, String>((
+final tourProviderGameId = FutureProvider.family<List<SerieData>, String>((
   ref,
   gameId,
 ) async {
@@ -24,7 +24,7 @@ final tourProviderGameId = FutureProvider.family<List<TournamentData>, String>((
     );
     final List<dynamic> tourGroupList = res.data;
 
-    return tourGroupList.map((json) => TournamentData.fromjson(json)).toList();
+    return tourGroupList.map((json) => SerieData.fromjson(json)).toList();
   } catch (e) {
     throw Exception(e);
   }

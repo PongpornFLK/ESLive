@@ -247,6 +247,21 @@ class AppLocalizationsTh extends AppLocalizations {
   String get rankOnlyNoStats => 'ทัวร์นี้ยังไม่มีสถิติแพ้ชนะ แสดงได้เฉพาะอันดับ';
 
   @override
+  String get tabPlayoff => 'รอบคัดออก';
+
+  @override
+  String get tabGroup => 'รอบแบ่งกลุ่ม';
+
+  @override
+  String get noPlayoffStage => 'ทัวร์นี้ไม่มีรอบคัดออก';
+
+  @override
+  String get noGroupStage => 'ทัวร์นี้ไม่มีรอบแบ่งกลุ่ม';
+
+  @override
+  String get sectionQualify => 'รอบคัดเลือก';
+
+  @override
   String get settings => 'ตั้งค่า';
 
   @override

@@ -21,5 +21,6 @@ def getPandaListTour(gameSlug : str) -> dict:
     res = httpx.get(
         f"https://api.pandascore.co/{gameSlug}/tournaments",
         headers={"Authorization": f"Bearer {settings.pandascore_api_key}"},
+        params={"per_page" : 100}, 
     )
     return res.json()

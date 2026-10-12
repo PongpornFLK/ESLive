@@ -249,6 +249,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rankOnlyNoStats => 'This tournament has no win/loss stats, rank only';
 
   @override
+  String get tabPlayoff => 'Playoffs';
+
+  @override
+  String get tabGroup => 'Group Stage';
+
+  @override
+  String get noPlayoffStage => 'This tournament has no playoff round';
+
+  @override
+  String get noGroupStage => 'This tournament has no group stage';
+
+  @override
+  String get sectionQualify => 'QUALIFY';
+
+  @override
   String get settings => 'SETTINGS';
 
   @override

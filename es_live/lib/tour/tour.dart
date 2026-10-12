@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Tour extends ConsumerStatefulWidget {
   final String slug;
 
-  const Tour({super.key,required this.slug});
+  const Tour({super.key, required this.slug});
 
   @override
   ConsumerState<Tour> createState() => _TourState();
@@ -39,30 +39,15 @@ class _TourState extends ConsumerState<Tour> {
             tourAsync.when(
               data:
                   (data) => Column(
-                    children:
-                        data
-                            .map(
-                              (m) => ListTour(
-                                tourId: m.tourId,
-                                tourName: m.tourName,
-                                leagueName: m.leagueName,
-                                leagueLogo: m.leagueLogo,
-                                startDate: m.startDate,
-                                endDate: m.endDate,
-                                region: m.region,
-                                type: m.type,
-                                teamCount: m.teamCount,
-                                prizePool: m.prizePool,
-                                hasBracket: m.hasBracket,
-                              ),
-                            )
-                            .toList(),
+                    children: data.map((m) => ListTour(serie: m)).toList(),
                   ),
               error:
                   (error, stackTrace) => Center(
                     child: Text(
                       "$error",
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
               loading: () => Center(child: CircularProgressIndicator()),

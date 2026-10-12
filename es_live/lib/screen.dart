@@ -3,7 +3,7 @@ import 'package:es_live/follow/follow.dart';
 import 'package:es_live/homelive/home.dart';
 import 'package:es_live/patch/patch.dart';
 import 'package:es_live/set/setting.dart';
-import 'package:es_live/tour/gametour.dart';
+import 'package:es_live/tour/game.dart';
 import 'package:es_live/widgets/app_bar.dart';
 import 'package:es_live/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,4 @@
+import 'package:es_live/_service/homelive/game_filter_pro.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/l10n/app_localizations.dart';
 import 'package:es_live/core/theme/root_colors.dart';
@@ -14,6 +15,7 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final selectedGame = ref.watch(gameFilterProvider); // MatchSection อ่าน provider
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -49,7 +51,17 @@ class Home extends ConsumerWidget {
               Row(
                 children:
                     data
-                        .map((g) => ListGame(logo: g.logo, gameName: g.name))
+                        .map(
+                          (g) => ListGame(
+                            logo: g.logo,
+                            gameName: g.name,
+                            selected: selectedGame == g.slug,
+                            onTap:
+                                () => ref
+                                    .read(gameFilterProvider.notifier)
+                                    .toggle(g.slug),
+                          ),
+                        )
                         .toList(),
               ),
               Divider(),

@@ -1,3 +1,4 @@
+import 'package:es_live/_service/homelive/game_filter_pro.dart';
 import 'package:es_live/_service/homelive/match_pro.dart';
 import 'package:es_live/core/media/text_scale.dart';
 import 'package:es_live/core/theme/root_colors.dart';
@@ -19,17 +20,20 @@ class MatchSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final matchAsync = ref.watch(matchProvider);
+    // null = ยังไม่ได้เลือกเกม ให้ผ่านทุกแมตช์
+    final gameSlug = ref.watch(gameFilterProvider);
 
     return matchAsync.when(
       data: (matches) {
         final list =
-            matches
-                .where(
-                  (m) =>
-                      m.status == status ||
-                      (status == "upcoming" && m.status == "canceled"),
-                )
-                .toList();
+            matches.where((m) {
+              final inSection =
+                  m.status == status ||
+                  (status == "upcoming" && m.status == "canceled");
+              final inGame = gameSlug == null || m.game.slug == gameSlug;
+
+              return inSection && inGame;
+            }).toList();
 
         // เช็คว่างได้ตรงนี้ที่เดียว ก่อนข้อมูลมาถึงยังไม่มีทางรู้ว่ามีกี่นัด
         if (list.isEmpty) return _notice(Text(emptyText, style: _greyText));

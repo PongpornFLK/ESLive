@@ -4,6 +4,7 @@ from app.models.match import Match
 from app.services.match.map import mapMatch
 from app.services.match.pandascore import getPandaTourForMatch
 import logging
+from app.services.tour.map import mapTour
 
 log = logging.getLogger("sync")
 
@@ -25,20 +26,8 @@ def getTourId(db: Session, raw: dict, game_id):
     if tour is None:
         tournament_detail = getPandaTourForMatch(raw["tournament"]["id"])
 
-        tour_data = Tournament(
-            game_id=game_id,
-            name=raw["tournament"]["slug"],
-            pandascore_id=tour_panda_id,
-            league_name=raw["league"]["name"],
-            league_logo_url=raw["league"]["image_url"],
-            region=raw["tournament"]["region"],
-            type=raw["tournament"]["type"],
-            team_count=len(tournament_detail["teams"]),
-            has_bracket=raw["tournament"]["has_bracket"],
-            prizepool=raw["tournament"]["prizepool"],
-            begin_at=raw["tournament"]["begin_at"],
-            end_at=raw["tournament"]["end_at"],
-        )
+        tour_data = mapTour(game_id, tournament_detail)
+        tour_data = Tournament(**tour_data)
         db.add(tour_data)
         db.commit()
 

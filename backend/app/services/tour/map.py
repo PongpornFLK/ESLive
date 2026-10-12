@@ -87,7 +87,9 @@ def mapGroupStanding(raw: dict) -> dict:
     }
 
 def mapTour(game_id: uuid.UUID,raw : dict) -> dict:
-    game_slug = raw["slug"]
+    stage_name = raw["name"]
+    serie_id = raw["serie_id"]
+    serie_name = raw["serie"]["full_name"]
     panda_id = raw["id"]
     has_bracket = raw["has_bracket"]
     prizepool = raw["prizepool"]
@@ -101,7 +103,9 @@ def mapTour(game_id: uuid.UUID,raw : dict) -> dict:
     
     return {
         "game_id": game_id,
-        "name": game_slug,
+        "serie_id" : serie_id,
+        "serie_name" : serie_name,
+        "name": stage_name,
         "league_name": league_name,
         "league_logo_url":league_logo_url,
         "region": region,

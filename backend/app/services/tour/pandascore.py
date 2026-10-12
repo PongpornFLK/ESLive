@@ -1,9 +1,9 @@
-import httpx
 from app.core.config import settings
+from app.core.http import http
 
 ##### Bracket
 def getBracket(tournament_id: int) -> dict:
-    res = httpx.get(
+    res = http.get(
         f"https://api.pandascore.co/tournaments/{tournament_id}/brackets",
         headers={"Authorization": f"Bearer {settings.pandascore_api_key}"},
     )
@@ -11,14 +11,14 @@ def getBracket(tournament_id: int) -> dict:
 
 ##### Group
 def getStanding(tournament_id: int) -> dict:
-    res = httpx.get(
+    res = http.get(
         f"https://api.pandascore.co/tournaments/{tournament_id}/standings",
         headers={"Authorization": f"Bearer {settings.pandascore_api_key}"},
     )
     return res.json()
 
 def getPandaListTour(gameSlug : str) -> dict:
-    res = httpx.get(
+    res = http.get(
         f"https://api.pandascore.co/{gameSlug}/tournaments",
         headers={"Authorization": f"Bearer {settings.pandascore_api_key}"},
         params={"per_page" : 100}, 

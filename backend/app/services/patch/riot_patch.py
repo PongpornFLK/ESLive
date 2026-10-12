@@ -1,18 +1,19 @@
-import httpx
 import re
 import html
+
+from app.core.http import http
 
 
 def getPatchRiot(game: str, zone: str):
 
-    res = httpx.get(f"https://data.rito.news/{game}/{zone}/news.json")
+    res = http.get(f"https://data.rito.news/{game}/{zone}/news.json")
 
     return res.json()
 
 
 def getPatchGameURL(raw_source_url: str):
 
-    content_html = httpx.get(f"{raw_source_url}")
+    content_html = http.get(f"{raw_source_url}")
     content_tag = content_html.text
     find_tag = re.findall(
         r'data-testid="rich-text-html"[^>]*>(.*?)</div></div>', content_tag, re.S

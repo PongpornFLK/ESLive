@@ -30,16 +30,13 @@ class TournamentOut(BaseModel):
 
     id: uuid.UUID
     game_id: uuid.UUID
-    name: str
     league_name: str | None
     league_logo_url: str | None
-    region: str | None
+    name: str
     type: str | None
     team_count: int | None
     has_bracket: bool | None
     prizepool: str | None
-    begin_at: datetime | None
-    end_at: datetime | None
     created_at: datetime
 
 
@@ -63,8 +60,8 @@ class BracketOut(BaseModel):
 
 
 class StandingOut(BaseModel):
-    #1 row = 1 team
-    #มีแค่ rank กับ team ที่อยู่ครบที่เหลือเป็น | None
+    # 1 row = 1 team
+    # มีแค่ rank กับ team ที่อยู่ครบที่เหลือเป็น | None
     rank: int
     team_name: str
     team_logo: str | None
@@ -76,3 +73,18 @@ class StandingOut(BaseModel):
     game_wins: int | None
     game_losses: int | None
     game_ties: int | None
+
+
+class SerieOut(BaseModel):
+    serie_id: int | None
+    serie_name: str | None
+    region: str | None
+    begin_at: datetime | None
+    end_at: datetime | None
+    league_name: str | None
+    league_logo_url: str | None
+    playoff_stages: list[TournamentOut]
+    group_stages: list[TournamentOut]
+    type : str | None
+    prizepool: str | None
+    team_count: int | None
